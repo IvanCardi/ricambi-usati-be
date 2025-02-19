@@ -1,7 +1,9 @@
 //utils
 import { FlowUtils } from "./utils/FlowUtils";
+import { TextUtils } from "./utils/TextUtils";
+import { NonEmptyString } from "./utils/NonEmptyString";
 
-export { FlowUtils };
+export { FlowUtils, TextUtils, NonEmptyString };
 
 //infra
 import { BaseController } from "./infra/BaseController";
