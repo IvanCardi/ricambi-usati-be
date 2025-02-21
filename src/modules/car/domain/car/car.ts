@@ -28,4 +28,40 @@ export class Car extends AggregateRoot<CarProps> {
       throw new SoldPartsMoreThanTotalParts();
     }
   }
+
+  get brand() {
+    return this.props.brand;
+  }
+
+  get model() {
+    return this.props.model;
+  }
+
+  get setup() {
+    return this.props.setup;
+  }
+
+  get description() {
+    return this.props.description;
+  }
+
+  get year() {
+    return this.props.year;
+  }
+
+  get kilometers() {
+    return this.props.kilometers;
+  }
+
+  get plate() {
+    return this.props.plate;
+  }
+
+  get totalParts() {
+    return this.props.totalParts;
+  }
+
+  get soldParts() {
+    return this.props.soldParts;
+  }
 }

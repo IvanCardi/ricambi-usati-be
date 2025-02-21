@@ -1,3 +1,7 @@
 import { NonEmptyString } from "../../../../../shared";
 
-export class LastName extends NonEmptyString<"LastName"> {}
+export class LastName extends NonEmptyString<"LastName"> {
+  constructor(lastName: string) {
+    super(lastName, "LastName");
+  }
+}

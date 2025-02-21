@@ -1,18 +1,29 @@
 {
   "compilerOptions": {
-    "lib": ["ES2016", "es2021"], // ES2020 in earlier versions
-    "module": "ESNext", //ESNext
-    "moduleResolution": "Node",
-    "target": "ESNext", // ES2020 in earlier versions
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "inlineSourceMap": true,
+    "target": "es2017",
+    "outDir": "./dist",
+    "lib": ["es6"],
+    "resolveJsonModule": true,
+    "types": ["node", "jest"],
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "pretty": true,
+    "jsx": "react",
+    "strict": true,
+    "skipLibCheck": true,
     "rootDir": "src" /* Specify the root folder within your source files. */,
-    "resolveJsonModule": true /* Enable importing .json files. */,
-    "allowJs": true /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
-    "outDir": "build" /* Specify an output folder for all emitted files. */,
-    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
-    "strict": true /* Enable all strict type-checking options. */,
-    "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   },
   "include": [
     "src/*.ts",

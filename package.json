@@ -2,11 +2,10 @@
   "name": "ricambi-usati-be",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "start": "npm run build && node build/index.js",
-    "build": "rimraf ./build && tsc",
-    "start:dev": "npx nodemon",
+    "start": "npm run build && node dist/index.js",
+    "build": "rimraf ./dist && tsc",
+    "start:dev": "cross-env NODE_ENV=development nodemon",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --verbose --coverage --config jest.config.js"
   },
   "keywords": [],

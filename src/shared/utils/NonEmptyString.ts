@@ -1,11 +1,17 @@
 export class NonEmptyString<T> extends String {
-  private type: T | undefined;
+  private _type: T | undefined;
 
-  public constructor(value: string) {
+  public constructor(value: string, type: T) {
     super(value);
 
     if (value === null || value === undefined || value === "") {
-      throw new Error("value is empty string");
+      throw new Error(`${type} value is empty string`);
     }
+
+    this._type = type;
+  }
+
+  get type() {
+    return this._type;
   }
 }

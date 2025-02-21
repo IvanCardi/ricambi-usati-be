@@ -2,10 +2,10 @@ import { NonEmptyString } from "../../../../../shared";
 import { InvalidCompanySdi } from "../../_errors/invalidCompanySdi";
 
 export class CompanySdi extends NonEmptyString<"CompanySdi"> {
-  constructor(value: string) {
-    super(value);
+  constructor(sdi: string) {
+    super(sdi, "CompanySdi");
 
-    if (value.length !== 7) {
+    if (sdi.length !== 7) {
       throw new InvalidCompanySdi();
     }
   }

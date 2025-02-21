@@ -78,3 +78,5 @@ export default class MongoDb {
     await mongoClient.db().collection(collectionName).deleteMany(filter);
   }
 }
+
+export const MONGO_DB = new MongoDb();
