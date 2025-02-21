@@ -1,18 +1,16 @@
-import { Guard } from "../core/Guard";
-import { ValueObject } from "../domain/ValueObject";
-
-export type NonEmptyStringProps = {
-  value: string;
-};
-
-export class NonEmptyString<T> extends ValueObject<NonEmptyStringProps> {
+export class NonEmptyString<T> {
   private type: T | undefined;
+  private _value: string;
 
-  public constructor(props: NonEmptyStringProps) {
-    super(props);
-
-    if (!Guard.againstInvalidStringValue(props.value).succeeded) {
+  public constructor(value: string) {
+    if (value === null || value === undefined || value === "") {
       throw new Error("value is empty string");
     }
+
+    this._value = value;
+  }
+
+  get value() {
+    return this._value;
   }
 }
