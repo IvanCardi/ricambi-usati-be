@@ -12,6 +12,7 @@ import { logger } from "../logger";
 import { healthRouter } from "./health";
 import authentication from "./middlewares/authentication";
 import carRouter from "../../modules/car/routes/carRouter";
+import carPartRouter from "../../modules/shop/routes/carPartRouter";
 
 const origin = {
   // origin: isProduction ? 'https://dddforum.com' : '*',
@@ -47,6 +48,7 @@ app.use(
 
 app.use(healthRouter);
 app.use(carRouter);
+app.use(carPartRouter);
 
 if (config.isProduction) {
   app.use(authentication);

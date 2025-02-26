@@ -1,15 +1,20 @@
-import { Entity } from "../../../../shared";
+import { Entity, ValueObject } from "../../../../shared";
 
 export type CarProps = {
+  carId: string;
   brand: string;
   model: string;
   setup: string;
-  year: string;
+  year: number;
 };
 
-export class Car extends Entity<CarProps> {
+export class Car extends ValueObject<CarProps> {
   public constructor(props: CarProps, id?: string) {
-    super(props, id);
+    super(props);
+  }
+
+  get carId() {
+    return this.props.carId;
   }
 
   get brand() {
