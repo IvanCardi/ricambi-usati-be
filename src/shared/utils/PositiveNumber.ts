@@ -1,4 +1,4 @@
-export class PositiveNumber<T> extends Number {
+export class PositiveNumber extends Number {
   constructor(num: number) {
     super(num);
 
