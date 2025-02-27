@@ -19,7 +19,11 @@ export class CreateCarController extends BaseController {
 
       return this.ok(res, { id: car.id });
     } catch (error) {
-      return this.fail(res, error instanceof Error ? error.code : error);
+      if (error instanceof Error) {
+        return this.clientError(res, error.message);
+      }
+
+      return this.fail(res, error as any);
     }
   }
 }

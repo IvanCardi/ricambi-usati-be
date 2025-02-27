@@ -5,7 +5,7 @@ export class NonEmptyString<T> extends String {
     super(value);
 
     if (value === null || value === undefined || value === "") {
-      throw new Error(`${type} value is empty string`);
+      throw new Error(`Empty${type}`);
     }
 
     this._type = type;

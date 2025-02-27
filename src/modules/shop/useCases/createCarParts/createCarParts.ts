@@ -1,10 +1,13 @@
-import { UseCase } from "../../../../shared";
+import { NonEmptyString, UseCase } from "../../../../shared";
 import { PositiveNumber } from "../../../../shared/utils/PositiveNumber";
 import { CarPart } from "../../domain/carPart/carPart";
 import { CarPartCategory } from "../../domain/carPart/carPartCategory";
 import { CarPartDescription } from "../../domain/carPart/carPartDescription";
 import { CarPartName } from "../../domain/carPart/carPartName";
+import { CarPartNumber } from "../../domain/carPart/carPartNumber";
 import { CarPartNumbers } from "../../domain/carPart/carPartNumbers";
+import { CarPartPrice } from "../../domain/carPart/carPartPrice";
+import { CarPartWarranty } from "../../domain/carPart/carPartWarranty";
 import { ICarPartRepo } from "../../repos/carPartRepo";
 import { ICarRepo } from "../../repos/carRepo";
 import { CarNotFound } from "../_errors/carNotFound";
@@ -40,11 +43,13 @@ export class CreateCarParts implements UseCase<CreateCarPartsInput, void> {
           compatibleCars: p.compatibleCars,
           description: new CarPartDescription(p.description),
           name: new CarPartName(p.name),
-          numbers: new CarPartNumbers(...p.numbers),
+          numbers: new CarPartNumbers(
+            ...p.numbers.map((n) => new CarPartNumber(n))
+          ),
           photos: p.photos,
-          price: new PositiveNumber(p.price),
+          price: new CarPartPrice(p.price),
           status: "available",
-          warranty: new PositiveNumber(p.warranty),
+          warranty: new CarPartWarranty(p.warranty),
         })
     );
 

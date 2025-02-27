@@ -5,7 +5,7 @@ export class CarPartMap extends Mapper<CarPart> {
   toPersistance(carPart: CarPart) {
     return {
       _id: carPart.id,
-      numbers: carPart.numbers,
+      numbers: carPart.numbers.map((n) => n.toString()),
       photos: carPart.photos,
       carId: carPart.car.carId,
       category: carPart.category.toPath(),

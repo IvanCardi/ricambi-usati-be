@@ -3,9 +3,12 @@ import { PositiveNumber } from "../../../shared/utils/PositiveNumber";
 import { Car } from "../domain/car/car";
 import { CarBrand } from "../domain/car/carBrand";
 import { CarDescription } from "../domain/car/carDescription";
+import { CarKilometers } from "../domain/car/carKilometers";
 import { CarModel } from "../domain/car/carModel";
 import { CarPlate } from "../domain/car/carPlate";
 import { CarSetup } from "../domain/car/carSetup";
+import { CarSoldParts } from "../domain/car/carSoldParts";
+import { CarTotalParts } from "../domain/car/carTotalParts";
 import { CarYear } from "../domain/car/carYear";
 
 export class CarMap extends Mapper<Car> {
@@ -29,12 +32,12 @@ export class CarMap extends Mapper<Car> {
       {
         brand: new CarBrand(car.brand),
         description: new CarDescription(car.description),
-        kilometers: new PositiveNumber(car.kilometers),
+        kilometers: new CarKilometers(car.kilometers),
         model: new CarModel(car.model),
         plate: new CarPlate(car.plate),
         setup: new CarSetup(car.setup),
-        soldParts: new PositiveNumber(car.soldParts),
-        totalParts: new PositiveNumber(car.totalParts),
+        soldParts: new CarSoldParts(car.soldParts),
+        totalParts: new CarTotalParts(car.totalParts),
         year: new CarYear(car.year),
       },
       car._id

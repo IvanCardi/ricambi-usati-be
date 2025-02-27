@@ -1,12 +1,14 @@
 import { AggregateRoot } from "../../../../shared";
+import { SoldPartsMoreThanTotalParts } from "../_errors/soldPartsMoreThanTotalParts";
 import { CarBrand } from "./carBrand";
 import { CarDescription } from "./carDescription";
+import { CarKilometers } from "./carKilometers";
 import { CarModel } from "./carModel";
-import { CarSetup } from "./carSetup";
-import { CarYear } from "./carYear";
 import { CarPlate } from "./carPlate";
-import { PositiveNumber } from "../../../../shared/utils/PositiveNumber";
-import { SoldPartsMoreThanTotalParts } from "../_errors/soldPartsMoreThanTotalParts";
+import { CarSetup } from "./carSetup";
+import { CarSoldParts } from "./carSoldParts";
+import { CarTotalParts } from "./carTotalParts";
+import { CarYear } from "./carYear";
 
 export type CarProps = {
   plate: CarPlate;
@@ -14,10 +16,10 @@ export type CarProps = {
   model: CarModel;
   setup: CarSetup;
   year: CarYear;
-  kilometers: PositiveNumber;
+  kilometers: CarKilometers;
   description: CarDescription;
-  totalParts: PositiveNumber;
-  soldParts: PositiveNumber;
+  totalParts: CarTotalParts;
+  soldParts: CarSoldParts;
 };
 
 export class Car extends AggregateRoot<CarProps> {

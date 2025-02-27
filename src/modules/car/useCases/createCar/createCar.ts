@@ -1,8 +1,10 @@
 import { UseCase } from "../../../../shared";
-import { PositiveNumber } from "../../../../shared/utils/PositiveNumber";
 import { Car } from "../../domain/car/car";
 import { CarDescription } from "../../domain/car/carDescription";
+import { CarKilometers } from "../../domain/car/carKilometers";
 import { CarPlate } from "../../domain/car/carPlate";
+import { CarSoldParts } from "../../domain/car/carSoldParts";
+import { CarTotalParts } from "../../domain/car/carTotalParts";
 import { CarYear } from "../../domain/car/carYear";
 import { IBrandModelSetupRepo } from "../../repos/brandModelSetupRepo";
 import { ICarRepo } from "../../repos/carRepo";
@@ -62,11 +64,11 @@ export class CreateCar implements UseCase<CreateCarInput, Car> {
       model,
       setup,
       description: new CarDescription(input.description),
-      kilometers: new PositiveNumber(input.kilometers),
+      kilometers: new CarKilometers(input.kilometers),
       plate: new CarPlate(input.plate),
       year: new CarYear(input.year),
-      soldParts: 0,
-      totalParts: 0,
+      soldParts: new CarSoldParts(0),
+      totalParts: new CarTotalParts(0),
     });
 
     await this.carRepo.save(car);

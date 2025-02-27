@@ -5,7 +5,9 @@ import { CarPartCategory } from "./carPartCategory";
 import { CarPartDescription } from "./carPartDescription";
 import { CarPartName } from "./carPartName";
 import { CarPartNumbers } from "./carPartNumbers";
+import { CarPartPrice } from "./carPartPrice";
 import { CarPartStatus } from "./carPartStatus";
+import { CarPartWarranty } from "./carPartWarranty";
 
 export type CarPartProps = {
   name: CarPartName;
@@ -14,8 +16,8 @@ export type CarPartProps = {
   car: Car;
   category: CarPartCategory;
   description: CarPartDescription;
-  warranty: PositiveNumber; // in month
-  price: PositiveNumber; // in €
+  warranty: CarPartWarranty; // in month
+  price: CarPartPrice; // in €
   status: CarPartStatus; // "available", "pending payment", "sold"
   compatibleCars: string[];
   lastUpdated?: Date; // timestamp
