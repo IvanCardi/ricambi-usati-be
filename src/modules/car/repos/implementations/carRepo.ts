@@ -13,6 +13,14 @@ export class CarRepo implements ICarRepo {
     await this.mongoDb.save(raw, this.collection);
   }
 
+  async getAll(): Promise<Car[]> {
+    const raws = (await this.mongoDb.find({}, this.collection)) as ReturnType<
+      typeof carMap.toPersistance
+    >[];
+
+    return raws.map((r) => carMap.toDomain(r));
+  }
+
   async existsWithPlate(plate: string): Promise<boolean> {
     const raw = await this.mongoDb.findOne({ plate }, this.collection);
 
