@@ -15,12 +15,12 @@ export class CreateCarController extends BaseController {
     res: express.Response
   ): Promise<any> {
     try {
-      const car = await this.createCar.execute(req.body);
+      await this.createCar.execute(req.body);
 
-      return this.ok(res, { id: car.id });
+      return this.created(res);
     } catch (error) {
       if (error instanceof Error) {
-        return this.clientError(res, error.message);
+        return this.clientError(res, error.code);
       }
 
       return this.fail(res, error as any);

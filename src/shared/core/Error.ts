@@ -4,6 +4,6 @@ export abstract class Error<T extends string> {
 
   constructor(code: T, message?: string) {
     this.code = code;
-    this.message = message || `Error: ${code}`;
+    this.message = message || `${code}`;
   }
 }
