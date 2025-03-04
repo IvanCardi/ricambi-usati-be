@@ -7,10 +7,23 @@ export class CarRepo implements ICarRepo {
   private collection = "cars";
   private mongoDb = MONGO_DB;
 
+  async getById(id: string): Promise<Car> {
+    const raw = (await this.mongoDb.findOne(
+      { _id: id },
+      this.collection
+    )) as ReturnType<typeof carMap.toPersistance>;
+
+    return carMap.toDomain(raw);
+  }
+
   async save(car: Car): Promise<void> {
     const raw = carMap.toPersistance(car);
 
-    await this.mongoDb.save(raw, this.collection);
+    if (!!(await this.getById(car.id))) {
+      await this.mongoDb.replace({ _id: car.id }, raw, this.collection);
+    } else {
+      await this.mongoDb.save(raw, this.collection);
+    }
   }
 
   async getAll(): Promise<Car[]> {

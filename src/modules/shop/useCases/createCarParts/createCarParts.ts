@@ -8,6 +8,7 @@ import { CarPartNumber } from "../../domain/carPart/carPartNumber";
 import { CarPartNumbers } from "../../domain/carPart/carPartNumbers";
 import { CarPartPrice } from "../../domain/carPart/carPartPrice";
 import { CarPartWarranty } from "../../domain/carPart/carPartWarranty";
+import CarPartsCreatedEmitter from "../../events/cartPartsCreated";
 import { ICarPartRepo } from "../../repos/carPartRepo";
 import { ICarRepo } from "../../repos/carRepo";
 import { CarNotFound } from "../_errors/carNotFound";
@@ -54,5 +55,10 @@ export class CreateCarParts implements UseCase<CreateCarPartsInput, void> {
     );
 
     await this.carPartRepo.saveAll(carParts);
+
+    CarPartsCreatedEmitter.emit({
+      carId,
+      partsCreated: carParts.length,
+    });
   }
 }

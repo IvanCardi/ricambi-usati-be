@@ -6,3 +6,6 @@ import "./bootstrap/database/index";
 
 // logger
 import "./bootstrap/logger";
+
+// subscriptions
+import "./modules/car/subscriptions";
