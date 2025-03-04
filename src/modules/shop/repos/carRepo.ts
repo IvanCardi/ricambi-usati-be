@@ -1,5 +1,6 @@
 import { Car } from "../domain/carPart/car";
 
 export interface ICarRepo {
-  getById(id: string): Promise<Car>;
+  getAll(): Promise<Car[]>;
+  getById(id: string): Promise<Car | undefined>;
 }
