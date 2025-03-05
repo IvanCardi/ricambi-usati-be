@@ -15,9 +15,22 @@ export class CustomerRepo implements ICustomerRepo {
     return raws.map((r) => customerMap.toDomain(r));
   }
 
+  async getById(id: string): Promise<Customer | undefined> {
+    const raw = (await this.mongoDb.findOne(
+      { _id: id },
+      this.collection
+    )) as ReturnType<typeof customerMap.toPersistance>;
+
+    return customerMap.toDomain(raw);
+  }
+
   async save(customer: Customer): Promise<void> {
     const raw = customerMap.toPersistance(customer);
 
-    await this.mongoDb.save(raw, this.collection);
+    if (await this.getById(customer.id)) {
+      await this.mongoDb.replace({ _id: customer.id }, raw, this.collection);
+    } else {
+      await this.mongoDb.save(raw, this.collection);
+    }
   }
 }

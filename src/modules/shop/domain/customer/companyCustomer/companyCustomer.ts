@@ -1,4 +1,5 @@
 import { Entity } from "../../../../../shared";
+import { DiscountOnNonAutomotiveComponyNotPermitted } from "../../_errors/discountOnNonAutomotiveComponyNotPermitted";
 import { Customer } from "../customer";
 import { Email } from "../email";
 import { CompanyDiscount } from "./companyDiscount";
@@ -52,5 +53,13 @@ export class CompanyCustomer
 
   get discount() {
     return this.props.discount;
+  }
+
+  setDiscount(discount: number) {
+    if (!this.isAutomotive) {
+      throw new DiscountOnNonAutomotiveComponyNotPermitted();
+    }
+
+    this.props.discount = new CompanyDiscount(discount);
   }
 }
