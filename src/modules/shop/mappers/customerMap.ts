@@ -1,13 +1,5 @@
-import { Car } from "../domain/carPart/car";
-import { CarPart } from "../domain/carPart/carPart";
-import { CarPartCategory } from "../domain/carPart/carPartCategory";
-import { CarPartDescription } from "../domain/carPart/carPartDescription";
-import { CarPartName } from "../domain/carPart/carPartName";
-import { CarPartNumber } from "../domain/carPart/carPartNumber";
-import { CarPartNumbers } from "../domain/carPart/carPartNumbers";
-import { CarPartPrice } from "../domain/carPart/carPartPrice";
-import { CarPartWarranty } from "../domain/carPart/carPartWarranty";
 import { CompanyCustomer } from "../domain/customer/companyCustomer/companyCustomer";
+import { CompanyDiscount } from "../domain/customer/companyCustomer/companyDiscount";
 import { CompanyName } from "../domain/customer/companyCustomer/companyName";
 import { CompanySdi } from "../domain/customer/companyCustomer/companySdi";
 import { CompanyVat } from "../domain/customer/companyCustomer/companyVat";
@@ -39,6 +31,7 @@ export class CustomerMap {
         sdi: customer.sdi.toString(),
         vat: customer.vat.toString(),
         isAutomotive: customer.isAutomotive,
+        discount: customer.discount?.valueOf() ?? 0,
       } as const;
     }
 
@@ -66,6 +59,7 @@ export class CustomerMap {
           sdi: new CompanySdi(customer.sdi),
           pec: new Email(customer.pec),
           isAutomotive: customer.isAutomotive,
+          discount: new CompanyDiscount(customer.discount),
         },
         customer._id
       );
@@ -95,6 +89,7 @@ export class CustomerMap {
         sdi: customer.sdi.toString(),
         vat: customer.vat.toString(),
         isAutomotive: customer.isAutomotive,
+        discount: customer.discount?.valueOf() ?? 0,
       } as const;
     }
 

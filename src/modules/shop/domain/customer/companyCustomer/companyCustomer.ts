@@ -1,6 +1,7 @@
 import { Entity } from "../../../../../shared";
 import { Customer } from "../customer";
 import { Email } from "../email";
+import { CompanyDiscount } from "./companyDiscount";
 import { CompanyName } from "./companyName";
 import { CompanySdi } from "./companySdi";
 import { CompanyVat } from "./companyVat";
@@ -12,6 +13,7 @@ export type CompanyCustomerProps = {
   email: Email;
   pec: Email;
   sdi: CompanySdi;
+  discount?: CompanyDiscount;
 };
 
 export class CompanyCustomer
@@ -20,6 +22,8 @@ export class CompanyCustomer
 {
   public constructor(props: CompanyCustomerProps, id?: string) {
     super(props, id);
+
+    this.props.discount = this.props.discount ?? new CompanyDiscount(0);
   }
 
   get name() {
@@ -44,5 +48,9 @@ export class CompanyCustomer
 
   get sdi() {
     return this.props.sdi;
+  }
+
+  get discount() {
+    return this.props.discount;
   }
 }
