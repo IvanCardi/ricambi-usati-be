@@ -1,5 +1,6 @@
 import { UseCase } from "../../../../shared";
 import { ICarRepo } from "../../repos/carRepo";
+import { CarNotFound } from "../_errors/carNotFound";
 
 export type UpdateCarPartsNumberInput = {
   carId: string;
@@ -13,6 +14,10 @@ export class UpdateCarPartsNumber
 
   async execute(input: UpdateCarPartsNumberInput): Promise<void> {
     const car = await this.carRepo.getById(input.carId);
+
+    if (!car) {
+      throw new CarNotFound();
+    }
 
     car.addTotalParts(input.partsCreated);
 

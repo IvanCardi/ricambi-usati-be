@@ -7,11 +7,15 @@ export class CarRepo implements ICarRepo {
   private collection = "cars";
   private mongoDb = MONGO_DB;
 
-  async getById(id: string): Promise<Car> {
+  async getById(id: string): Promise<Car | undefined> {
     const raw = (await this.mongoDb.findOne(
       { _id: id },
       this.collection
     )) as ReturnType<typeof carMap.toPersistance>;
+
+    if (!raw) {
+      return undefined;
+    }
 
     return carMap.toDomain(raw);
   }
