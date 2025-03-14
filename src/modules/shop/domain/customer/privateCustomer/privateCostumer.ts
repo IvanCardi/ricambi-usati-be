@@ -19,14 +19,14 @@ export class PrivateCostumer
   }
 
   get firstName() {
-    return this.props.firstName;
+    return this.props.firstName.toString();
   }
 
   get lastName() {
-    return this.props.lastName;
+    return this.props.lastName.toString();
   }
 
   get email() {
-    return this.props.email;
+    return this.props.email.toString();
   }
 }

@@ -15,9 +15,9 @@ export class CustomerMap {
       return {
         _id: customer.id,
         type: "private",
-        firstName: customer.firstName.toString(),
-        lastName: customer.lastName.toString(),
-        email: customer.email.toString(),
+        firstName: customer.firstName,
+        lastName: customer.lastName,
+        email: customer.email,
       } as const;
     }
 
@@ -25,13 +25,13 @@ export class CustomerMap {
       return {
         _id: customer.id,
         type: "company",
-        name: customer.name.toString(),
-        email: customer.email.toString(),
-        pec: customer.pec.toString(),
-        sdi: customer.sdi.toString(),
-        vat: customer.vat.toString(),
+        name: customer.name,
+        email: customer.email,
+        pec: customer.pec,
+        sdi: customer.sdi,
+        vat: customer.vat,
         isAutomotive: customer.isAutomotive,
-        discount: customer.discount?.valueOf() ?? 0,
+        discount: customer.discount,
       } as const;
     }
 
@@ -73,9 +73,9 @@ export class CustomerMap {
       return {
         id: customer.id,
         type: "private",
-        firstName: customer.firstName.toString(),
-        lastName: customer.lastName.toString(),
-        email: customer.email.toString(),
+        firstName: customer.firstName,
+        lastName: customer.lastName,
+        email: customer.email,
       } as const;
     }
 
@@ -83,13 +83,13 @@ export class CustomerMap {
       return {
         id: customer.id,
         type: "company",
-        name: customer.name.toString(),
-        email: customer.email.toString(),
-        pec: customer.pec.toString(),
-        sdi: customer.sdi.toString(),
-        vat: customer.vat.toString(),
+        name: customer.name,
+        email: customer.email,
+        pec: customer.pec,
+        sdi: customer.sdi,
+        vat: customer.vat,
         isAutomotive: customer.isAutomotive,
-        discount: customer.discount?.valueOf() ?? 0,
+        discount: customer.discount,
       } as const;
     }
 

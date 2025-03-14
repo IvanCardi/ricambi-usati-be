@@ -14,7 +14,7 @@ export type CompanyCustomerProps = {
   email: Email;
   pec: Email;
   sdi: CompanySdi;
-  discount?: CompanyDiscount;
+  discount: CompanyDiscount;
 };
 
 export class CompanyCustomer
@@ -24,19 +24,21 @@ export class CompanyCustomer
   public constructor(props: CompanyCustomerProps, id?: string) {
     super(props, id);
 
-    this.props.discount = this.props.discount ?? new CompanyDiscount(0);
+    if (!this.isAutomotive && this.discount !== 0) {
+      throw new DiscountOnNonAutomotiveComponyNotPermitted();
+    }
   }
 
   get name() {
-    return this.props.name;
+    return this.props.name.toString();
   }
 
   get vat() {
-    return this.props.vat;
+    return this.props.vat.toString();
   }
 
   get email() {
-    return this.props.email;
+    return this.props.email.toString();
   }
 
   get isAutomotive() {
@@ -44,19 +46,19 @@ export class CompanyCustomer
   }
 
   get pec() {
-    return this.props.pec;
+    return this.props.pec.toString();
   }
 
   get sdi() {
-    return this.props.sdi;
+    return this.props.sdi.toString();
   }
 
   get discount() {
-    return this.props.discount;
+    return this.props.discount.valueOf();
   }
 
   setDiscount(discount: number) {
-    if (!this.isAutomotive) {
+    if (!this.isAutomotive && discount !== 0) {
       throw new DiscountOnNonAutomotiveComponyNotPermitted();
     }
 

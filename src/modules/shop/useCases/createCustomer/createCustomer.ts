@@ -1,5 +1,6 @@
 import { UseCase } from "../../../../shared";
 import { CompanyCustomer } from "../../domain/customer/companyCustomer/companyCustomer";
+import { CompanyDiscount } from "../../domain/customer/companyCustomer/companyDiscount";
 import { CompanyName } from "../../domain/customer/companyCustomer/companyName";
 import { CompanySdi } from "../../domain/customer/companyCustomer/companySdi";
 import { CompanyVat } from "../../domain/customer/companyCustomer/companyVat";
@@ -49,6 +50,7 @@ export class CreateCustomer implements UseCase<CreateCustomerInput, void> {
         name: new CompanyName(input.name),
         sdi: new CompanySdi(input.sdi),
         vat: new CompanyVat(input.vat),
+        discount: new CompanyDiscount(0),
       });
     }
 
