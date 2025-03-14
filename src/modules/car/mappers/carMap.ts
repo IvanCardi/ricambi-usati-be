@@ -15,15 +15,15 @@ export class CarMap extends Mapper<Car> {
   toPersistance(car: Car) {
     return {
       _id: car.id,
-      brand: car.brand.toString(),
-      model: car.model.toString(),
-      setup: car.setup.toString(),
-      plate: car.plate.toString(),
-      description: car.description.toString(),
-      kilometers: car.kilometers.valueOf(),
-      year: car.year.valueOf(),
-      totalParts: car.totalParts.valueOf(),
-      soldParts: car.soldParts.valueOf(),
+      brand: car.brand,
+      model: car.model,
+      setup: car.setup,
+      plate: car.plate,
+      description: car.description,
+      kilometers: car.kilometers,
+      year: car.year,
+      totalParts: car.totalParts,
+      soldParts: car.soldParts,
     };
   }
 
@@ -47,15 +47,15 @@ export class CarMap extends Mapper<Car> {
   toDTO(car: Car) {
     return {
       id: car.id,
-      brand: car.brand.toString(),
-      model: car.model.toString(),
-      setup: car.setup.toString(),
-      plate: car.plate.toString(),
-      description: car.description.toString(),
-      kilometers: car.kilometers.valueOf(),
-      year: car.year.valueOf(),
-      totalParts: car.totalParts.valueOf(),
-      soldParts: car.soldParts.valueOf(),
+      brand: car.brand,
+      model: car.model,
+      setup: car.setup,
+      plate: car.plate,
+      description: car.description,
+      kilometers: car.kilometers,
+      year: car.year,
+      totalParts: car.totalParts,
+      soldParts: car.soldParts,
     };
   }
 }

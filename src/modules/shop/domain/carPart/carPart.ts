@@ -1,5 +1,4 @@
 import { AggregateRoot } from "../../../../shared";
-import { PositiveNumber } from "../../../../shared/utils/PositiveNumber";
 import { Car } from "./car";
 import { CarPartCategory } from "./carPartCategory";
 import { CarPartDescription } from "./carPartDescription";
@@ -33,7 +32,7 @@ export class CarPart extends AggregateRoot<CarPartProps> {
   }
 
   get name() {
-    return this.props.name;
+    return this.props.name.toString();
   }
 
   get car() {
@@ -53,15 +52,15 @@ export class CarPart extends AggregateRoot<CarPartProps> {
   }
 
   get description() {
-    return this.props.description;
+    return this.props.description.toString();
   }
 
   get warranty() {
-    return this.props.warranty;
+    return this.props.warranty.valueOf();
   }
 
   get price() {
-    return this.props.price;
+    return this.props.price.valueOf();
   }
 
   get status() {

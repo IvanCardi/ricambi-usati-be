@@ -16,11 +16,19 @@ export class UploadImagesController extends BaseController {
     res: express.Response
   ): Promise<any> {
     try {
+      const files = req.files?.photos;
       const input: UploadImagesInput = {
-        images: (req.files?.photos as UploadedFile[]).map((f) => ({
-          name: f.name,
-          data: f.data,
-        })),
+        images: Array.isArray(files)
+          ? (files as UploadedFile[]).map((f) => ({
+              name: f.name,
+              data: f.data,
+            }))
+          : [
+              {
+                name: (files as UploadedFile).name,
+                data: (files as UploadedFile).data,
+              },
+            ],
       };
 
       const paths = await this.uploadImages.execute(input);

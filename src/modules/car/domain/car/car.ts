@@ -32,39 +32,39 @@ export class Car extends AggregateRoot<CarProps> {
   }
 
   get brand() {
-    return this.props.brand;
+    return this.props.brand.toString();
   }
 
   get model() {
-    return this.props.model;
+    return this.props.model.toString();
   }
 
   get setup() {
-    return this.props.setup;
+    return this.props.setup.toString();
   }
 
   get description() {
-    return this.props.description;
+    return this.props.description.toString();
   }
 
   get year() {
-    return this.props.year;
+    return this.props.year.valueOf();
   }
 
   get kilometers() {
-    return this.props.kilometers;
+    return this.props.kilometers.valueOf();
   }
 
   get plate() {
-    return this.props.plate;
+    return this.props.plate.toString();
   }
 
   get totalParts() {
-    return this.props.totalParts;
+    return this.props.totalParts.valueOf();
   }
 
   get soldParts() {
-    return this.props.soldParts;
+    return this.props.soldParts.valueOf();
   }
 
   addTotalParts(partsCreated: number) {
