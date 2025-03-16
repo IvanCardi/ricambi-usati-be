@@ -12,4 +12,12 @@ export class OrderRepo implements IOrderRepo {
 
     await this.mongoDb.save(raw, this.collection);
   }
+
+  async getAll(): Promise<Order[]> {
+    const raws = (await this.mongoDb.find({}, this.collection)) as ReturnType<
+      typeof orderMap.toPersistance
+    >[];
+
+    return raws.map(orderMap.toDomain);
+  }
 }

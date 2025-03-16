@@ -18,4 +18,13 @@ export class CarRepo implements ICarRepo {
 
     return raw && carMap.toDomain(raw);
   }
+
+  async getByIds(ids: string[]): Promise<Car[]> {
+    const raws = (await this.mongoDb.findManyByIds(
+      ids,
+      this.collection
+    )) as any;
+
+    return raws.map((r: any) => carMap.toDomain(r));
+  }
 }
