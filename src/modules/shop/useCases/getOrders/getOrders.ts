@@ -4,8 +4,6 @@ import { CompanyCustomer } from "../../domain/customer/companyCustomer/companyCu
 import { Customer } from "../../domain/customer/customer";
 import { PrivateCostumer } from "../../domain/customer/privateCustomer/privateCostumer";
 import { OrderQueryModel } from "../../domain/queryModels/orderQueryModel";
-import { ICarPartRepo } from "../../repos/carPartRepo";
-import { ICustomerRepo } from "../../repos/customerRepo";
 import { IOrderRepo } from "../../repos/orderRepo";
 
 export class GetOrders implements UseCase<void, OrderQueryModel[]> {
@@ -30,6 +28,7 @@ export class GetOrders implements UseCase<void, OrderQueryModel[]> {
           street: order.street,
           zipCode: order.zipCode,
         },
+        totalPrice: order.getTotalPrice(),
       });
     }
 

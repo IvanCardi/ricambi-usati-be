@@ -1,5 +1,6 @@
 import { Entity } from "../../../../shared";
 import { CarPart } from "../carPart/carPart";
+import { CompanyCustomer } from "../customer/companyCustomer/companyCustomer";
 import { Customer } from "../customer/customer";
 import { OrderAddress } from "./orderAddress";
 import { OrderStatus } from "./orderStatus";
@@ -50,5 +51,20 @@ export class Order extends Entity<OrderProps> {
 
   get status() {
     return this.props.status;
+  }
+
+  getTotalPrice(): number {
+    const totalPrice = this.products.reduce((total, product) => {
+      return total + product.price;
+    }, 0);
+
+    if (
+      this.customer instanceof CompanyCustomer &&
+      this.customer.isAutomotive
+    ) {
+      return totalPrice - (totalPrice * this.customer.discount) / 100;
+    }
+
+    return totalPrice;
   }
 }
