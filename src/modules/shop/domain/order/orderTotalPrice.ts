@@ -1,7 +1,7 @@
 import { PositiveNumber } from "../../../../shared/utils/PositiveNumber";
 
-export class CarPartPrice extends PositiveNumber<"CarPartPrice"> {
+export class OrderTotalPrice extends PositiveNumber<"OrderTotalPrice"> {
   constructor(price: number) {
-    super(price, "CarPartPrice");
+    super(price, "OrderTotalPrice");
   }
 }

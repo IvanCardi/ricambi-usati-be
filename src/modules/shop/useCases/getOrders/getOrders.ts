@@ -9,11 +9,7 @@ import { ICustomerRepo } from "../../repos/customerRepo";
 import { IOrderRepo } from "../../repos/orderRepo";
 
 export class GetOrders implements UseCase<void, OrderQueryModel[]> {
-  constructor(
-    private orderRepo: IOrderRepo,
-    private carPartRepo: ICarPartRepo,
-    private customerRepo: ICustomerRepo
-  ) {}
+  constructor(private orderRepo: IOrderRepo) {}
 
   async execute(): Promise<OrderQueryModel[]> {
     const orders = await this.orderRepo.getAll();
@@ -21,25 +17,20 @@ export class GetOrders implements UseCase<void, OrderQueryModel[]> {
     const orderQueryModels: OrderQueryModel[] = [];
 
     for (const order of orders) {
-      const customer = await this.customerRepo.getById(order.userId);
-      const products = await this.carPartRepo.getByIds(order.products);
-
-      if (customer && products.length > 0) {
-        orderQueryModels.push({
-          id: order.id,
-          status: order.status,
-          user: this.mapCustomer(customer),
-          products: products.map(this.mapProduct),
-          address: {
-            city: order.city,
-            number: order.number,
-            province: order.province,
-            state: order.state,
-            street: order.street,
-            zipCode: order.zipCode,
-          },
-        });
-      }
+      orderQueryModels.push({
+        id: order.id,
+        status: order.status,
+        user: this.mapCustomer(order.customer),
+        products: order.products.map(this.mapProduct),
+        address: {
+          city: order.city,
+          number: order.number,
+          province: order.province,
+          state: order.state,
+          street: order.street,
+          zipCode: order.zipCode,
+        },
+      });
     }
 
     return orderQueryModels;

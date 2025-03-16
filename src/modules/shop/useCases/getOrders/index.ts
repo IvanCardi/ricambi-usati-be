@@ -1,6 +1,6 @@
-import { carPartRepo, customerRepo, orderRepo } from "../../repos";
+import { orderRepo } from "../../repos";
 import { GetOrders } from "./getOrders";
 
-const getOrders = new GetOrders(orderRepo, carPartRepo, customerRepo);
+const getOrders = new GetOrders(orderRepo);
 
 export { getOrders };

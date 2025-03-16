@@ -1,11 +1,18 @@
 import { MONGO_DB } from "../../../../bootstrap/database/mongoDb";
 import { Order } from "../../domain/order/order";
 import { orderMap } from "../../mappers";
+import { ICarPartRepo } from "../carPartRepo";
+import { ICustomerRepo } from "../customerRepo";
 import { IOrderRepo } from "../orderRepo";
 
 export class OrderRepo implements IOrderRepo {
   private collection = "orders";
   private mongoDb = MONGO_DB;
+
+  constructor(
+    private customerRepo: ICustomerRepo,
+    private carPartRepo: ICarPartRepo
+  ) {}
 
   async save(order: Order): Promise<void> {
     const raw = orderMap.toPersistance(order);
@@ -18,6 +25,17 @@ export class OrderRepo implements IOrderRepo {
       typeof orderMap.toPersistance
     >[];
 
-    return raws.map(orderMap.toDomain);
+    const orders: Order[] = [];
+
+    for (const raw of raws) {
+      const customer = await this.customerRepo.getById(raw.customerId);
+      const carParts = await this.carPartRepo.getByIds(raw.products);
+
+      if (customer && carParts.length === raw.products.length) {
+        orders.push(orderMap.toDomain(raw, customer, carParts));
+      }
+    }
+
+    return orders;
   }
 }

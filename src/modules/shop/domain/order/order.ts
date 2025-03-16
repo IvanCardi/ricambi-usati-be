@@ -1,10 +1,12 @@
 import { Entity } from "../../../../shared";
+import { CarPart } from "../carPart/carPart";
+import { Customer } from "../customer/customer";
 import { OrderAddress } from "./orderAddress";
 import { OrderStatus } from "./orderStatus";
 
 export type OrderProps = {
-  userId: string;
-  products: string[];
+  customer: Customer;
+  products: CarPart[];
   address: OrderAddress;
   status: OrderStatus;
 };
@@ -14,8 +16,8 @@ export class Order extends Entity<OrderProps> {
     super(props, id);
   }
 
-  get userId() {
-    return this.props.userId;
+  get customer() {
+    return this.props.customer;
   }
 
   get products() {

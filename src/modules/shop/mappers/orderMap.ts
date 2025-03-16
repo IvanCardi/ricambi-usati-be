@@ -1,3 +1,4 @@
+import { CarPart } from "../domain/carPart/carPart";
 import { CompanyCustomer } from "../domain/customer/companyCustomer/companyCustomer";
 import { CompanyDiscount } from "../domain/customer/companyCustomer/companyDiscount";
 import { CompanyName } from "../domain/customer/companyCustomer/companyName";
@@ -21,8 +22,8 @@ export class OrderMap {
   toPersistance(order: Order) {
     return {
       _id: order.id,
-      userId: order.userId,
-      products: order.products,
+      customerId: order.customer.id,
+      products: order.products.map((p) => p.id),
       street: order.street,
       number: order.number,
       zipCode: order.zipCode,
@@ -33,11 +34,15 @@ export class OrderMap {
     } as const;
   }
 
-  toDomain(order: ReturnType<typeof this.toPersistance>): Order {
+  toDomain(
+    order: ReturnType<typeof this.toPersistance>,
+    customer: Customer,
+    products: CarPart[]
+  ): Order {
     return new Order(
       {
-        userId: order.userId,
-        products: order.products,
+        customer,
+        products,
         address: new OrderAddress({
           city: new OrderAddressCity(order.city),
           number: new OrderAddressNumber(order.number),
