@@ -17,7 +17,23 @@ export class GetOrdersController extends BaseController {
     try {
       const orders = await this.getOrders.execute();
 
-      return this.ok(res, orders);
+      return this.ok(
+        res,
+        orders.map((o) => ({
+          id: o.id,
+          status: o.status,
+          totalPrice: o.getTotalPrice(),
+          createdAt: o.createdAt.toISOString(),
+          address: {
+            city: o.city,
+            number: o.number,
+            province: o.province,
+            state: o.state,
+            street: o.street,
+            zipCode: o.zipCode,
+          },
+        }))
+      );
     } catch (error) {
       if (error instanceof Error) {
         return this.clientError(res, error.message);

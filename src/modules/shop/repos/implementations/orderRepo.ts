@@ -13,6 +13,25 @@ export class OrderRepo implements IOrderRepo {
     private customerRepo: ICustomerRepo,
     private carPartRepo: ICarPartRepo
   ) {}
+  async getById(id: string): Promise<Order | undefined> {
+    const raw = (await this.mongoDb.findOne(
+      { _id: id },
+      this.collection
+    )) as ReturnType<typeof orderMap.toPersistance>;
+
+    if (!raw) {
+      return undefined;
+    }
+
+    const customer = await this.customerRepo.getById(raw.customerId);
+    const carParts = await this.carPartRepo.getByIds(raw.products);
+
+    if (customer && carParts.length === raw.products.length) {
+      return orderMap.toDomain(raw, customer, carParts);
+    }
+
+    throw new Error("error during order getById");
+  }
 
   async save(order: Order): Promise<void> {
     const raw = orderMap.toPersistance(order);

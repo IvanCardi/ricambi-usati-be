@@ -3,6 +3,8 @@ import { createOrder } from "../useCases/createOrder";
 import { CreateOrderController } from "../useCases/createOrder/createOrderController";
 import { GetOrdersController } from "../useCases/getOrders/getOrdersController";
 import { getOrders } from "../useCases/getOrders";
+import { GetOrderController } from "../useCases/getOrder/getOrderController";
+import { getOrder } from "../useCases/getOrder";
 
 const orderRouter = express.Router();
 
@@ -12,6 +14,10 @@ orderRouter.post("/orders", (req, res) =>
 
 orderRouter.get("/orders", (req, res) =>
   new GetOrdersController(getOrders).execute(req, res)
+);
+
+orderRouter.get("/orders/:id", (req, res) =>
+  new GetOrderController(getOrder).execute(req, res)
 );
 
 export default orderRouter;

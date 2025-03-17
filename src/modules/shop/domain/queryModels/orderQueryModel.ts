@@ -2,7 +2,7 @@ import { OrderStatus } from "../order/orderStatus";
 
 export type OrderQueryModel = {
   id: string;
-  user:
+  customer:
     | {
         id: string;
         type: "private";
@@ -23,6 +23,8 @@ export type OrderQueryModel = {
     name: string;
     photo: string;
     description: string;
+    price: number;
+    discountedPrice?: number;
   }[];
   status: OrderStatus;
   totalPrice: number;
