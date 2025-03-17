@@ -43,7 +43,7 @@ export class CreateOrder implements UseCase<CreateOrderInput, any> {
       throw new CarPartNotFound();
     }
 
-    const order = new Order({
+    const order = Order.create({
       customer,
       products,
       address: new OrderAddress({
@@ -54,7 +54,6 @@ export class CreateOrder implements UseCase<CreateOrderInput, any> {
         street: new OrderAddressStreet(input.street),
         zipCode: new OrderAddressZipCode(input.zipCode),
       }),
-      status: "created",
     });
 
     await this.orderRepo.save(order);

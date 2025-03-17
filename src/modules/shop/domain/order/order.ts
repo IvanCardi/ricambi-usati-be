@@ -10,11 +10,26 @@ export type OrderProps = {
   products: CarPart[];
   address: OrderAddress;
   status: OrderStatus;
+  createdAt: Date; // timestamp
 };
 
 export class Order extends Entity<OrderProps> {
   public constructor(props: OrderProps, id?: string) {
     super(props, id);
+
+    this.props.createdAt = props.createdAt ?? new Date();
+  }
+
+  static create(props: {
+    customer: Customer;
+    products: CarPart[];
+    address: OrderAddress;
+  }): Order {
+    return new Order({ ...props, createdAt: new Date(), status: "created" });
+  }
+
+  get createdAt() {
+    return this.props.createdAt;
   }
 
   get customer() {

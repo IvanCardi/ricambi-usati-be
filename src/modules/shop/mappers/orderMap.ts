@@ -1,14 +1,5 @@
 import { CarPart } from "../domain/carPart/carPart";
-import { CompanyCustomer } from "../domain/customer/companyCustomer/companyCustomer";
-import { CompanyDiscount } from "../domain/customer/companyCustomer/companyDiscount";
-import { CompanyName } from "../domain/customer/companyCustomer/companyName";
-import { CompanySdi } from "../domain/customer/companyCustomer/companySdi";
-import { CompanyVat } from "../domain/customer/companyCustomer/companyVat";
 import { Customer } from "../domain/customer/customer";
-import { Email } from "../domain/customer/email";
-import { FirstName } from "../domain/customer/privateCustomer/firstName";
-import { LastName } from "../domain/customer/privateCustomer/lastName";
-import { PrivateCostumer } from "../domain/customer/privateCustomer/privateCostumer";
 import { Order } from "../domain/order/order";
 import { OrderAddress } from "../domain/order/orderAddress";
 import { OrderAddressCity } from "../domain/order/orderAddressCity";
@@ -31,6 +22,7 @@ export class OrderMap {
       city: order.city,
       state: order.state,
       status: order.status,
+      createdAt: order.createdAt.toISOString(),
     } as const;
   }
 
@@ -52,6 +44,7 @@ export class OrderMap {
           zipCode: new OrderAddressZipCode(order.zipCode),
         }),
         status: order.status,
+        createdAt: new Date(order.createdAt),
       },
       order._id
     );

@@ -29,6 +29,7 @@ export class GetOrders implements UseCase<void, OrderQueryModel[]> {
           zipCode: order.zipCode,
         },
         totalPrice: order.getTotalPrice(),
+        createdAt: order.createdAt.toISOString(),
       });
     }
 

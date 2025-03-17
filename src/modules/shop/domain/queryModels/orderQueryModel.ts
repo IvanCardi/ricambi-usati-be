@@ -26,4 +26,5 @@ export type OrderQueryModel = {
   }[];
   status: OrderStatus;
   totalPrice: number;
+  createdAt: string;
 };
