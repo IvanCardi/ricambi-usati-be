@@ -6,10 +6,11 @@ export type OrderQueryModel = {
     | {
         id: string;
         type: "private";
+        email: string;
         firstName: string;
         lastName: string;
       }
-    | { id: string; type: "company"; name: string };
+    | { id: string; type: "company"; name: string; email: string };
   address: {
     street: string;
     number: string;

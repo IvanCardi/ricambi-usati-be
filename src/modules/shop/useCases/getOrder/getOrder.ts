@@ -52,6 +52,7 @@ export class GetOrder implements UseCase<GetOrderInput, OrderQueryModel> {
         type: "private",
         firstName: customer.firstName,
         lastName: customer.lastName,
+        email: customer.email,
       } as const;
     }
 
@@ -60,6 +61,7 @@ export class GetOrder implements UseCase<GetOrderInput, OrderQueryModel> {
         id: customer.id,
         type: "company",
         name: customer.name,
+        email: customer.email,
       } as const;
     }
 
