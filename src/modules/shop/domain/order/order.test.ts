@@ -3,6 +3,7 @@ import { createCarPart } from "../../testUtils/createCarPart";
 import { createCompanyCustomerOrder } from "../../testUtils/createCompanyCustomerOrder";
 import { createPrivateCustomer } from "../../testUtils/createPrivateCustomer";
 import { createPrivateCustomerOrder } from "../../testUtils/createPrivateCustomerOrder";
+import { OrderCannotBeShipped } from "../_errors/orderCannotBeShipped";
 import { CarPartPrice } from "../carPart/carPartPrice";
 import { Order } from "./order";
 
@@ -61,6 +62,28 @@ describe("Order Tests", () => {
       const totalPrice = order.getTotalPrice();
 
       expect(totalPrice).toEqual(90);
+    });
+  });
+
+  describe("Mark as shipped", () => {
+    test("Should change status to shipped if the order is in paid status", () => {
+      const order = createPrivateCustomerOrder({
+        products: [createCarPart({ price: new CarPartPrice(10) })],
+        status: "paid",
+      });
+
+      order.markAsShipped();
+
+      expect(order.status).toEqual("shipped");
+    });
+    test("Should throw error if order is not in paid status", () => {
+      const order = createPrivateCustomerOrder({
+        products: [createCarPart({ price: new CarPartPrice(10) })],
+      });
+
+      expect(() => {
+        order.markAsShipped();
+      }).toThrow(OrderCannotBeShipped);
     });
   });
 });

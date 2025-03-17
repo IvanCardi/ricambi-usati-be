@@ -1,4 +1,5 @@
 import { Entity } from "../../../../shared";
+import { OrderCannotBeShipped } from "../_errors/orderCannotBeShipped";
 import { CarPart } from "../carPart/carPart";
 import { CompanyCustomer } from "../customer/companyCustomer/companyCustomer";
 import { Customer } from "../customer/customer";
@@ -81,5 +82,13 @@ export class Order extends Entity<OrderProps> {
     }
 
     return totalPrice;
+  }
+
+  markAsShipped() {
+    if (this.status !== "paid") {
+      throw new OrderCannotBeShipped();
+    }
+
+    this.props.status = "shipped";
   }
 }

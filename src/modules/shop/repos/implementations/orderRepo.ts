@@ -13,6 +13,7 @@ export class OrderRepo implements IOrderRepo {
     private customerRepo: ICustomerRepo,
     private carPartRepo: ICarPartRepo
   ) {}
+
   async getById(id: string): Promise<Order | undefined> {
     const raw = (await this.mongoDb.findOne(
       { _id: id },
@@ -36,7 +37,11 @@ export class OrderRepo implements IOrderRepo {
   async save(order: Order): Promise<void> {
     const raw = orderMap.toPersistance(order);
 
-    await this.mongoDb.save(raw, this.collection);
+    if (await this.getById(order.id)) {
+      await this.mongoDb.replace({ _id: raw._id }, raw, this.collection);
+    } else {
+      await this.mongoDb.save(raw, this.collection);
+    }
   }
 
   async getAll(): Promise<Order[]> {
