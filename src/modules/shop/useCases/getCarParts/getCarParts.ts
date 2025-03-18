@@ -2,10 +2,16 @@ import { UseCase } from "../../../../shared";
 import { CarPart } from "../../domain/carPart/carPart";
 import { ICarPartRepo } from "../../repos/carPartRepo";
 
-export class GetCarParts implements UseCase<void, CarPart[]> {
+export type GetCarPartsInput = {
+  carId?: string;
+};
+
+export class GetCarParts implements UseCase<GetCarPartsInput, CarPart[]> {
   constructor(private carPartRepo: ICarPartRepo) {}
-  async execute(): Promise<CarPart[]> {
-    const carParts = await this.carPartRepo.getAll();
+  async execute({ carId }: GetCarPartsInput): Promise<CarPart[]> {
+    const carParts = carId
+      ? await this.carPartRepo.getByCar(carId)
+      : await this.carPartRepo.getAll();
 
     return carParts;
   }

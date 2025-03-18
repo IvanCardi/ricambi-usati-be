@@ -1,6 +1,6 @@
 import * as express from "express";
 import { BaseController, Error } from "../../../../shared";
-import { GetCarParts } from "./getCarParts";
+import { GetCarParts, GetCarPartsInput } from "./getCarParts";
 import { carPartMap } from "../../mappers";
 
 export class GetCarPartsController extends BaseController {
@@ -16,7 +16,14 @@ export class GetCarPartsController extends BaseController {
     res: express.Response
   ): Promise<any> {
     try {
-      const carParts = await this.getCarParts.execute();
+      const input: GetCarPartsInput = {
+        carId:
+          req.query.carId === "undefined"
+            ? undefined
+            : (req.query.carId as string),
+      };
+
+      const carParts = await this.getCarParts.execute(input);
 
       return this.ok(
         res,

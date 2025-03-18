@@ -23,6 +23,21 @@ export class CarPartRepo implements ICarPartRepo {
     );
   }
 
+  async getByCar(id: string): Promise<CarPart[]> {
+    const car = await this.carRepo.getById(id);
+
+    if (!car) {
+      throw new Error("error getting all car parts for a specific car");
+    }
+
+    const rawCarParts = (await this.mongoDb.find(
+      { carId: id },
+      this.collection
+    )) as ReturnType<typeof carPartMap.toPersistance>[];
+
+    return rawCarParts.map((cp) => carPartMap.toDomain(cp, car));
+  }
+
   async saveAll(carParts: CarPart[]): Promise<void> {
     const rawParts = carParts.map(carPartMap.toPersistance);
 
