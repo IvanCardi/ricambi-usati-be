@@ -67,9 +67,9 @@ export class Car extends AggregateRoot<CarProps> {
     return this.props.soldParts.valueOf();
   }
 
-  addTotalParts(partsCreated: number) {
+  updateTotalParts(partsCreated: number, partsRemoved: number) {
     this.props.totalParts = new CarTotalParts(
-      this.props.totalParts.valueOf() + partsCreated
+      this.props.totalParts.valueOf() + partsCreated - partsRemoved
     );
   }
 }

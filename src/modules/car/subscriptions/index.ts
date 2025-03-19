@@ -1,1 +1,2 @@
 import "./afterCarPartsCreated";
+import "./afterCarPartsDeleted";

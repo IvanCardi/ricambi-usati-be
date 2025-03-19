@@ -1,4 +1,5 @@
 import { UseCase } from "../../../../shared";
+import CarPartsDeletedEmitter from "../../events/carPartsDeleted";
 import { ICarPartRepo } from "../../repos/carPartRepo";
 import { CarPartNotFound } from "../_errors/carPartNotFound";
 
@@ -10,14 +11,19 @@ export class DeleteCarPart implements UseCase<DeleteCarPartInput, void> {
   constructor(private carPartRepo: ICarPartRepo) {}
 
   async execute(input: DeleteCarPartInput): Promise<void> {
-    const car = await this.carPartRepo.getById(input.id);
+    const carPart = await this.carPartRepo.getById(input.id);
 
-    if (!car) {
+    if (!carPart) {
       throw new CarPartNotFound();
     }
 
-    if (car.status === "available") {
+    if (carPart.status === "available") {
       await this.carPartRepo.delete(input.id);
+
+      CarPartsDeletedEmitter.emit({
+        carId: carPart.car.carId,
+        partsDeleted: 1,
+      });
     }
   }
 }

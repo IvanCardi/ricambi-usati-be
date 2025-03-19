@@ -1,9 +1,9 @@
 import { logger } from "../../../bootstrap/logger";
-import CarPartsCreatedEmitter from "../../shop/events/cartPartsCreated";
+import CarPartsDeletedEmitter from "../../shop/events/carPartsDeleted";
 import { updateCarPartsNumber } from "../useCases/updateCarPartsNumber";
 
-CarPartsCreatedEmitter.on((event) => {
-  updateCarPartsNumber.execute({ ...event, partsDeleted: 0 }).catch((err) => {
+CarPartsDeletedEmitter.on((event) => {
+  updateCarPartsNumber.execute({ ...event, partsCreated: 0 }).catch((err) => {
     logger.error(`Error during UpdateCarPartsNumber useCase: ${err}`);
   });
 });

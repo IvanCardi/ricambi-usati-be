@@ -5,6 +5,7 @@ import { CarNotFound } from "../_errors/carNotFound";
 export type UpdateCarPartsNumberInput = {
   carId: string;
   partsCreated: number;
+  partsDeleted: number;
 };
 
 export class UpdateCarPartsNumber
@@ -19,7 +20,7 @@ export class UpdateCarPartsNumber
       throw new CarNotFound();
     }
 
-    car.addTotalParts(input.partsCreated);
+    car.updateTotalParts(input.partsCreated, input.partsDeleted);
 
     await this.carRepo.save(car);
   }
