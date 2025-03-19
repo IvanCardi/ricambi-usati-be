@@ -17,7 +17,7 @@ export type CarPartProps = {
   description: CarPartDescription;
   warranty: CarPartWarranty; // in month
   price: CarPartPrice; // in €
-  status: CarPartStatus; // "available", "pending payment", "sold"
+  status: CarPartStatus; // "available", "sold"
   compatibleCars: string[];
   lastUpdated: Date; // timestamp
 };

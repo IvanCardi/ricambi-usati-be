@@ -1,1 +1,1 @@
-export type CarPartStatus = "available" | "pending payment" | "sold";
+export type CarPartStatus = "available" | "sold";
