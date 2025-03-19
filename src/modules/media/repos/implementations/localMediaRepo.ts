@@ -21,7 +21,7 @@ export class LocalMediaRepo implements IMediaRepo {
 
       await writeFile(filePath, data);
 
-      paths.push(`http://localhost:${server.port}/${filePath}`);
+      paths.push(`http://localhost:${server.port}/media/${sanitizedName}`);
     }
 
     return paths;
