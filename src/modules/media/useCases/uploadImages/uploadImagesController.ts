@@ -16,7 +16,7 @@ export class UploadImagesController extends BaseController {
     res: express.Response
   ): Promise<any> {
     try {
-      const files = req.files?.photos;
+      const files = req.files?.images;
       const input: UploadImagesInput = {
         images: Array.isArray(files)
           ? (files as UploadedFile[]).map((f) => ({
