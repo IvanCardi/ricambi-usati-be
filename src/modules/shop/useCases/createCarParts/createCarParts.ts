@@ -36,22 +36,18 @@ export class CreateCarParts implements UseCase<CreateCarPartsInput, void> {
       throw new CarNotFound();
     }
 
-    const carParts = parts.map(
-      (p) =>
-        new CarPart({
-          car,
-          category: CarPartCategory.from(p.category),
-          compatibleCars: p.compatibleCars,
-          description: new CarPartDescription(p.description),
-          name: new CarPartName(p.name),
-          numbers: new CarPartNumbers(
-            ...p.numbers.map((n) => new CarPartNumber(n))
-          ),
-          photos: p.photos,
-          price: new CarPartPrice(p.price),
-          status: "available",
-          warranty: new CarPartWarranty(p.warranty),
-        })
+    const carParts = parts.map((p) =>
+      CarPart.create({
+        car,
+        category: p.category,
+        compatibleCars: p.compatibleCars,
+        description: p.description,
+        name: p.name,
+        numbers: p.numbers,
+        photos: p.photos,
+        price: p.price,
+        warranty: p.warranty,
+      })
     );
 
     await this.carPartRepo.saveAll(carParts);

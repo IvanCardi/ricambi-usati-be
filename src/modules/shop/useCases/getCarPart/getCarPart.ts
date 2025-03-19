@@ -11,12 +11,12 @@ export class GetCarPart implements UseCase<GetCarPartInput, CarPart> {
   constructor(private carPartRepo: ICarPartRepo) {}
 
   async execute({ id }: GetCarPartInput): Promise<CarPart> {
-    const carParts = await this.carPartRepo.getByIds([id]);
+    const carPart = await this.carPartRepo.getById(id);
 
-    if (carParts.length === 0) {
+    if (!carPart) {
       throw new CarPartNotFound();
     }
 
-    return carParts[0];
+    return carPart;
   }
 }

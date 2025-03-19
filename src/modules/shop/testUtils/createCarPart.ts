@@ -7,18 +7,11 @@ import { CarPartNumber } from "../domain/carPart/carPartNumber";
 import { CarPartNumbers } from "../domain/carPart/carPartNumbers";
 import { CarPartPrice } from "../domain/carPart/carPartPrice";
 import { CarPartWarranty } from "../domain/carPart/carPartWarranty";
+import { createCar } from "./createCar";
 
 export function createCarPart(props: Partial<CarPartProps>): CarPart {
   return new CarPart({
-    car:
-      props.car ??
-      new Car({
-        brand: "brand",
-        carId: "car_id",
-        model: "model",
-        setup: "setup",
-        year: 2005,
-      }),
+    car: props.car ?? createCar(),
     category: props.category ?? CarPartCategory.from("category"),
     compatibleCars: props.compatibleCars ?? [],
     description: props.description ?? new CarPartDescription("desc"),
@@ -28,6 +21,6 @@ export function createCarPart(props: Partial<CarPartProps>): CarPart {
     price: props.price ?? new CarPartPrice(10),
     status: props.status ?? "available",
     warranty: props.warranty ?? new CarPartWarranty(0),
-    lastUpdated: props.lastUpdated,
+    lastUpdated: props.lastUpdated ?? new Date(),
   });
 }

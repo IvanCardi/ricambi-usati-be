@@ -19,16 +19,34 @@ export type CarPartProps = {
   price: CarPartPrice; // in €
   status: CarPartStatus; // "available", "pending payment", "sold"
   compatibleCars: string[];
-  lastUpdated?: Date; // timestamp
+  lastUpdated: Date; // timestamp
 };
 
 export class CarPart extends AggregateRoot<CarPartProps> {
-  public constructor(props: CarPartProps, id?: string) {
-    super(props, id);
-
-    this.props.photos = props.photos ?? [];
-    this.props.compatibleCars = props.compatibleCars ?? [];
-    this.props.lastUpdated = props.lastUpdated ?? new Date();
+  static create(props: {
+    name: string;
+    numbers: string[];
+    photos?: string[];
+    car: Car;
+    category: string;
+    description: string;
+    warranty: number; // in month
+    price: number; // in €
+    compatibleCars?: string[];
+  }): CarPart {
+    return new CarPart({
+      car: props.car,
+      category: CarPartCategory.from(props.category),
+      compatibleCars: props.compatibleCars ?? [],
+      description: new CarPartDescription(props.description),
+      lastUpdated: new Date(),
+      name: new CarPartName(props.name),
+      numbers: CarPartNumbers.from(props.numbers),
+      photos: props.photos ?? [],
+      price: new CarPartPrice(props.price),
+      status: "available",
+      warranty: new CarPartWarranty(props.warranty),
+    });
   }
 
   get name() {
@@ -73,5 +91,27 @@ export class CarPart extends AggregateRoot<CarPartProps> {
 
   get lastUpdated() {
     return this.props.lastUpdated;
+  }
+
+  update(info: {
+    name: string;
+    numbers: string[];
+    category: string; // like "cat1/cat2/cat3"
+    description: string;
+    photos: string[];
+    warranty: number; // in month
+    price: number; // in €
+    compatibleCars: string[];
+  }) {
+    this.props.name = new CarPartName(info.name);
+    this.props.numbers = CarPartNumbers.from(info.numbers);
+    this.props.category = CarPartCategory.from(info.category);
+    this.props.description = new CarPartDescription(info.description);
+    this.props.photos = info.photos;
+    this.props.warranty = new CarPartWarranty(info.warranty);
+    this.props.price = new CarPartPrice(info.price);
+    this.props.compatibleCars = info.compatibleCars;
+
+    this.props.lastUpdated = new Date();
   }
 }
