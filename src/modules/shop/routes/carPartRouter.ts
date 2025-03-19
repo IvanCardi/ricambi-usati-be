@@ -7,6 +7,8 @@ import { GetCarPartController } from "../useCases/getCarPart/getCarPartControlle
 import { getCarPart } from "../useCases/getCarPart";
 import { UpdateCarPartController } from "../useCases/updateCarPart/updateCarPartController";
 import { updateCarPart } from "../useCases/updateCarPart";
+import { DeleteCarPartController } from "../useCases/deleteCarPart/deleteCarPartController";
+import { deleteCarPart } from "../useCases/deleteCarPart";
 
 const carPartRouter = express.Router();
 
@@ -24,6 +26,10 @@ carPartRouter.get("/carParts/:id", (req, res) =>
 
 carPartRouter.patch("/carParts/:id", (req, res) =>
   new UpdateCarPartController(updateCarPart).execute(req, res)
+);
+
+carPartRouter.delete("/carParts/:id", (req, res) =>
+  new DeleteCarPartController(deleteCarPart).execute(req, res)
 );
 
 export default carPartRouter;

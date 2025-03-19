@@ -87,4 +87,8 @@ export class CarPartRepo implements ICarPartRepo {
 
     await this.mongoDb.saveMany(rawParts, this.collection);
   }
+
+  async delete(id: string): Promise<void> {
+    await this.mongoDb.deleteOne({ _id: id }, this.collection);
+  }
 }

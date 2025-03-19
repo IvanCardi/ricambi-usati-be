@@ -7,4 +7,5 @@ export interface ICarPartRepo {
   getByCar(id: string): Promise<CarPart[]>;
   save(carPart: CarPart): Promise<void>;
   saveAll(carParts: CarPart[]): Promise<void>;
+  delete(id: string): Promise<void>;
 }
