@@ -16,4 +16,8 @@ const server = {
   port: process.env.SERVER_PORT,
 };
 
-export { isProduction, db, server };
+const salt = process.env.BCRYPT_SALT_ROUNDS
+  ? parseFloat(process.env.BCRYPT_SALT_ROUNDS)
+  : 10;
+
+export { isProduction, db, server, salt };
