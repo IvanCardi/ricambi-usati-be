@@ -16,6 +16,7 @@ import carPartRouter from "../../modules/shop/routes/carPartRouter";
 import mediaRouter from "../../modules/media/routes/carPartRouter";
 import customerRouter from "../../modules/shop/routes/customerRouter";
 import orderRouter from "../../modules/shop/routes/orderRouter";
+import userRouter from "../../modules/user/routes/userRouter";
 
 const origin = {
   // origin: isProduction ? 'https://dddforum.com' : '*',
@@ -55,6 +56,7 @@ app.use(carPartRouter);
 app.use(mediaRouter);
 app.use(customerRouter);
 app.use(orderRouter);
+app.use(userRouter);
 
 if (config.isProduction) {
   app.use(authentication);
