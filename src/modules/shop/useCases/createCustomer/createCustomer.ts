@@ -1,9 +1,17 @@
 import { Email, UseCase } from "../../../../shared";
+import { Address } from "../../domain/address/address";
+import { AddressCity } from "../../domain/address/addressCity";
+import { AddressNumber } from "../../domain/address/addressNumber";
+import { AddressProvince } from "../../domain/address/addressProvince";
+import { AddressState } from "../../domain/address/addressState";
+import { AddressStreet } from "../../domain/address/addressStreet";
+import { AddressZipCode } from "../../domain/address/addressZipCode";
 import { CompanyCustomer } from "../../domain/customer/companyCustomer/companyCustomer";
 import { CompanyDiscount } from "../../domain/customer/companyCustomer/companyDiscount";
 import { CompanyName } from "../../domain/customer/companyCustomer/companyName";
 import { CompanySdi } from "../../domain/customer/companyCustomer/companySdi";
 import { CompanyVat } from "../../domain/customer/companyCustomer/companyVat";
+import { TaxCode } from "../../domain/customer/companyCustomer/taxCode";
 import { Customer } from "../../domain/customer/customer";
 import { FirstName } from "../../domain/customer/privateCustomer/firstName";
 import { LastName } from "../../domain/customer/privateCustomer/lastName";
@@ -26,8 +34,24 @@ export type CreateCustomerInput =
       vat: string;
       isAutomotive: boolean;
       email: string;
-      pec: string;
+      taxCode: string;
       sdi: string;
+      billingAddress: {
+        street: string;
+        city: string;
+        province: string;
+        zipCode: string;
+        number: string;
+        state: string;
+      };
+      shippingAddress: {
+        street: string;
+        city: string;
+        province: string;
+        zipCode: string;
+        number: string;
+        state: string;
+      };
     };
 
 export class CreateCustomer implements UseCase<CreateCustomerInput, void> {
@@ -49,12 +73,28 @@ export class CreateCustomer implements UseCase<CreateCustomerInput, void> {
       customer = new CompanyCustomer({
         userId: input.userId,
         email: new Email(input.email),
-        pec: new Email(input.pec),
         isAutomotive: input.isAutomotive,
         name: new CompanyName(input.name),
         sdi: new CompanySdi(input.sdi),
         vat: new CompanyVat(input.vat),
         discount: new CompanyDiscount(0),
+        billingAddress: new Address({
+          street: new AddressStreet(input.billingAddress.street),
+          city: new AddressCity(input.billingAddress.city),
+          province: new AddressProvince(input.billingAddress.province),
+          zipCode: new AddressZipCode(input.billingAddress.zipCode),
+          number: new AddressNumber(input.billingAddress.number),
+          state: new AddressState(input.billingAddress.state),
+        }),
+        shippingAddress: new Address({
+          street: new AddressStreet(input.shippingAddress.street),
+          city: new AddressCity(input.shippingAddress.city),
+          province: new AddressProvince(input.shippingAddress.province),
+          zipCode: new AddressZipCode(input.billingAddress.zipCode),
+          number: new AddressNumber(input.billingAddress.number),
+          state: new AddressState(input.billingAddress.state),
+        }),
+        taxCode: new TaxCode(input.taxCode),
       });
     }
 

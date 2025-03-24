@@ -1,13 +1,13 @@
+import { Address } from "../domain/address/address";
+import { AddressCity } from "../domain/address/addressCity";
+import { AddressNumber } from "../domain/address/addressNumber";
+import { AddressProvince } from "../domain/address/addressProvince";
+import { AddressState } from "../domain/address/addressState";
+import { AddressStreet } from "../domain/address/addressStreet";
+import { AddressZipCode } from "../domain/address/addressZipCode";
 import { CarPart } from "../domain/carPart/carPart";
 import { Customer } from "../domain/customer/customer";
 import { Order } from "../domain/order/order";
-import { OrderAddress } from "../domain/order/orderAddress";
-import { OrderAddressCity } from "../domain/order/orderAddressCity";
-import { OrderAddressNumber } from "../domain/order/orderAddressNumber";
-import { OrderAddressProvince } from "../domain/order/orderAddressProvince";
-import { OrderAddressState } from "../domain/order/orderAddressState";
-import { OrderAddressStreet } from "../domain/order/orderAddressStreet";
-import { OrderAddressZipCode } from "../domain/order/orderAddressZipCode";
 
 export class OrderMap {
   toPersistance(order: Order) {
@@ -35,13 +35,13 @@ export class OrderMap {
       {
         customer,
         products,
-        address: new OrderAddress({
-          city: new OrderAddressCity(order.city),
-          number: new OrderAddressNumber(order.number),
-          province: new OrderAddressProvince(order.province),
-          state: new OrderAddressState(order.state),
-          street: new OrderAddressStreet(order.street),
-          zipCode: new OrderAddressZipCode(order.zipCode),
+        address: new Address({
+          city: new AddressCity(order.city),
+          number: new AddressNumber(order.number),
+          province: new AddressProvince(order.province),
+          state: new AddressState(order.state),
+          street: new AddressStreet(order.street),
+          zipCode: new AddressZipCode(order.zipCode),
         }),
         status: order.status,
         createdAt: new Date(order.createdAt),

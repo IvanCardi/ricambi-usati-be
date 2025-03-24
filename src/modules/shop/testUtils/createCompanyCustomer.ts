@@ -8,6 +8,8 @@ import { CompanyName } from "../domain/customer/companyCustomer/companyName";
 import { CompanySdi } from "../domain/customer/companyCustomer/companySdi";
 import { CompanyVat } from "../domain/customer/companyCustomer/companyVat";
 import { Email } from "../../../shared";
+import { createAddress } from "./createAddress";
+import { TaxCode } from "../domain/customer/companyCustomer/taxCode";
 
 export function createCompanyCustomer(
   props: Partial<CompanyCustomerProps>
@@ -17,9 +19,11 @@ export function createCompanyCustomer(
     email: props.email ?? new Email("comp@cust.com"),
     isAutomotive: props.isAutomotive ?? false,
     name: props.name ?? new CompanyName("Company"),
-    pec: props.pec ?? new Email("pec@pec.com"),
+    billingAddress: props.billingAddress ?? createAddress({}),
+    shippingAddress: props.shippingAddress ?? createAddress({}),
     sdi: props.sdi ?? new CompanySdi("1234567"),
     vat: props.vat ?? new CompanyVat("01234567890"),
     userId: props.userId ?? "user_id",
+    taxCode: props.taxCode ?? new TaxCode("CRDVNI96S16D423Y"),
   });
 }

@@ -1,12 +1,12 @@
 import { UseCase } from "../../../../shared";
+import { Address } from "../../domain/address/address";
+import { AddressCity } from "../../domain/address/addressCity";
+import { AddressNumber } from "../../domain/address/addressNumber";
+import { AddressProvince } from "../../domain/address/addressProvince";
+import { AddressState } from "../../domain/address/addressState";
+import { AddressStreet } from "../../domain/address/addressStreet";
+import { AddressZipCode } from "../../domain/address/addressZipCode";
 import { Order } from "../../domain/order/order";
-import { OrderAddress } from "../../domain/order/orderAddress";
-import { OrderAddressCity } from "../../domain/order/orderAddressCity";
-import { OrderAddressNumber } from "../../domain/order/orderAddressNumber";
-import { OrderAddressProvince } from "../../domain/order/orderAddressProvince";
-import { OrderAddressState } from "../../domain/order/orderAddressState";
-import { OrderAddressStreet } from "../../domain/order/orderAddressStreet";
-import { OrderAddressZipCode } from "../../domain/order/orderAddressZipCode";
 import { ICarPartRepo } from "../../repos/carPartRepo";
 import { ICustomerRepo } from "../../repos/customerRepo";
 import { IOrderRepo } from "../../repos/orderRepo";
@@ -46,13 +46,13 @@ export class CreateOrder implements UseCase<CreateOrderInput, any> {
     const order = Order.create({
       customer,
       products,
-      address: new OrderAddress({
-        city: new OrderAddressCity(input.city),
-        number: new OrderAddressNumber(input.streetNumber),
-        province: new OrderAddressProvince(input.province),
-        state: new OrderAddressState(input.state),
-        street: new OrderAddressStreet(input.street),
-        zipCode: new OrderAddressZipCode(input.zipCode),
+      address: new Address({
+        city: new AddressCity(input.city),
+        number: new AddressNumber(input.streetNumber),
+        province: new AddressProvince(input.province),
+        state: new AddressState(input.state),
+        street: new AddressStreet(input.street),
+        zipCode: new AddressZipCode(input.zipCode),
       }),
     });
 

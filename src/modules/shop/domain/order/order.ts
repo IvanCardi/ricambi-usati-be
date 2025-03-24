@@ -1,15 +1,15 @@
 import { Entity } from "../../../../shared";
 import { OrderCannotBeShipped } from "../_errors/orderCannotBeShipped";
+import { Address } from "../address/address";
 import { CarPart } from "../carPart/carPart";
 import { CompanyCustomer } from "../customer/companyCustomer/companyCustomer";
 import { Customer } from "../customer/customer";
-import { OrderAddress } from "./orderAddress";
 import { OrderStatus } from "./orderStatus";
 
 export type OrderProps = {
   customer: Customer;
   products: CarPart[];
-  address: OrderAddress;
+  address: Address;
   status: OrderStatus;
   createdAt: Date; // timestamp
 };
@@ -24,7 +24,7 @@ export class Order extends Entity<OrderProps> {
   static create(props: {
     customer: Customer;
     products: CarPart[];
-    address: OrderAddress;
+    address: Address;
   }): Order {
     return new Order({ ...props, createdAt: new Date(), status: "created" });
   }

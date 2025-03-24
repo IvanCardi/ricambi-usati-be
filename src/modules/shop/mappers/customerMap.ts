@@ -1,9 +1,17 @@
 import { Email } from "../../../shared";
+import { Address } from "../domain/address/address";
+import { AddressCity } from "../domain/address/addressCity";
+import { AddressNumber } from "../domain/address/addressNumber";
+import { AddressProvince } from "../domain/address/addressProvince";
+import { AddressState } from "../domain/address/addressState";
+import { AddressStreet } from "../domain/address/addressStreet";
+import { AddressZipCode } from "../domain/address/addressZipCode";
 import { CompanyCustomer } from "../domain/customer/companyCustomer/companyCustomer";
 import { CompanyDiscount } from "../domain/customer/companyCustomer/companyDiscount";
 import { CompanyName } from "../domain/customer/companyCustomer/companyName";
 import { CompanySdi } from "../domain/customer/companyCustomer/companySdi";
 import { CompanyVat } from "../domain/customer/companyCustomer/companyVat";
+import { TaxCode } from "../domain/customer/companyCustomer/taxCode";
 import { Customer } from "../domain/customer/customer";
 import { FirstName } from "../domain/customer/privateCustomer/firstName";
 import { LastName } from "../domain/customer/privateCustomer/lastName";
@@ -28,12 +36,28 @@ export class CustomerMap {
         type: "company",
         name: customer.name,
         email: customer.email,
-        pec: customer.pec,
+        billingAddress: {
+          street: customer.billingAddress.street,
+          number: customer.billingAddress.number,
+          city: customer.billingAddress.city,
+          province: customer.billingAddress.province,
+          state: customer.billingAddress.state,
+          zipCode: customer.billingAddress.zipCode,
+        },
+        shippingAddress: {
+          street: customer.shippingAddress.street,
+          number: customer.shippingAddress.number,
+          city: customer.shippingAddress.city,
+          province: customer.shippingAddress.province,
+          state: customer.shippingAddress.state,
+          zipCode: customer.shippingAddress.zipCode,
+        },
         sdi: customer.sdi,
         vat: customer.vat,
         isAutomotive: customer.isAutomotive,
         discount: customer.discount,
         userId: customer.userId,
+        taxCode: customer.taxCode,
       } as const;
     }
 
@@ -60,10 +84,26 @@ export class CustomerMap {
           name: new CompanyName(customer.name),
           vat: new CompanyVat(customer.vat),
           sdi: new CompanySdi(customer.sdi),
-          pec: new Email(customer.pec),
+          billingAddress: new Address({
+            street: new AddressStreet(customer.billingAddress.street),
+            city: new AddressCity(customer.billingAddress.city),
+            province: new AddressProvince(customer.billingAddress.province),
+            zipCode: new AddressZipCode(customer.billingAddress.zipCode),
+            state: new AddressState(customer.billingAddress.state),
+            number: new AddressNumber(customer.billingAddress.number),
+          }),
+          shippingAddress: new Address({
+            street: new AddressStreet(customer.shippingAddress.street),
+            city: new AddressCity(customer.shippingAddress.city),
+            province: new AddressProvince(customer.shippingAddress.province),
+            zipCode: new AddressZipCode(customer.shippingAddress.zipCode),
+            state: new AddressState(customer.shippingAddress.state),
+            number: new AddressNumber(customer.shippingAddress.number),
+          }),
           isAutomotive: customer.isAutomotive,
           discount: new CompanyDiscount(customer.discount),
           userId: customer.userId,
+          taxCode: new TaxCode(customer.taxCode),
         },
         customer._id
       );
@@ -89,7 +129,22 @@ export class CustomerMap {
         type: "company",
         name: customer.name,
         email: customer.email,
-        pec: customer.pec,
+        billingAddress: {
+          street: customer.billingAddress.street,
+          number: customer.billingAddress.number,
+          city: customer.billingAddress.city,
+          province: customer.billingAddress.province,
+          state: customer.billingAddress.state,
+          zipCode: customer.billingAddress.zipCode,
+        },
+        shippingAddress: {
+          street: customer.shippingAddress.street,
+          number: customer.shippingAddress.number,
+          city: customer.shippingAddress.city,
+          province: customer.shippingAddress.province,
+          state: customer.shippingAddress.state,
+          zipCode: customer.shippingAddress.zipCode,
+        },
         sdi: customer.sdi,
         vat: customer.vat,
         isAutomotive: customer.isAutomotive,

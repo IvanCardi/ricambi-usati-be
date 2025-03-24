@@ -1,20 +1,24 @@
 import { Entity, Email } from "../../../../../shared";
 import { DiscountOnNonAutomotiveComponyNotPermitted } from "../../_errors/discountOnNonAutomotiveComponyNotPermitted";
+import { Address } from "../../address/address";
 import { Customer } from "../customer";
 import { CompanyDiscount } from "./companyDiscount";
 import { CompanyName } from "./companyName";
 import { CompanySdi } from "./companySdi";
 import { CompanyVat } from "./companyVat";
+import { TaxCode } from "./taxCode";
 
 export type CompanyCustomerProps = {
   name: CompanyName;
   vat: CompanyVat;
   isAutomotive: boolean;
   email: Email;
-  pec: Email;
   sdi: CompanySdi;
   discount: CompanyDiscount;
   userId: string;
+  taxCode: TaxCode;
+  billingAddress: Address;
+  shippingAddress: Address;
 };
 
 export class CompanyCustomer
@@ -49,16 +53,24 @@ export class CompanyCustomer
     return this.props.isAutomotive;
   }
 
-  get pec() {
-    return this.props.pec.toString();
-  }
-
   get sdi() {
     return this.props.sdi.toString();
   }
 
   get discount() {
     return this.props.discount.valueOf();
+  }
+
+  get billingAddress() {
+    return this.props.billingAddress;
+  }
+
+  get shippingAddress() {
+    return this.props.shippingAddress;
+  }
+
+  get taxCode() {
+    return this.props.taxCode.toString();
   }
 
   setDiscount(discount: number) {

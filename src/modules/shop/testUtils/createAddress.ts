@@ -1,18 +1,18 @@
-import { OrderAddress, OrderAddressProps } from "../domain/order/orderAddress";
-import { OrderAddressCity } from "../domain/order/orderAddressCity";
-import { OrderAddressNumber } from "../domain/order/orderAddressNumber";
-import { OrderAddressProvince } from "../domain/order/orderAddressProvince";
-import { OrderAddressState } from "../domain/order/orderAddressState";
-import { OrderAddressStreet } from "../domain/order/orderAddressStreet";
-import { OrderAddressZipCode } from "../domain/order/orderAddressZipCode";
+import { Address, AddressProps } from "../domain/address/address";
+import { AddressCity } from "../domain/address/addressCity";
+import { AddressNumber } from "../domain/address/addressNumber";
+import { AddressProvince } from "../domain/address/addressProvince";
+import { AddressState } from "../domain/address/addressState";
+import { AddressStreet } from "../domain/address/addressStreet";
+import { AddressZipCode } from "../domain/address/addressZipCode";
 
-export function createAddress(props: Partial<OrderAddressProps>): OrderAddress {
-  return new OrderAddress({
-    city: props.city ?? new OrderAddressCity("city"),
-    state: props.state ?? new OrderAddressState("state"),
-    zipCode: props.zipCode ?? new OrderAddressZipCode("zipCode"),
-    province: props.province ?? new OrderAddressProvince("province"),
-    number: props.number ?? new OrderAddressNumber("number"),
-    street: props.street ?? new OrderAddressStreet("street"),
+export function createAddress(props: Partial<AddressProps>): Address {
+  return new Address({
+    city: props.city ?? new AddressCity("city"),
+    state: props.state ?? new AddressState("state"),
+    zipCode: props.zipCode ?? new AddressZipCode("zipCode"),
+    province: props.province ?? new AddressProvince("province"),
+    number: props.number ?? new AddressNumber("number"),
+    street: props.street ?? new AddressStreet("street"),
   });
 }
