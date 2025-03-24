@@ -5,9 +5,9 @@ import {
 } from "../domain/customer/companyCustomer/companyCustomer";
 import { CompanyDiscount } from "../domain/customer/companyCustomer/companyDiscount";
 import { CompanyName } from "../domain/customer/companyCustomer/companyName";
-import { Email } from "../domain/customer/email";
 import { CompanySdi } from "../domain/customer/companyCustomer/companySdi";
 import { CompanyVat } from "../domain/customer/companyCustomer/companyVat";
+import { Email } from "../../../shared";
 
 export function createCompanyCustomer(
   props: Partial<CompanyCustomerProps>

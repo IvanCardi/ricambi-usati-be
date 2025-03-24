@@ -1,10 +1,10 @@
+import { Email } from "../../../shared";
 import { CompanyCustomer } from "../domain/customer/companyCustomer/companyCustomer";
 import { CompanyDiscount } from "../domain/customer/companyCustomer/companyDiscount";
 import { CompanyName } from "../domain/customer/companyCustomer/companyName";
 import { CompanySdi } from "../domain/customer/companyCustomer/companySdi";
 import { CompanyVat } from "../domain/customer/companyCustomer/companyVat";
 import { Customer } from "../domain/customer/customer";
-import { Email } from "../domain/customer/email";
 import { FirstName } from "../domain/customer/privateCustomer/firstName";
 import { LastName } from "../domain/customer/privateCustomer/lastName";
 import { PrivateCostumer } from "../domain/customer/privateCustomer/privateCostumer";

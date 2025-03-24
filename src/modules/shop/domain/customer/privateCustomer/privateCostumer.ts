@@ -1,6 +1,5 @@
-import { Entity } from "../../../../../shared";
+import { Email, Entity } from "../../../../../shared";
 import { Customer } from "../customer";
-import { Email } from "../email";
 import { FirstName } from "./firstName";
 import { LastName } from "./lastName";
 

@@ -1,7 +1,6 @@
-import { Entity } from "../../../../../shared";
+import { Entity, Email } from "../../../../../shared";
 import { DiscountOnNonAutomotiveComponyNotPermitted } from "../../_errors/discountOnNonAutomotiveComponyNotPermitted";
 import { Customer } from "../customer";
-import { Email } from "../email";
 import { CompanyDiscount } from "./companyDiscount";
 import { CompanyName } from "./companyName";
 import { CompanySdi } from "./companySdi";

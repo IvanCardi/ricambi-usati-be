@@ -1,5 +1,4 @@
-import { InvalidEmail } from "../_errors/invalidEmail";
-import { Email } from "./email";
+import { Email, InvalidEmail } from "./Email";
 
 describe("Email Tests", () => {
   test("Should create a mail when email is valid", () => {

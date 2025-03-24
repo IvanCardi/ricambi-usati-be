@@ -1,4 +1,4 @@
-import { Email } from "../domain/customer/email";
+import { Email } from "../../../shared";
 import { FirstName } from "../domain/customer/privateCustomer/firstName";
 import { LastName } from "../domain/customer/privateCustomer/lastName";
 import {

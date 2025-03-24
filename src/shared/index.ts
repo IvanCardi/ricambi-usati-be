@@ -2,6 +2,7 @@
 import { FlowUtils } from "./utils/FlowUtils";
 import { TextUtils } from "./utils/TextUtils";
 import { NonEmptyString } from "./utils/NonEmptyString";
+import { Email } from "./utils/Email";
 
 export { FlowUtils, TextUtils, NonEmptyString };
 
@@ -24,4 +25,4 @@ import { EventEmitterBuilder as EventEmitter } from "./domain/EventEmitter";
 import { ValueObject } from "./domain/ValueObject";
 import { WatchedList } from "./domain/WatchedList";
 
-export { AggregateRoot, Entity, EventEmitter, ValueObject, WatchedList };
+export { AggregateRoot, Entity, EventEmitter, ValueObject, WatchedList, Email };

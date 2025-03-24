@@ -1,5 +1,5 @@
+import { Email } from "../../../../../shared";
 import { DiscountOnNonAutomotiveComponyNotPermitted } from "../../_errors/discountOnNonAutomotiveComponyNotPermitted";
-import { Email } from "../email";
 import { CompanyCustomer } from "./companyCustomer";
 import { CompanyDiscount } from "./companyDiscount";
 import { CompanyName } from "./companyName";
