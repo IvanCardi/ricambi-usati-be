@@ -18,6 +18,7 @@ export class CustomerMap {
         firstName: customer.firstName,
         lastName: customer.lastName,
         email: customer.email,
+        userId: customer.userId,
       } as const;
     }
 
@@ -32,6 +33,7 @@ export class CustomerMap {
         vat: customer.vat,
         isAutomotive: customer.isAutomotive,
         discount: customer.discount,
+        userId: customer.userId,
       } as const;
     }
 
@@ -45,6 +47,7 @@ export class CustomerMap {
           email: new Email(customer.email),
           firstName: new FirstName(customer.firstName),
           lastName: new LastName(customer.lastName),
+          userId: customer.userId,
         },
         customer._id
       );
@@ -60,6 +63,7 @@ export class CustomerMap {
           pec: new Email(customer.pec),
           isAutomotive: customer.isAutomotive,
           discount: new CompanyDiscount(customer.discount),
+          userId: customer.userId,
         },
         customer._id
       );

@@ -7,6 +7,7 @@ export type PrivateCostumerProps = {
   firstName: FirstName;
   lastName: LastName;
   email: Email;
+  userId: string;
 };
 
 export class PrivateCostumer
@@ -27,5 +28,9 @@ export class PrivateCostumer
 
   get email() {
     return this.props.email.toString();
+  }
+
+  get userId() {
+    return this.props.userId;
   }
 }

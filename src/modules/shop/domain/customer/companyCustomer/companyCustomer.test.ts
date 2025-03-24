@@ -16,6 +16,7 @@ describe("Company Customer Tests", () => {
       sdi: new CompanySdi("1234567"),
       vat: new CompanyVat("IT123456789"),
       discount: new CompanyDiscount(0),
+      userId: "user_id",
     });
 
     expect(() => customer.setDiscount(10)).toThrow(

@@ -14,6 +14,7 @@ export type CompanyCustomerProps = {
   pec: Email;
   sdi: CompanySdi;
   discount: CompanyDiscount;
+  userId: string;
 };
 
 export class CompanyCustomer
@@ -26,6 +27,10 @@ export class CompanyCustomer
     if (!this.isAutomotive && this.discount !== 0) {
       throw new DiscountOnNonAutomotiveComponyNotPermitted();
     }
+  }
+
+  get userId() {
+    return this.props.userId;
   }
 
   get name() {

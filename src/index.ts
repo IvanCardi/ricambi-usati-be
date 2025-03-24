@@ -9,3 +9,4 @@ import "./bootstrap/logger";
 
 // subscriptions
 import "./modules/car/subscriptions";
+import "./modules/shop/subscriptions";

@@ -1,5 +1,6 @@
 import { UseCase } from "../../../../shared";
 import { User } from "../../domain/user";
+import UserCreatedEmitter from "../../events/userCreated";
 import { IUserRepo } from "../../repos/userRepo";
 import { DuplicatedUser } from "../_errors/duplicatedUser";
 
@@ -20,5 +21,11 @@ export class Register implements UseCase<RegisterInput, void> {
     const user = await User.create(input.email, input.password);
 
     await this.userRepo.save(user);
+
+    UserCreatedEmitter.emit({
+      ...input.info,
+      email: input.email,
+      userId: user.id,
+    });
   }
 }

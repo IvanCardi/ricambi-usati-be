@@ -21,6 +21,10 @@ export class CustomerRepo implements ICustomerRepo {
       this.collection
     )) as ReturnType<typeof customerMap.toPersistance>;
 
+    if (!raw) {
+      return undefined;
+    }
+
     return customerMap.toDomain(raw);
   }
 

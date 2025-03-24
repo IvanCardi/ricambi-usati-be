@@ -13,5 +13,6 @@ export function createPrivateCustomer(
     email: props.email ?? new Email("priv@cust.com"),
     firstName: props.firstName ?? new FirstName("private"),
     lastName: props.lastName ?? new LastName("customer"),
+    userId: props.userId ?? "user_id",
   });
 }

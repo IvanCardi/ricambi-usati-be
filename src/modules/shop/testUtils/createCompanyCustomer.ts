@@ -20,5 +20,6 @@ export function createCompanyCustomer(
     pec: props.pec ?? new Email("pec@pec.com"),
     sdi: props.sdi ?? new CompanySdi("1234567"),
     vat: props.vat ?? new CompanyVat("01234567890"),
+    userId: props.userId ?? "user_id",
   });
 }
