@@ -20,7 +20,8 @@ import userRouter from "../../modules/user/routes/userRouter";
 
 const origin = {
   // origin: isProduction ? 'https://dddforum.com' : '*',
-  origin: "*",
+  origin: "http://localhost:3001",
+  credentials: true,
 };
 
 export const app = express();

@@ -18,4 +18,8 @@ export class Password extends NonEmptyString<"Password"> {
 
     return new Password(await bcrypt.hash(plainTextPassword, salt));
   }
+
+  async compare(plainTextPassword: string): Promise<boolean> {
+    return bcrypt.compare(plainTextPassword, this.toString());
+  }
 }

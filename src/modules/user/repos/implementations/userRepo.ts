@@ -7,6 +7,19 @@ export class UserRepo implements IUserRepo {
   private collection = "users";
   private mongoDb = MONGO_DB;
 
+  async getByEmail(email: string): Promise<User | undefined> {
+    const raw = (await this.mongoDb.findOne(
+      { email },
+      this.collection
+    )) as ReturnType<typeof userMap.toPersistance>;
+
+    if (!raw) {
+      return undefined;
+    }
+
+    return userMap.toDomain(raw);
+  }
+
   async exists(email: string): Promise<boolean> {
     return !!(await this.mongoDb.findOne({ email }, this.collection));
   }

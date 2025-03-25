@@ -31,4 +31,8 @@ export class User extends Entity<UserProps> {
   get createdAt() {
     return this.props.createdAt;
   }
+
+  async hasSamePassword(plainTextPassword: string): Promise<boolean> {
+    return this.props.password.compare(plainTextPassword);
+  }
 }

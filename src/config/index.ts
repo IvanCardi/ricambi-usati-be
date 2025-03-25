@@ -20,4 +20,13 @@ const salt = process.env.BCRYPT_SALT_ROUNDS
   ? parseFloat(process.env.BCRYPT_SALT_ROUNDS)
   : 10;
 
-export { isProduction, db, server, salt };
+const access = {
+  secret: process.env.ACCESS_SECRET || "access_secret",
+  expiresIn: (process.env.ACCESS_EXPIRES_IN || "1m") as any,
+};
+const refresh = {
+  secret: process.env.REFRESH_SECRET || "refresh_secret",
+  expiresIn: (process.env.REFRESH_EXPIRES_IN || "1m") as any,
+};
+
+export { isProduction, db, server, salt, access, refresh };
