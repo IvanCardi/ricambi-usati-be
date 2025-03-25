@@ -26,10 +26,7 @@ export class GetCarPartsController extends BaseController {
 
       const carParts = await this.getCarParts.execute(input);
 
-      return this.ok(
-        res,
-        carParts.map((c) => carPartMap.toDTO(c))
-      );
+      return this.ok(res, carParts);
     } catch (error) {
       if (error instanceof Error) {
         return this.clientError(res, error.message);
