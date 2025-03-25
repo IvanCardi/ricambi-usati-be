@@ -9,10 +9,11 @@ import { UpdateCarPartController } from "../useCases/updateCarPart/updateCarPart
 import { updateCarPart } from "../useCases/updateCarPart";
 import { DeleteCarPartController } from "../useCases/deleteCarPart/deleteCarPartController";
 import { deleteCarPart } from "../useCases/deleteCarPart";
+import { authentication } from "../../../middelwares/authentication";
 
 const carPartRouter = express.Router();
 
-carPartRouter.get("/carParts", (req, res) =>
+carPartRouter.get("/carParts", authentication, (req, res) =>
   new GetCarPartsController(getCarParts).execute(req, res)
 );
 

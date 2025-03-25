@@ -17,6 +17,7 @@ export class GetCarPartsController extends BaseController {
   ): Promise<any> {
     try {
       const input: GetCarPartsInput = {
+        userId: req.body.userId,
         carId:
           req.query.carId === "undefined"
             ? undefined
