@@ -1,9 +1,8 @@
-import { error } from "console";
 import { MONGO_DB } from "../../../../bootstrap/database/mongoDb";
 import { CarPart } from "../../domain/carPart/carPart";
 import { carPartMap } from "../../mappers";
+import { OrderBy } from "../../useCases/getCarParts/getCarParts";
 import { ICarPartRepo } from "../carPartRepo";
-import { ICarRepo } from "../carRepo";
 
 export class CarPartRepo implements ICarPartRepo {
   private collection = "car_parts";
@@ -70,19 +69,39 @@ export class CarPartRepo implements ICarPartRepo {
   }
 
   async getFilteredAndOrderedAndPaginated(
-    filter: { [field: string]: string },
-    order: "price_asc" | "price_desc" | undefined,
+    filter: {
+      brand?: string;
+      model?: string;
+      setup?: string;
+      startYear?: number;
+      endYear?: number;
+    },
+    order: OrderBy | undefined,
     page: number
   ): Promise<{ carParts: CarPart[]; totalPages: number }> {
+    const query = {
+      ...(filter.startYear && filter.endYear
+        ? { carYear: { $gte: filter.startYear, $lte: filter.endYear } }
+        : {}),
+      ...(filter.brand ? { carBrand: filter.brand } : {}),
+      ...(filter.model ? { carModel: filter.model } : {}),
+      ...(filter.setup ? { carSetup: filter.setup } : {}),
+    };
+
+    let sortOptions: any = {};
+    if (order === "price_asc") sortOptions.price = 1; // Sort by price ascending
+    if (order === "price_desc") sortOptions.price = -1; // Sort by price descending
+
     const collection = await this.mongoDb.getCollection(this.collection);
 
     const raws = await collection
-      .find(filter)
+      .find(query)
+      .sort(sortOptions)
       .skip((page - 1) * 8)
       .limit(8)
       .toArray();
 
-    const totalCount = await collection.countDocuments(filter);
+    const totalCount = await collection.countDocuments(query);
 
     return {
       totalPages: Math.ceil(totalCount / 8),

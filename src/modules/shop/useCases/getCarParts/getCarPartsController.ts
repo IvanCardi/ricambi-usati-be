@@ -1,6 +1,6 @@
 import * as express from "express";
 import { BaseController, Error } from "../../../../shared";
-import { GetCarParts, GetCarPartsInput } from "./getCarParts";
+import { GetCarParts, GetCarPartsInput, OrderBy } from "./getCarParts";
 
 export class GetCarPartsController extends BaseController {
   private getCarParts: GetCarParts;
@@ -21,7 +21,17 @@ export class GetCarPartsController extends BaseController {
           req.query.carId === "undefined"
             ? undefined
             : (req.query.carId as string),
-        page: req.query.page ? parseFloat(req.query.page as string) : 1,
+        page: req.query.page ? parseFloat(req.query.page as string) : undefined,
+        brand: req.query.brand ? (req.query.brand as string) : undefined,
+        model: req.query.model ? (req.query.model as string) : undefined,
+        setup: req.query.setup ? (req.query.setup as string) : undefined,
+        startYear: req.query.startYear
+          ? parseFloat(req.query.startYear as string)
+          : undefined,
+        endYear: req.query.endYear
+          ? parseFloat(req.query.endYear as string)
+          : undefined,
+        order: req.query.order ? (req.query.order as OrderBy) : undefined,
       };
 
       const carParts = await this.getCarParts.execute(input);

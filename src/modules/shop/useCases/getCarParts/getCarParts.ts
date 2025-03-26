@@ -3,10 +3,18 @@ import { CarPart } from "../../domain/carPart/carPart";
 import { CarPartQueryModel } from "../../domain/queryModels/carPartQueryModel";
 import { ICarPartRepo } from "../../repos/carPartRepo";
 
+export type OrderBy = "price_asc" | "price_desc";
+
 export type GetCarPartsInput = {
   userId?: string;
   carId?: string;
   page?: number;
+  brand?: string;
+  model?: string;
+  setup?: string;
+  startYear?: number;
+  endYear?: number;
+  order?: OrderBy;
 };
 
 export class GetCarParts
@@ -37,12 +45,18 @@ export class GetCarParts
   private async getFromDb({
     carId,
     page,
+    brand,
+    endYear,
+    model,
+    setup,
+    startYear,
+    order,
   }: GetCarPartsInput): Promise<{ carParts: CarPart[]; totalPages: number }> {
-    if (page) {
+    if (page || brand || endYear || model || setup || startYear || order) {
       return this.carPartRepo.getFilteredAndOrderedAndPaginated(
-        {},
-        undefined,
-        page
+        { brand, model, setup, startYear, endYear },
+        order,
+        page || 1
       );
     }
 

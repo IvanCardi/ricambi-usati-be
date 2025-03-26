@@ -1,9 +1,16 @@
 import { CarPart } from "../domain/carPart/carPart";
+import { OrderBy } from "../useCases/getCarParts/getCarParts";
 
 export interface ICarPartRepo {
   getFilteredAndOrderedAndPaginated(
-    filter: { [field: string]: string },
-    order: "price_asc" | "price_desc" | undefined,
+    filter: {
+      brand?: string;
+      model?: string;
+      setup?: string;
+      startYear?: number;
+      endYear?: number;
+    },
+    order: OrderBy | undefined,
     page: number
   ): Promise<{ carParts: CarPart[]; totalPages: number }>;
   getById(id: string): Promise<CarPart | undefined>;
