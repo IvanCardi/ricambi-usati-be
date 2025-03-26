@@ -18,9 +18,16 @@ import customerRouter from "../../modules/shop/routes/customerRouter";
 import orderRouter from "../../modules/shop/routes/orderRouter";
 import userRouter from "../../modules/user/routes/userRouter";
 
-const origin = {
-  // origin: isProduction ? 'https://dddforum.com' : '*',
-  origin: "http://localhost:3001",
+const allowedOrigins = ["http://localhost:3001", "http://localhost:3002"];
+
+const corsOptions = {
+  origin: function (origin: any, callback: any) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 };
 
@@ -32,7 +39,7 @@ export const server = http.createServer(app).listen(port, () => {
   logger.info(`Listening on port ${port}`);
 });
 
-app.use(cors(origin));
+app.use(cors(corsOptions));
 
 app.use(express.static("public"));
 

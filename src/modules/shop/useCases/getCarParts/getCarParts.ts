@@ -1,7 +1,11 @@
 import { UseCase } from "../../../../shared";
 import { CarPart } from "../../domain/carPart/carPart";
+import { CompanyCustomer } from "../../domain/customer/companyCustomer/companyCustomer";
+import { Customer } from "../../domain/customer/customer";
 import { CarPartQueryModel } from "../../domain/queryModels/carPartQueryModel";
+import { DiscountedPriceCalculator } from "../../domain/services/discountedPriceCalculator";
 import { ICarPartRepo } from "../../repos/carPartRepo";
+import { ICustomerRepo } from "../../repos/customerRepo";
 
 export type OrderBy = "price_asc" | "price_desc";
 
@@ -25,18 +29,41 @@ export class GetCarParts
       { carParts: CarPartQueryModel[]; totalPages: number }
     >
 {
-  constructor(private carPartRepo: ICarPartRepo) {}
+  constructor(
+    private carPartRepo: ICarPartRepo,
+    private customerRepo: ICustomerRepo
+  ) {}
 
   async execute(
     input: GetCarPartsInput
   ): Promise<{ carParts: CarPartQueryModel[]; totalPages: number }> {
     const { totalPages, carParts } = await this.getFromDb(input);
 
+    let customer: Customer | undefined = undefined;
+    let discountedPriceCalculator: DiscountedPriceCalculator | undefined =
+      undefined;
+
+    if (input.userId) {
+      customer = await this.customerRepo.getByUserId(input.userId);
+
+      if (!customer) {
+        // TODO: What does it mean?
+      }
+
+      if (customer instanceof CompanyCustomer) {
+        discountedPriceCalculator = new DiscountedPriceCalculator(
+          customer.discount
+        );
+      }
+    }
+
     return {
       carParts: carParts.map((cp) => ({
         id: cp.id,
         name: cp.name,
-        price: cp.price,
+        price: discountedPriceCalculator
+          ? discountedPriceCalculator.calculate(cp.price)
+          : cp.price,
         imageUrl: cp.photos.length > 0 ? cp.photos[0] : undefined,
       })),
       totalPages,

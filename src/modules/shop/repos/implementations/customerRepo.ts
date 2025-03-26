@@ -7,6 +7,19 @@ export class CustomerRepo implements ICustomerRepo {
   private collection = "customers";
   private mongoDb = MONGO_DB;
 
+  async getByUserId(userId: string): Promise<Customer | undefined> {
+    const raw = (await this.mongoDb.findOne(
+      { userId },
+      this.collection
+    )) as ReturnType<typeof customerMap.toPersistance>;
+
+    if (!raw) {
+      return undefined;
+    }
+
+    return customerMap.toDomain(raw);
+  }
+
   async getAll(): Promise<Customer[]> {
     const raws = (await this.mongoDb.find({}, this.collection)) as ReturnType<
       typeof customerMap.toPersistance
