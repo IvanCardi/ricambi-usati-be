@@ -20,6 +20,7 @@ export type GetCarPartsInput = {
   endYear?: number;
   order?: OrderBy;
   number?: string;
+  category?: string;
 };
 
 export class GetCarParts
@@ -91,14 +92,24 @@ export class GetCarParts
     startYear,
     order,
     number,
+    category,
   }: GetCarPartsInput): Promise<{ carParts: CarPart[]; totalPages: number }> {
     if (number) {
       return this.carPartRepo.getByNumberAndPage(number, page ?? 1, 8);
     }
 
-    if (page || brand || endYear || model || setup || startYear || order) {
+    if (
+      page ||
+      brand ||
+      endYear ||
+      model ||
+      setup ||
+      startYear ||
+      order ||
+      category
+    ) {
       return this.carPartRepo.getFilteredAndOrderedAndPaginated(
-        { brand, model, setup, startYear, endYear },
+        { brand, model, setup, startYear, endYear, category },
         order,
         page || 1,
         8

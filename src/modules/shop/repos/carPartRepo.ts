@@ -14,6 +14,7 @@ export interface ICarPartRepo {
       setup?: string;
       startYear?: number;
       endYear?: number;
+      category?: string;
     },
     order: OrderBy | undefined,
     page: number,

@@ -75,6 +75,7 @@ export class CarPartRepo implements ICarPartRepo {
       setup?: string;
       startYear?: number;
       endYear?: number;
+      category?: string;
     },
     order: OrderBy | undefined,
     page: number,
@@ -87,6 +88,7 @@ export class CarPartRepo implements ICarPartRepo {
       ...(filter.brand ? { carBrand: filter.brand } : {}),
       ...(filter.model ? { carModel: filter.model } : {}),
       ...(filter.setup ? { carSetup: filter.setup } : {}),
+      ...(filter.category ? { category: filter.category } : {}),
     };
 
     let sortOptions: any = {};
