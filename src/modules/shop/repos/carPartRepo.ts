@@ -2,6 +2,11 @@ import { CarPart } from "../domain/carPart/carPart";
 import { OrderBy } from "../useCases/getCarParts/getCarParts";
 
 export interface ICarPartRepo {
+  getByNumberAndPage(
+    number: string,
+    page: number,
+    limit: number
+  ): Promise<{ carParts: CarPart[]; totalPages: number }>;
   getFilteredAndOrderedAndPaginated(
     filter: {
       brand?: string;
@@ -11,7 +16,8 @@ export interface ICarPartRepo {
       endYear?: number;
     },
     order: OrderBy | undefined,
-    page: number
+    page: number,
+    limit: number
   ): Promise<{ carParts: CarPart[]; totalPages: number }>;
   getById(id: string): Promise<CarPart | undefined>;
   getByIds(products: string[]): Promise<CarPart[]>;

@@ -77,7 +77,8 @@ export class CarPartRepo implements ICarPartRepo {
       endYear?: number;
     },
     order: OrderBy | undefined,
-    page: number
+    page: number,
+    limit: number
   ): Promise<{ carParts: CarPart[]; totalPages: number }> {
     const query = {
       ...(filter.startYear && filter.endYear
@@ -97,14 +98,36 @@ export class CarPartRepo implements ICarPartRepo {
     const raws = await collection
       .find(query)
       .sort(sortOptions)
-      .skip((page - 1) * 8)
-      .limit(8)
+      .skip((page - 1) * limit)
+      .limit(limit)
       .toArray();
 
     const totalCount = await collection.countDocuments(query);
 
     return {
-      totalPages: Math.ceil(totalCount / 8),
+      totalPages: Math.ceil(totalCount / limit),
+      carParts: raws.map((r) => carPartMap.toDomain(r as any)),
+    };
+  }
+
+  async getByNumberAndPage(
+    number: string,
+    page: number,
+    limit: number
+  ): Promise<{ carParts: CarPart[]; totalPages: number }> {
+    const collection = await this.mongoDb.getCollection(this.collection);
+
+    const query = { numbers: number };
+    const raws = await collection
+      .find(query)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .toArray();
+
+    const totalCount = await collection.countDocuments(query);
+
+    return {
+      totalPages: Math.ceil(totalCount / limit),
       carParts: raws.map((r) => carPartMap.toDomain(r as any)),
     };
   }

@@ -32,6 +32,7 @@ export class GetCarPartsController extends BaseController {
           ? parseFloat(req.query.endYear as string)
           : undefined,
         order: req.query.order ? (req.query.order as OrderBy) : undefined,
+        number: req.query.number ? (req.query.number as OrderBy) : undefined,
       };
 
       const carParts = await this.getCarParts.execute(input);
