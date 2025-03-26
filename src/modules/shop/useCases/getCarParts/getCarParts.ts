@@ -65,6 +65,17 @@ export class GetCarParts
           ? discountedPriceCalculator.calculate(cp.price)
           : cp.price,
         imageUrl: cp.photos.length > 0 ? cp.photos[0] : undefined,
+        carBrand: cp.car.brand,
+        carId: cp.car.carId ?? "",
+        carModel: cp.car.model,
+        carSetup: cp.car.setup,
+        category: cp.category.toPath(),
+        compatibleCars: cp.compatibleCars,
+        description: cp.description,
+        lastUpdated: cp.lastUpdated.toISOString(),
+        numbers: cp.numbers.map((n) => n.toString()),
+        status: cp.status,
+        warranty: cp.warranty,
       })),
       totalPages,
     };
