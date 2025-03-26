@@ -1,3 +1,4 @@
+import { error } from "console";
 import { MONGO_DB } from "../../../../bootstrap/database/mongoDb";
 import { CarPart } from "../../domain/carPart/carPart";
 import { carPartMap } from "../../mappers";
@@ -7,8 +8,6 @@ import { ICarRepo } from "../carRepo";
 export class CarPartRepo implements ICarPartRepo {
   private collection = "car_parts";
   private mongoDb = MONGO_DB;
-
-  constructor(private carRepo: ICarRepo) {}
 
   async getById(id: string): Promise<CarPart | undefined> {
     const raw = (await this.mongoDb.findOne(
@@ -20,13 +19,7 @@ export class CarPartRepo implements ICarPartRepo {
       return undefined;
     }
 
-    const car = await this.carRepo.getById(raw.carId);
-
-    if (!car) {
-      throw new Error("error while getting single car part from db");
-    }
-
-    return carPartMap.toDomain(raw, car);
+    return carPartMap.toDomain(raw);
   }
 
   async getByIds(ids: string[]): Promise<CarPart[]> {
@@ -35,41 +28,25 @@ export class CarPartRepo implements ICarPartRepo {
       this.collection
     )) as ReturnType<typeof carPartMap.toPersistance>[];
 
-    const carIds = [...new Set(rawCarParts.map((p) => p.carId))];
-
-    const cars = await this.carRepo.getByIds(carIds);
-
-    return rawCarParts.map((cp) =>
-      carPartMap.toDomain(cp, cars.find((c) => c.carId === cp.carId)!)
-    );
+    return rawCarParts.map((cp) => carPartMap.toDomain(cp));
   }
 
   async getAll(): Promise<CarPart[]> {
-    const cars = await this.carRepo.getAll();
-
     const rawCarParts = (await this.mongoDb.find(
       {},
       this.collection
     )) as ReturnType<typeof carPartMap.toPersistance>[];
 
-    return rawCarParts.map((cp) =>
-      carPartMap.toDomain(cp, cars.find((c) => c.carId === cp.carId)!)
-    );
+    return rawCarParts.map((cp) => carPartMap.toDomain(cp));
   }
 
   async getByCar(id: string): Promise<CarPart[]> {
-    const car = await this.carRepo.getById(id);
-
-    if (!car) {
-      throw new Error("error getting all car parts for a specific car");
-    }
-
     const rawCarParts = (await this.mongoDb.find(
       { carId: id },
       this.collection
     )) as ReturnType<typeof carPartMap.toPersistance>[];
 
-    return rawCarParts.map((cp) => carPartMap.toDomain(cp, car));
+    return rawCarParts.map((cp) => carPartMap.toDomain(cp));
   }
 
   async save(carPart: CarPart): Promise<void> {
@@ -90,5 +67,26 @@ export class CarPartRepo implements ICarPartRepo {
 
   async delete(id: string): Promise<void> {
     await this.mongoDb.deleteOne({ _id: id }, this.collection);
+  }
+
+  async getFilteredAndOrderedAndPaginated(
+    filter: { [field: string]: string },
+    order: "price_asc" | "price_desc" | undefined,
+    page: number
+  ): Promise<{ carParts: CarPart[]; totalPages: number }> {
+    const collection = await this.mongoDb.getCollection(this.collection);
+
+    const raws = await collection
+      .find(filter)
+      .skip((page - 1) * 8)
+      .limit(8)
+      .toArray();
+
+    const totalCount = await collection.countDocuments(filter);
+
+    return {
+      totalPages: Math.ceil(totalCount / 8),
+      carParts: raws.map((r) => carPartMap.toDomain(r as any)),
+    };
   }
 }

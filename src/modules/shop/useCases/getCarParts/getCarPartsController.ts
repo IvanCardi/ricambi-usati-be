@@ -1,7 +1,6 @@
 import * as express from "express";
 import { BaseController, Error } from "../../../../shared";
 import { GetCarParts, GetCarPartsInput } from "./getCarParts";
-import { carPartMap } from "../../mappers";
 
 export class GetCarPartsController extends BaseController {
   private getCarParts: GetCarParts;
@@ -22,6 +21,7 @@ export class GetCarPartsController extends BaseController {
           req.query.carId === "undefined"
             ? undefined
             : (req.query.carId as string),
+        page: req.query.page ? parseFloat(req.query.page as string) : 1,
       };
 
       const carParts = await this.getCarParts.execute(input);

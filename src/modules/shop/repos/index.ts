@@ -4,7 +4,7 @@ import { CustomerRepo } from "./implementations/customerRepo";
 import { OrderRepo } from "./implementations/orderRepo";
 
 const carRepo = new CarRepo();
-const carPartRepo = new CarPartRepo(carRepo);
+const carPartRepo = new CarPartRepo();
 const customerRepo = new CustomerRepo();
 const orderRepo = new OrderRepo(customerRepo, carPartRepo);
 

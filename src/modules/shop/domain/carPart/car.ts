@@ -1,7 +1,7 @@
 import { Entity, ValueObject } from "../../../../shared";
 
 export type CarProps = {
-  carId: string;
+  carId?: string;
   brand: string;
   model: string;
   setup: string;

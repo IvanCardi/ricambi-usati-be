@@ -20,10 +20,12 @@ export class DeleteCarPart implements UseCase<DeleteCarPartInput, void> {
     if (carPart.status === "available") {
       await this.carPartRepo.delete(input.id);
 
-      CarPartsDeletedEmitter.emit({
-        carId: carPart.car.carId,
-        partsDeleted: 1,
-      });
+      if (carPart.car.carId) {
+        CarPartsDeletedEmitter.emit({
+          carId: carPart.car.carId,
+          partsDeleted: 1,
+        });
+      }
     }
   }
 }

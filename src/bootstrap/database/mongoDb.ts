@@ -1,6 +1,10 @@
 import { mongoClient } from ".";
 
 export default class MongoDb {
+  public async getCollection(collectionName: string) {
+    return mongoClient.db().collection(collectionName);
+  }
+
   public async save(document: object, collectionName: string): Promise<void> {
     await mongoClient.db().collection(collectionName).insertOne(document);
   }

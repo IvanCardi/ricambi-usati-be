@@ -16,6 +16,10 @@ export class CarPartMap {
       numbers: carPart.numbers.map((n) => n.toString()),
       photos: carPart.photos,
       carId: carPart.car.carId,
+      carBrand: carPart.car.brand,
+      carModel: carPart.car.model,
+      carSetup: carPart.car.setup,
+      carYear: carPart.car.year,
       category: carPart.category.toPath(),
       description: carPart.description,
       warranty: carPart.warranty,
@@ -26,10 +30,16 @@ export class CarPartMap {
     };
   }
 
-  toDomain(carPart: ReturnType<typeof this.toPersistance>, car: Car): CarPart {
+  toDomain(carPart: ReturnType<typeof this.toPersistance>): CarPart {
     return new CarPart(
       {
-        car,
+        car: new Car({
+          carId: carPart.carId,
+          brand: carPart.carBrand,
+          model: carPart.carModel,
+          setup: carPart.carSetup,
+          year: carPart.carYear,
+        }),
         category: CarPartCategory.from(carPart.category),
         compatibleCars: carPart.compatibleCars,
         description: new CarPartDescription(carPart.description),
