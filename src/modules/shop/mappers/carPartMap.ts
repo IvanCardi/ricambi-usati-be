@@ -67,6 +67,7 @@ export class CarPartMap {
       carBrand: carPart.car.brand,
       carModel: carPart.car.model,
       carSetup: carPart.car.setup,
+      carYear: carPart.car.year,
       category: carPart.category.toPath(),
       description: carPart.description,
       warranty: carPart.warranty,
