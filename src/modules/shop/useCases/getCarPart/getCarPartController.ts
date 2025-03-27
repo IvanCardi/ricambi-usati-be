@@ -18,11 +18,12 @@ export class GetCarPartController extends BaseController {
     try {
       const input: GetCarPartInput = {
         id: req.params.id,
+        userId: req.body.userId,
       };
 
       const carPart = await this.getCarPart.execute(input);
 
-      return this.ok(res, carPartMap.toDTO(carPart));
+      return this.ok(res, carPart);
     } catch (error) {
       if (error instanceof Error) {
         return this.clientError(res, error.message);

@@ -70,6 +70,7 @@ export class GetCarParts
         carId: cp.car.carId ?? "",
         carModel: cp.car.model,
         carSetup: cp.car.setup,
+        carYear: cp.car.year.toString(),
         category: cp.category.toPath(),
         compatibleCars: cp.compatibleCars,
         description: cp.description,
@@ -77,6 +78,7 @@ export class GetCarParts
         numbers: cp.numbers.map((n) => n.toString()),
         status: cp.status,
         warranty: cp.warranty,
+        photos: cp.photos,
       })),
       totalPages,
     };

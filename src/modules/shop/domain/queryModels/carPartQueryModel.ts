@@ -8,10 +8,12 @@ export type CarPartQueryModel = {
   carBrand: string;
   carModel: string;
   carSetup: string;
+  carYear: string;
   category: string;
   description: string;
   warranty: number;
   status: "available" | "sold";
   compatibleCars: string[];
   lastUpdated: string;
+  photos: string[];
 };
