@@ -23,7 +23,7 @@ export class Login
       throw new InvalidCredentials();
     }
 
-    if (!user.hasSamePassword(input.password)) {
+    if (!(await user.hasSamePassword(input.password))) {
       throw new InvalidCredentials();
     }
 
