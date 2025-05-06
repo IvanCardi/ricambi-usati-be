@@ -10,6 +10,7 @@ import { Order } from "../../domain/order/order";
 import { ICarPartRepo } from "../../repos/carPartRepo";
 import { ICustomerRepo } from "../../repos/customerRepo";
 import { IOrderRepo } from "../../repos/orderRepo";
+import { IPaymentGateway } from "../../repos/paymentGateway";
 import { CarPartNotFound } from "../_errors/carPartNotFound";
 import { UserNotFound } from "../_errors/userNotFound";
 
@@ -28,10 +29,13 @@ export class CreateOrder implements UseCase<CreateOrderInput, any> {
   constructor(
     private orderRepo: IOrderRepo,
     private customerRepo: ICustomerRepo,
-    private carPartRepo: ICarPartRepo
+    private carPartRepo: ICarPartRepo,
+    private paymentService: IPaymentGateway
   ) {}
 
-  async execute(input: CreateOrderInput): Promise<any> {
+  async execute(
+    input: CreateOrderInput
+  ): Promise<{ checkoutPaymentUrl: string }> {
     const customer = await this.customerRepo.getById(input.userId);
     const products = await this.carPartRepo.getByIds(input.products);
 
@@ -56,6 +60,15 @@ export class CreateOrder implements UseCase<CreateOrderInput, any> {
       }),
     });
 
+    const payment = await this.paymentService.createPayment(
+      order.getTotalPrice(),
+      order.id
+    );
+
+    order.setPaymentId(payment.id);
+
     await this.orderRepo.save(order);
+
+    return { checkoutPaymentUrl: payment.checkoutUrl };
   }
 }

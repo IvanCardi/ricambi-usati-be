@@ -12,6 +12,7 @@ export type OrderProps = {
   address: Address;
   status: OrderStatus;
   createdAt: Date; // timestamp
+  paymentId?: string;
 };
 
 export class Order extends Entity<OrderProps> {
@@ -90,5 +91,11 @@ export class Order extends Entity<OrderProps> {
     }
 
     this.props.status = "shipped";
+  }
+
+  setPaymentId(id: string) {
+    this.props.status = "in payment";
+
+    this.props.paymentId = id;
   }
 }
