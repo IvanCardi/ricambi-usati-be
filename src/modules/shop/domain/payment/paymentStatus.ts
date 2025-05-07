@@ -1,1 +1,7 @@
-export type PaymentStatus = "in payment" | "paid" | "failed";
+export type PaymentStatus =
+  | "pending"
+  | "paid"
+  | "canceled"
+  | "authorized"
+  | "failed"
+  | "expired";

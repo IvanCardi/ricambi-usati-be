@@ -22,6 +22,7 @@ export class OrderMap {
       city: order.city,
       state: order.state,
       status: order.status,
+      paymentId: order.paymentId,
       createdAt: order.createdAt.toISOString(),
     } as const;
   }
@@ -44,6 +45,7 @@ export class OrderMap {
           zipCode: new AddressZipCode(order.zipCode),
         }),
         status: order.status,
+        paymentId: order.paymentId,
         createdAt: new Date(order.createdAt),
       },
       order._id

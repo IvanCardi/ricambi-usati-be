@@ -70,6 +70,14 @@ export class Order extends Entity<OrderProps> {
     return this.props.status;
   }
 
+  get paymentId() {
+    return this.props.paymentId ?? "";
+  }
+
+  setStatus(status: OrderStatus) {
+    this.props.status = status;
+  }
+
   getTotalPrice(): number {
     const totalPrice = this.products.reduce((total, product) => {
       return total + product.price;

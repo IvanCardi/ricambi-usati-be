@@ -17,6 +17,7 @@ import mediaRouter from "../../modules/media/routes/carPartRouter";
 import customerRouter from "../../modules/shop/routes/customerRouter";
 import orderRouter from "../../modules/shop/routes/orderRouter";
 import userRouter from "../../modules/user/routes/userRouter";
+import checkPaymentWebhookRouter from "../../modules/shop/routes/checkPaymentWebhook";
 
 const allowedOrigins = ["http://localhost:3001", "http://localhost:3002"];
 
@@ -65,6 +66,7 @@ app.use(mediaRouter);
 app.use(customerRouter);
 app.use(orderRouter);
 app.use(userRouter);
+app.use(checkPaymentWebhookRouter);
 
 if (config.isProduction) {
   app.use(authentication);

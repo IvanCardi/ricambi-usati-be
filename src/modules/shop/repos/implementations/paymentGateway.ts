@@ -1,4 +1,5 @@
 import { Payment } from "../../domain/payment/payment";
+import { PaymentStatus } from "../../domain/payment/paymentStatus";
 import { mollie } from "../../infra/mollie/molliePaymentGateway";
 import { IPaymentGateway } from "../paymentGateway";
 
@@ -9,7 +10,7 @@ export class PaymentGateway implements IPaymentGateway {
         value: amount.toString(),
         currency: "EUR",
       },
-      description: "My first API payment",
+      description: `Order #${orderId}`,
       redirectUrl: process.env.FE_REDIRECT_URL,
       webhookUrl: `${process.env.BE_BASE_URL}/webhook`,
     });
@@ -17,11 +18,24 @@ export class PaymentGateway implements IPaymentGateway {
     const checkoutUrl = payment.getCheckoutUrl();
 
     if (!checkoutUrl)
-      return new Payment({
-        checkoutUrl: "",
-        status: "failed",
-      });
+      return new Payment(
+        {
+          checkoutUrl: "",
+          status: "failed",
+        },
+        orderId
+      );
 
-    return new Payment({ checkoutUrl, status: "in payment" });
+    return new Payment({ checkoutUrl, status: "pending" }, orderId);
+  }
+
+  async getPaymentStatus(id: string): Promise<PaymentStatus> {
+    const payment = await mollie.payments.get(id);
+
+    if (payment.status === "open") {
+      return "pending";
+    }
+
+    return payment.status;
   }
 }
