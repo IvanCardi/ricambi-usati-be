@@ -3,7 +3,7 @@ import { AddressCity } from "../domain/address/addressCity";
 import { AddressNumber } from "../domain/address/addressNumber";
 import { AddressProvince } from "../domain/address/addressProvince";
 import { AddressState } from "../domain/address/addressState";
-import { AddressStreet } from "../domain/address/addressStreet";
+import { AddressStreetName } from "../domain/address/addressStreet";
 import { AddressZipCode } from "../domain/address/addressZipCode";
 import { CarPart } from "../domain/carPart/carPart";
 import { Customer } from "../domain/customer/customer";
@@ -22,6 +22,8 @@ export class OrderMap {
       city: order.city,
       state: order.state,
       status: order.status,
+      deliveryOption: order.deliveryOption,
+      paymentMethod: order.paymentMethod,
       paymentId: order.paymentId,
       createdAt: order.createdAt.toISOString(),
     } as const;
@@ -41,9 +43,11 @@ export class OrderMap {
           number: new AddressNumber(order.number),
           province: new AddressProvince(order.province),
           state: new AddressState(order.state),
-          street: new AddressStreet(order.street),
+          street: new AddressStreetName(order.street),
           zipCode: new AddressZipCode(order.zipCode),
         }),
+        deliveryOption: order.deliveryOption,
+        paymentMethod: order.paymentMethod,
         status: order.status,
         paymentId: order.paymentId,
         createdAt: new Date(order.createdAt),

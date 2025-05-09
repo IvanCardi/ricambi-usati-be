@@ -3,6 +3,7 @@ import { createCarPart } from "../../testUtils/createCarPart";
 import { createCompanyCustomerOrder } from "../../testUtils/createCompanyCustomerOrder";
 import { createPrivateCustomer } from "../../testUtils/createPrivateCustomer";
 import { createPrivateCustomerOrder } from "../../testUtils/createPrivateCustomerOrder";
+import { createShippingAddress } from "../../testUtils/createShippingAddress";
 import { OrderCannotBeShipped } from "../_errors/orderCannotBeShipped";
 import { CarPartPrice } from "../carPart/carPartPrice";
 import { Order } from "./order";
@@ -12,7 +13,10 @@ describe("Order Tests", () => {
     const order = Order.create({
       customer: createPrivateCustomer({}),
       products: [createCarPart({})],
-      address: createAddress({}),
+      shippingAddress: createShippingAddress({}),
+      email: "test@gmail.com",
+      deliveryOption: "Corriere espresso",
+      paymentMethod: "Paga con carte",
     });
 
     expect(order.status).toEqual("created");

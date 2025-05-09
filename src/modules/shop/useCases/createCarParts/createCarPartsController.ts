@@ -1,6 +1,7 @@
 import * as express from "express";
 import { BaseController, Error, TextUtils } from "../../../../shared";
 import { CreateCarParts, CreateCarPartsInput } from "./createCarParts";
+import { PaymentError } from "../../domain/_errors/payment";
 
 export class CreateCarPartsController extends BaseController {
   private createCarParts: CreateCarParts;
@@ -39,8 +40,8 @@ export class CreateCarPartsController extends BaseController {
 
       return this.created(res);
     } catch (error) {
-      if (error instanceof Error) {
-        return this.clientError(res, error.message);
+      if (error instanceof PaymentError.CheckoutUrlCreationFailed) {
+        return this.clientError(res, error.code);
       }
 
       return this.fail(res, error as any);

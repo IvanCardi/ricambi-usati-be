@@ -1,8 +1,8 @@
 import { CarPart } from "../domain/carPart/carPart";
 import { CompanyDiscount } from "../domain/customer/companyCustomer/companyDiscount";
 import { Order } from "../domain/order/order";
-import { createAddress } from "./createAddress";
 import { createCompanyCustomer } from "./createCompanyCustomer";
+import { createShippingAddress } from "./createShippingAddress";
 
 export function createCompanyCustomerOrder(props: {
   products: CarPart[];
@@ -15,8 +15,11 @@ export function createCompanyCustomerOrder(props: {
       isAutomotive: props.isAutomotive,
     }),
     products: props.products,
-    address: createAddress({}),
+    shippingAddress: createShippingAddress({}),
+    email: "test@gmail.com",
     status: "created",
     createdAt: new Date(),
+    deliveryOption: "Corriere espresso",
+    paymentMethod: "Paga con carte",
   });
 }

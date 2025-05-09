@@ -1,17 +1,23 @@
 import { Entity } from "../../../../shared";
 import { OrderCannotBeShipped } from "../_errors/orderCannotBeShipped";
-import { Address } from "../address/address";
 import { CarPart } from "../carPart/carPart";
 import { CompanyCustomer } from "../customer/companyCustomer/companyCustomer";
 import { Customer } from "../customer/customer";
+import { DeliveryOption } from "./orderDeliveryOptions";
 import { OrderStatus } from "./orderStatus";
+import { PaymentMethod } from "./orderPaymentMethods";
+import { ShippingAddress } from "../shippingAddress/shippingAddress";
 
 export type OrderProps = {
   customer: Customer;
   products: CarPart[];
-  address: Address;
+  shippingAddress: ShippingAddress;
   status: OrderStatus;
   createdAt: Date; // timestamp
+  email: string;
+  details?: string;
+  deliveryOption: DeliveryOption;
+  paymentMethod: PaymentMethod;
   paymentId?: string;
 };
 
@@ -25,7 +31,11 @@ export class Order extends Entity<OrderProps> {
   static create(props: {
     customer: Customer;
     products: CarPart[];
-    address: Address;
+    shippingAddress: ShippingAddress;
+    email: string;
+    details?: string;
+    deliveryOption: DeliveryOption;
+    paymentMethod: PaymentMethod;
   }): Order {
     return new Order({ ...props, createdAt: new Date(), status: "created" });
   }
@@ -42,36 +52,68 @@ export class Order extends Entity<OrderProps> {
     return this.props.products;
   }
 
-  get street() {
-    return this.props.address.street.toString();
+  get firstName() {
+    return this.props.shippingAddress.firstName;
   }
 
-  get number() {
-    return this.props.address.number.toString();
+  get lastName() {
+    return this.props.shippingAddress.lastName;
   }
 
-  get zipCode() {
-    return this.props.address.zipCode.toString();
+  get streetName() {
+    return this.props.shippingAddress.streetName;
   }
 
-  get province() {
-    return this.props.address.province.toString();
+  get country() {
+    return this.props.shippingAddress.country;
+  }
+
+  get streetName2() {
+    return this.props.shippingAddress.streetName2;
   }
 
   get city() {
-    return this.props.address.city.toString();
+    return this.props.shippingAddress.city;
   }
 
-  get state() {
-    return this.props.address.state.toString();
+  get province() {
+    return this.props.shippingAddress.province;
+  }
+
+  get administrativeArea() {
+    return this.props.shippingAddress.administrativeArea;
+  }
+
+  get dependentLocality() {
+    return this.props.shippingAddress.dependentLocality;
+  }
+
+  get postalCode() {
+    return this.props.shippingAddress.postalCode;
   }
 
   get status() {
     return this.props.status;
   }
 
+  get deliveryOption() {
+    return this.props.deliveryOption;
+  }
+
+  get paymentMethod() {
+    return this.props.paymentMethod;
+  }
+
+  get email() {
+    return this.props.email;
+  }
+
+  get details() {
+    return this.props.details;
+  }
+
   get paymentId() {
-    return this.props.paymentId ?? "";
+    return this.props.paymentId;
   }
 
   setStatus(status: OrderStatus) {
