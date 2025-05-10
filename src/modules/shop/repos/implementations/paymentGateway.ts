@@ -10,7 +10,7 @@ export class PaymentGateway implements IPaymentGateway {
   ): Promise<{ checkoutPaymentUrl: string; paymentId: string }> {
     const payment = await mollie.payments.create({
       amount: {
-        value: amount.toString(),
+        value: amount.toFixed(2),
         currency: "EUR",
       },
       description: `Order #${orderId}`,

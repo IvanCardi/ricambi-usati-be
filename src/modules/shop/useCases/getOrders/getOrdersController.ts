@@ -25,12 +25,18 @@ export class GetOrdersController extends BaseController {
           totalPrice: o.getTotalPrice(),
           createdAt: o.createdAt.toISOString(),
           address: {
+            firstName: o.firstName,
+            lastName: o.lastName,
+            streetName: o.streetName,
+            streetName2: o.streetName2,
             city: o.city,
-            number: o.number,
+            country: o.country,
             province: o.province,
-            state: o.state,
-            street: o.street,
-            zipCode: o.zipCode,
+            administrativeArea: o.administrativeArea,
+            dependentLocality: o.dependentLocality,
+            postalCode: o.postalCode,
+            email: o.email,
+            details: o.details,
           },
         }))
       );

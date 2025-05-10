@@ -4,13 +4,13 @@ export type ShippingAddressProps = {
   firstName: string;
   lastName: string;
   streetName: string;
-  streetName2: string | undefined;
-  city: string | undefined;
+  streetName2?: string;
+  city?: string;
   country: string;
-  province: string | undefined;
-  administrativeArea: string | undefined;
-  dependentLocality: string | undefined;
-  postalCode: string | undefined;
+  province?: string;
+  administrativeArea?: string;
+  dependentLocality?: string;
+  postalCode?: string;
 };
 
 export class ShippingAddress extends ValueObject<ShippingAddressProps> {

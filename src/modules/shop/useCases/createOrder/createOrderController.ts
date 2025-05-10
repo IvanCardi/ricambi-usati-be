@@ -17,7 +17,7 @@ export class CreateOrderController extends BaseController {
     try {
       const { checkoutPaymentUrl } = await this.createOrder.execute(req.body);
 
-      return this.ok(res, checkoutPaymentUrl);
+      return this.ok(res, { checkoutPaymentUrl });
     } catch (error) {
       if (error instanceof Error) {
         return this.clientError(res, error.message);

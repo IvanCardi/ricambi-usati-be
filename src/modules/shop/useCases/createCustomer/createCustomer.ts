@@ -4,7 +4,7 @@ import { AddressCity } from "../../domain/address/addressCity";
 import { AddressNumber } from "../../domain/address/addressNumber";
 import { AddressProvince } from "../../domain/address/addressProvince";
 import { AddressState } from "../../domain/address/addressState";
-import { AddressStreetName } from "../../domain/address/addressStreet";
+import { AddressStreet } from "../../domain/address/addressStreet";
 import { AddressZipCode } from "../../domain/address/addressZipCode";
 import { CompanyCustomer } from "../../domain/customer/companyCustomer/companyCustomer";
 import { CompanyDiscount } from "../../domain/customer/companyCustomer/companyDiscount";
@@ -79,7 +79,7 @@ export class CreateCustomer implements UseCase<CreateCustomerInput, void> {
         vat: new CompanyVat(input.vat),
         discount: new CompanyDiscount(0),
         billingAddress: new Address({
-          street: new AddressStreetName(input.billingAddress.street),
+          street: new AddressStreet(input.billingAddress.street),
           city: new AddressCity(input.billingAddress.city),
           province: new AddressProvince(input.billingAddress.province),
           zipCode: new AddressZipCode(input.billingAddress.zipCode),
@@ -87,7 +87,7 @@ export class CreateCustomer implements UseCase<CreateCustomerInput, void> {
           state: new AddressState(input.billingAddress.state),
         }),
         shippingAddress: new Address({
-          street: new AddressStreetName(input.shippingAddress.street),
+          street: new AddressStreet(input.shippingAddress.street),
           city: new AddressCity(input.shippingAddress.city),
           province: new AddressProvince(input.shippingAddress.province),
           zipCode: new AddressZipCode(input.billingAddress.zipCode),

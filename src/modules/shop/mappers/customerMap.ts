@@ -4,7 +4,7 @@ import { AddressCity } from "../domain/address/addressCity";
 import { AddressNumber } from "../domain/address/addressNumber";
 import { AddressProvince } from "../domain/address/addressProvince";
 import { AddressState } from "../domain/address/addressState";
-import { AddressStreetName } from "../domain/address/addressStreet";
+import { AddressStreet } from "../domain/address/addressStreet";
 import { AddressZipCode } from "../domain/address/addressZipCode";
 import { CompanyCustomer } from "../domain/customer/companyCustomer/companyCustomer";
 import { CompanyDiscount } from "../domain/customer/companyCustomer/companyDiscount";
@@ -85,7 +85,7 @@ export class CustomerMap {
           vat: new CompanyVat(customer.vat),
           sdi: new CompanySdi(customer.sdi),
           billingAddress: new Address({
-            street: new AddressStreetName(customer.billingAddress.street),
+            street: new AddressStreet(customer.billingAddress.street),
             city: new AddressCity(customer.billingAddress.city),
             province: new AddressProvince(customer.billingAddress.province),
             zipCode: new AddressZipCode(customer.billingAddress.zipCode),
@@ -93,7 +93,7 @@ export class CustomerMap {
             number: new AddressNumber(customer.billingAddress.number),
           }),
           shippingAddress: new Address({
-            street: new AddressStreetName(customer.shippingAddress.street),
+            street: new AddressStreet(customer.shippingAddress.street),
             city: new AddressCity(customer.shippingAddress.city),
             province: new AddressProvince(customer.shippingAddress.province),
             zipCode: new AddressZipCode(customer.shippingAddress.zipCode),

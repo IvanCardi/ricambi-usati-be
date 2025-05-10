@@ -28,7 +28,7 @@ export class OrderRepo implements IOrderRepo {
     const carParts = await this.carPartRepo.getByIds(raw.products);
 
     if (customer && carParts.length === raw.products.length) {
-      return orderMap.toDomain(raw, customer, carParts);
+      return orderMap.toDomain(customer, carParts, raw);
     }
 
     throw new Error("error during order getById");
@@ -48,7 +48,7 @@ export class OrderRepo implements IOrderRepo {
     const carParts = await this.carPartRepo.getByIds(raw.products);
 
     if (customer && carParts.length === raw.products.length) {
-      return orderMap.toDomain(raw, customer, carParts);
+      return orderMap.toDomain(customer, carParts, raw);
     }
 
     throw new Error("error during order getByPaymentId");
@@ -76,7 +76,7 @@ export class OrderRepo implements IOrderRepo {
       const carParts = await this.carPartRepo.getByIds(raw.products);
 
       if (customer && carParts.length === raw.products.length) {
-        orders.push(orderMap.toDomain(raw, customer, carParts));
+        orders.push(orderMap.toDomain(customer, carParts, raw));
       }
     }
 

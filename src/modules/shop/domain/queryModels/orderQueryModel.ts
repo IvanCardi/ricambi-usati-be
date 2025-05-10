@@ -1,4 +1,5 @@
 import { OrderStatus } from "../order/orderStatus";
+import { ShippingAddress } from "../shippingAddress/shippingAddress";
 
 export type OrderQueryModel = {
   id: string;
@@ -12,12 +13,16 @@ export type OrderQueryModel = {
       }
     | { id: string; type: "company"; name: string; email: string };
   address: {
-    street: string;
-    number: string;
-    zipCode: string;
-    province: string;
-    city: string;
-    state: string;
+    firstName: string;
+    lastName: string;
+    streetName: string;
+    streetName2?: string;
+    city?: string;
+    country: string;
+    province?: string;
+    administrativeArea?: string;
+    dependentLocality?: string;
+    postalCode?: string;
   };
   products: {
     id: string;
