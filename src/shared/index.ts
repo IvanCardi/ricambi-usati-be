@@ -1,10 +1,16 @@
 //utils
 import { FlowUtils } from "./utils/FlowUtils";
-import { TextUtils } from "./utils/TextUtils";
 import { NonEmptyString } from "./utils/NonEmptyString";
-import { Email } from "./utils/Email";
+import { PositiveNumber } from "./utils/PositiveNumber";
+import { Email } from "./utils/common-classes/Email";
+import { FirstName } from "./utils/common-classes/FirstName";
+import { LastName } from "./utils/common-classes/LastName";
+import { Address } from "./utils/common-classes/address/Address";
+import { TextUtils } from "./utils/TextUtils";
 
-export { FlowUtils, TextUtils, NonEmptyString };
+import { createAddress } from "./utils/creation-functions/createAddress";
+
+export { FlowUtils };
 
 //infra
 import { BaseController } from "./infra/BaseController";
@@ -25,4 +31,18 @@ import { EventEmitterBuilder as EventEmitter } from "./domain/EventEmitter";
 import { ValueObject } from "./domain/ValueObject";
 import { WatchedList } from "./domain/WatchedList";
 
-export { AggregateRoot, Entity, EventEmitter, ValueObject, WatchedList, Email };
+export {
+  AggregateRoot,
+  Entity,
+  EventEmitter,
+  ValueObject,
+  WatchedList,
+  NonEmptyString,
+  PositiveNumber,
+  Email,
+  TextUtils,
+  FirstName,
+  LastName,
+  Address,
+  createAddress,
+};

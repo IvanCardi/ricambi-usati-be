@@ -1,4 +1,4 @@
-import { PositiveNumber } from "../../../../shared/utils/PositiveNumber";
+import { PositiveNumber } from "../../../../shared";
 
 export class CarTotalParts extends PositiveNumber<"CarTotalParts"> {
   constructor(num: number) {

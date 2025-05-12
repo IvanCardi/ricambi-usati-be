@@ -33,6 +33,6 @@ export class Entity<T> {
       return false;
     }
 
-    return this._id === object._id;
+    return this._id.toString() === object._id.toString();
   }
 }

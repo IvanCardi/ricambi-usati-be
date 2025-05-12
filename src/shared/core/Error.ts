@@ -6,4 +6,11 @@ export abstract class Error<T extends string> {
     this.code = code;
     this.message = message || `${code}`;
   }
+
+  toString() {
+    return `{
+    code: ${this.code},
+    message: ${this.message}
+    }`;
+  }
 }

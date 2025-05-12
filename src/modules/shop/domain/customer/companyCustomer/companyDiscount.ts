@@ -1,4 +1,4 @@
-import { PositiveNumber } from "../../../../../shared/utils/PositiveNumber";
+import { PositiveNumber } from "../../../../../shared";
 import { InvalidCompanyDiscount } from "../../_errors/invalidCompanyDiscount";
 
 export class CompanyDiscount extends PositiveNumber<"CompanyDiscount"> {

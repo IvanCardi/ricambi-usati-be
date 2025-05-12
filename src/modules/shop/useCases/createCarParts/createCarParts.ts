@@ -1,5 +1,5 @@
 import { NonEmptyString, UseCase } from "../../../../shared";
-import { PositiveNumber } from "../../../../shared/utils/PositiveNumber";
+import { PositiveNumber } from "../../../../shared";
 import { CarPart } from "../../domain/carPart/carPart";
 import { CarPartCategory } from "../../domain/carPart/carPartCategory";
 import { CarPartDescription } from "../../domain/carPart/carPartDescription";

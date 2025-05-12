@@ -1,5 +1,3 @@
-import { Mapper } from "../../../shared";
-import { PositiveNumber } from "../../../shared/utils/PositiveNumber";
 import { Car } from "../domain/car/car";
 import { CarBrand } from "../domain/car/carBrand";
 import { CarDescription } from "../domain/car/carDescription";
@@ -11,7 +9,7 @@ import { CarSoldParts } from "../domain/car/carSoldParts";
 import { CarTotalParts } from "../domain/car/carTotalParts";
 import { CarYear } from "../domain/car/carYear";
 
-export class CarMap extends Mapper<Car> {
+export class CarMap {
   toPersistance(car: Car) {
     return {
       _id: car.id,

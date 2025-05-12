@@ -1,6 +1,6 @@
-import { Error } from "../core/Error";
-import { NonEmptyString } from "./NonEmptyString";
-import { TextUtils } from "./TextUtils";
+import { Error } from "../../core/Error";
+import { NonEmptyString } from "./../NonEmptyString";
+import { TextUtils } from "./../TextUtils";
 
 export class InvalidEmail extends Error<"InvalidEmail"> {
   constructor() {
