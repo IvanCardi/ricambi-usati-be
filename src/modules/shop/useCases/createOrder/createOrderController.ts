@@ -15,9 +15,11 @@ export class CreateOrderController extends BaseController {
     res: express.Response
   ): Promise<any> {
     try {
-      const { checkoutPaymentUrl } = await this.createOrder.execute(req.body);
+      const { checkoutPaymentUrl, orderId } = await this.createOrder.execute(
+        req.body
+      );
 
-      return this.ok(res, { checkoutPaymentUrl });
+      return this.ok(res, { checkoutPaymentUrl, orderId });
     } catch (error) {
       if (error instanceof Error) {
         return this.clientError(res, error.message);

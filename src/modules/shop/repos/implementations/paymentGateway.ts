@@ -15,7 +15,7 @@ export class PaymentGateway implements IPaymentGateway {
       },
       description: `Order #${orderId}`,
       metadata: { orderId },
-      redirectUrl: process.env.FE_REDIRECT_URL,
+      redirectUrl: `${process.env.FE_BASE_URL}/processingPayment`,
       webhookUrl: `${process.env.BE_BASE_URL}/webhook`,
     });
 

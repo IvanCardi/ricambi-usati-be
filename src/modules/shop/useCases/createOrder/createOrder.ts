@@ -39,7 +39,7 @@ export class CreateOrder implements UseCase<CreateOrderInput, any> {
 
   async execute(
     input: CreateOrderInput
-  ): Promise<{ checkoutPaymentUrl: string }> {
+  ): Promise<{ checkoutPaymentUrl: string; orderId: string }> {
     const customer = await this.customerRepo.getById(
       "681c750c1e7bc04bc5e026d3"
     ); //input.userId
@@ -81,6 +81,6 @@ export class CreateOrder implements UseCase<CreateOrderInput, any> {
 
     await this.orderRepo.save(order);
 
-    return { checkoutPaymentUrl };
+    return { checkoutPaymentUrl, orderId: order.id };
   }
 }
