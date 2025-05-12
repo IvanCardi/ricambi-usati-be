@@ -64,6 +64,7 @@ export class GetCarPart implements UseCase<GetCarPartInput, CarPartQueryModel> {
       status: carPart.status,
       warranty: carPart.warranty,
       photos: carPart.photos,
+      adHocShippingCosts: carPart.adHocShippingCosts,
     };
   }
 }

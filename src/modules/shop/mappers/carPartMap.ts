@@ -61,26 +61,4 @@ export class CarPartMap {
       carPart._id
     );
   }
-
-  toDTO(carPart: CarPart): object {
-    return {
-      id: carPart.id,
-      name: carPart.name,
-      numbers: carPart.numbers.map((n) => n.toString()),
-      photos: carPart.photos,
-      carId: carPart.car.carId,
-      carBrand: carPart.car.brand,
-      carModel: carPart.car.model,
-      carSetup: carPart.car.setup,
-      carYear: carPart.car.year,
-      category: carPart.category.toPath(),
-      description: carPart.description,
-      warranty: carPart.warranty,
-      price: carPart.price,
-      status: carPart.status,
-      compatibleCars: carPart.compatibleCars,
-      lastUpdated: carPart.lastUpdated?.toISOString(),
-      adHocShippingCosts: carPart.adHocShippingCosts,
-    };
-  }
 }

@@ -16,4 +16,5 @@ export type CarPartQueryModel = {
   compatibleCars: string[];
   lastUpdated: string;
   photos: string[];
+  adHocShippingCosts?: number;
 };
