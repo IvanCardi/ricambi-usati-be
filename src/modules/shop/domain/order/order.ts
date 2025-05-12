@@ -18,7 +18,6 @@ export type OrderProps = {
   details?: string;
   deliveryOption: DeliveryOption;
   paymentMethod: PaymentMethod;
-  paymentId?: string;
 };
 
 export class Order extends Entity<OrderProps> {
@@ -112,10 +111,6 @@ export class Order extends Entity<OrderProps> {
     return this.props.details;
   }
 
-  get paymentId() {
-    return this.props.paymentId;
-  }
-
   setStatus(status: OrderStatus) {
     this.props.status = status;
   }
@@ -141,11 +136,5 @@ export class Order extends Entity<OrderProps> {
     }
 
     this.props.status = "shipped";
-  }
-
-  setPaymentId(id: string) {
-    this.props.status = "in payment";
-
-    this.props.paymentId = id;
   }
 }

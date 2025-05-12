@@ -74,10 +74,10 @@ export class CreateOrder implements UseCase<CreateOrderInput, any> {
       paymentMethod: input.paymentMethod as PaymentMethod,
     });
 
-    const { paymentId, checkoutPaymentUrl } =
-      await this.paymentService.createPayment(order.getTotalPrice(), order.id);
-
-    order.setPaymentId(paymentId);
+    const { checkoutPaymentUrl } = await this.paymentService.createPayment(
+      order.getTotalPrice(),
+      order.id
+    );
 
     await this.orderRepo.save(order);
 
