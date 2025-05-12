@@ -22,5 +22,6 @@ export function createCarPart(props: Partial<CarPartProps>): CarPart {
     status: props.status ?? "available",
     warranty: props.warranty ?? new CarPartWarranty(0),
     lastUpdated: props.lastUpdated ?? new Date(),
+    adHocShippingCosts: props.adHocShippingCosts,
   });
 }

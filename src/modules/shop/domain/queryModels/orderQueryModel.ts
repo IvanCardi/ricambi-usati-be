@@ -1,4 +1,9 @@
+import { CarPart } from "../carPart/carPart";
+import { CompanyCustomer } from "../customer/companyCustomer/companyCustomer";
+import { Customer } from "../customer/customer";
+import { PrivateCostumer } from "../customer/privateCustomer/privateCostumer";
 import { OrderStatus } from "../order/orderStatus";
+import { DiscountedPriceCalculator } from "../services/discountedPriceCalculator";
 import { ShippingAddress } from "../shippingAddress/shippingAddress";
 
 export type OrderQueryModel = {
@@ -36,3 +41,45 @@ export type OrderQueryModel = {
   totalPrice: number;
   createdAt: string;
 };
+
+export function mapOrderQueryModelProducts(
+  carParts: CarPart[],
+  customer: Customer
+): OrderQueryModel["products"] {
+  return carParts.map((carPart) => ({
+    id: carPart.id,
+    name: carPart.name,
+    photo: carPart.photos[0],
+    description: carPart.description,
+    price: carPart.price,
+    discountedPrice:
+      customer instanceof CompanyCustomer && customer.isAutomotive
+        ? new DiscountedPriceCalculator(customer.discount).calculate(
+            carPart.price
+          )
+        : undefined,
+  }));
+}
+
+export function mapOrderQueryModelCustomer(customer: Customer): OrderQueryModel["customer"]{
+  if (customer instanceof PrivateCostumer) {
+    return {
+      id: customer.id,
+      type: "private",
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      email: customer.email,
+    } as const;
+  }
+
+  if (customer instanceof CompanyCustomer) {
+    return {
+      id: customer.id,
+      type: "company",
+      name: customer.name,
+      email: customer.email,
+    } as const;
+  }
+
+  throw new Error("invalid customer");
+}
