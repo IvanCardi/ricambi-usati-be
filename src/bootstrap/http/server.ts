@@ -18,6 +18,7 @@ import customerRouter from "../../modules/shop/routes/customerRouter";
 import orderRouter from "../../modules/shop/routes/orderRouter";
 import userRouter from "../../modules/user/routes/userRouter";
 import checkPaymentWebhookRouter from "../../modules/shop/routes/checkPaymentWebhook";
+import orderDraftRouter from "../../modules/shop/routes/orderDraftRouter";
 
 const allowedOrigins = ["http://localhost:3001", "http://localhost:3002"];
 
@@ -67,6 +68,7 @@ app.use(customerRouter);
 app.use(orderRouter);
 app.use(userRouter);
 app.use(checkPaymentWebhookRouter);
+app.use(orderDraftRouter);
 
 if (config.isProduction) {
   app.use(authentication);
