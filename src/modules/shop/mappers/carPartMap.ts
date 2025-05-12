@@ -7,6 +7,7 @@ import { CarPartNumber } from "../domain/carPart/carPartNumber";
 import { CarPartNumbers } from "../domain/carPart/carPartNumbers";
 import { CarPartPrice } from "../domain/carPart/carPartPrice";
 import { CarPartWarranty } from "../domain/carPart/carPartWarranty";
+import { ShippingCosts } from "../domain/carPart/shippingCosts";
 
 export class CarPartMap {
   toPersistance(carPart: CarPart) {
@@ -27,6 +28,7 @@ export class CarPartMap {
       status: carPart.status,
       compatibleCars: carPart.compatibleCars,
       lastUpdated: carPart.lastUpdated?.toISOString()!,
+      adHocShippingCosts: carPart.adHocShippingCosts,
     };
   }
 
@@ -52,6 +54,9 @@ export class CarPartMap {
         status: carPart.status,
         warranty: new CarPartWarranty(carPart.warranty),
         lastUpdated: new Date(carPart.lastUpdated),
+        adHocShippingCosts: carPart.adHocShippingCosts
+          ? new ShippingCosts(carPart.adHocShippingCosts)
+          : undefined,
       },
       carPart._id
     );
