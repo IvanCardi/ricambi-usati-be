@@ -39,6 +39,10 @@ describe("Car Part Tests", () => {
     test("Should set the lastUpdated date to now", () => {
       expect(part.lastUpdated).toBeDefined();
     });
+
+    test("Should set adHocShippingCosts to undefined if not specified", () => {
+      expect(part.adHocShippingCosts).toBeUndefined();
+    });
   });
   describe("Update", () => {
     const part = createCarPart({
@@ -54,6 +58,7 @@ describe("Car Part Tests", () => {
       photos: ["photoUrl"],
       price: 1000,
       warranty: 100,
+      adHocShippingCosts: 50,
     });
 
     test("Should update the car part", () => {
@@ -66,6 +71,7 @@ describe("Car Part Tests", () => {
       expect(part.price).toEqual(1000);
       expect(part.warranty).toEqual(100);
       expect(part.category.name).toEqual("newCategory");
+      expect(part.adHocShippingCosts).toEqual(50);
     });
 
     test("Should set the lastUpdated date to now", () => {

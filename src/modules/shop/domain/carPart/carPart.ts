@@ -7,6 +7,7 @@ import { CarPartNumbers } from "./carPartNumbers";
 import { CarPartPrice } from "./carPartPrice";
 import { CarPartStatus } from "./carPartStatus";
 import { CarPartWarranty } from "./carPartWarranty";
+import { ShippingCosts } from "./shippingCosts";
 
 export type CarPartProps = {
   name: CarPartName;
@@ -20,6 +21,7 @@ export type CarPartProps = {
   status: CarPartStatus; // "available", "sold"
   compatibleCars: string[];
   lastUpdated: Date; // timestamp
+  adHocShippingCosts?: ShippingCosts;
 };
 
 export class CarPart extends AggregateRoot<CarPartProps> {
@@ -33,6 +35,7 @@ export class CarPart extends AggregateRoot<CarPartProps> {
     warranty: number; // in month
     price: number; // in €
     compatibleCars?: string[];
+    adHocShippingCosts?: number;
   }): CarPart {
     return new CarPart({
       car: props.car,
@@ -46,6 +49,9 @@ export class CarPart extends AggregateRoot<CarPartProps> {
       price: new CarPartPrice(props.price),
       status: "available",
       warranty: new CarPartWarranty(props.warranty),
+      adHocShippingCosts: props.adHocShippingCosts
+        ? new ShippingCosts(props.adHocShippingCosts)
+        : undefined,
     });
   }
 
@@ -93,6 +99,10 @@ export class CarPart extends AggregateRoot<CarPartProps> {
     return this.props.lastUpdated;
   }
 
+  get adHocShippingCosts() {
+    return this.props.adHocShippingCosts?.valueOf();
+  }
+
   update(info: {
     name: string;
     numbers: string[];
@@ -102,6 +112,7 @@ export class CarPart extends AggregateRoot<CarPartProps> {
     warranty: number; // in month
     price: number; // in €
     compatibleCars: string[];
+    adHocShippingCosts?: number;
   }) {
     this.props.name = new CarPartName(info.name);
     this.props.numbers = CarPartNumbers.from(info.numbers);
@@ -111,6 +122,10 @@ export class CarPart extends AggregateRoot<CarPartProps> {
     this.props.warranty = new CarPartWarranty(info.warranty);
     this.props.price = new CarPartPrice(info.price);
     this.props.compatibleCars = info.compatibleCars;
+
+    this.props.adHocShippingCosts = info.adHocShippingCosts
+      ? new ShippingCosts(info.adHocShippingCosts)
+      : undefined;
 
     this.props.lastUpdated = new Date();
   }

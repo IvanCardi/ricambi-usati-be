@@ -35,6 +35,7 @@ export class UpdateCarPartController extends BaseController {
           : [],
         warranty: req.body.warranty, // in month
         price: req.body.price,
+        adHocShippingCosts: req.body.adHocShippingCosts
       };
 
       await this.updateCarPart.execute(input);

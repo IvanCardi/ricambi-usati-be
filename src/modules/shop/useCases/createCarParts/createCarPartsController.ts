@@ -33,6 +33,7 @@ export class CreateCarPartsController extends BaseController {
             : [],
           warranty: p.warranty, // in month
           price: p.price, // in €
+          adHocShippingCosts: p.adHocShippingCosts
         })),
       };
 

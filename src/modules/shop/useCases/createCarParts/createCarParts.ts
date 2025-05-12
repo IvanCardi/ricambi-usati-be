@@ -1,13 +1,5 @@
-import { NonEmptyString, UseCase } from "../../../../shared";
-import { PositiveNumber } from "../../../../shared";
+import { UseCase } from "../../../../shared";
 import { CarPart } from "../../domain/carPart/carPart";
-import { CarPartCategory } from "../../domain/carPart/carPartCategory";
-import { CarPartDescription } from "../../domain/carPart/carPartDescription";
-import { CarPartName } from "../../domain/carPart/carPartName";
-import { CarPartNumber } from "../../domain/carPart/carPartNumber";
-import { CarPartNumbers } from "../../domain/carPart/carPartNumbers";
-import { CarPartPrice } from "../../domain/carPart/carPartPrice";
-import { CarPartWarranty } from "../../domain/carPart/carPartWarranty";
 import CarPartsCreatedEmitter from "../../events/cartPartsCreated";
 import { ICarPartRepo } from "../../repos/carPartRepo";
 import { ICarRepo } from "../../repos/carRepo";
@@ -24,6 +16,7 @@ export type CreateCarPartsInput = {
     warranty: number; // in month
     price: number; // in €
     compatibleCars: string[];
+    adHocShippingCosts?: number;
   }[];
 };
 
@@ -47,6 +40,7 @@ export class CreateCarParts implements UseCase<CreateCarPartsInput, void> {
         photos: p.photos,
         price: p.price,
         warranty: p.warranty,
+        adHocShippingCosts: p.adHocShippingCosts,
       })
     );
 
