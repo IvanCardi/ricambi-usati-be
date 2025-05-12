@@ -80,6 +80,7 @@ export class CarPartMap {
       status: carPart.status,
       compatibleCars: carPart.compatibleCars,
       lastUpdated: carPart.lastUpdated?.toISOString(),
+      adHocShippingCosts: carPart.adHocShippingCosts,
     };
   }
 }
