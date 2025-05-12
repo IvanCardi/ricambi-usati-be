@@ -1,5 +1,6 @@
 import { UseCase } from "../../../../shared";
 import { OrderDraft } from "../../domain/orderDraft/orderDraft";
+import { GetSoldProducts } from "../../domain/services/getSoldProducts";
 import { ICarPartRepo } from "../../repos/carPartRepo";
 import { ICustomerRepo } from "../../repos/customerRepo";
 import { IOrderDraftRepo } from "../../repos/orderDraftRepo";
@@ -12,7 +13,11 @@ export type CreateOrUpdateOrderDraftInput = {
 };
 
 export class CreateOrUpdateOrderDraft
-  implements UseCase<CreateOrUpdateOrderDraftInput, OrderDraft>
+  implements
+    UseCase<
+      CreateOrUpdateOrderDraftInput,
+      OrderDraft | { soldProducts: string[] }
+    >
 {
   constructor(
     private orderDraftRepo: IOrderDraftRepo,
@@ -20,8 +25,16 @@ export class CreateOrUpdateOrderDraft
     private customerRepo: ICustomerRepo
   ) {}
 
-  async execute(input: CreateOrUpdateOrderDraftInput): Promise<OrderDraft> {
+  async execute(
+    input: CreateOrUpdateOrderDraftInput
+  ): Promise<OrderDraft | { soldProducts: string[] }> {
     const products = await this.carPartRepo.getByIds(input.products);
+
+    const soldProducts = new GetSoldProducts(products).execute();
+
+    if (soldProducts.length > 0) {
+      return { soldProducts: soldProducts.map((p) => p.id) };
+    }
 
     const customer = input.userId
       ? await this.customerRepo.getByUserId(input.userId)
@@ -39,7 +52,7 @@ export class CreateOrUpdateOrderDraft
 
     if (foundOrderDraft) {
       orderDraft = foundOrderDraft;
-      
+
       orderDraft.setProducts(products);
 
       if (customer) {

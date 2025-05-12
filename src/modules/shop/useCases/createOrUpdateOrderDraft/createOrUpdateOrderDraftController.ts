@@ -1,5 +1,6 @@
 import * as express from "express";
 import { BaseController, Error } from "../../../../shared";
+import { OrderDraft } from "../../domain/orderDraft/orderDraft";
 import {
   CreateOrUpdateOrderDraft,
   CreateOrUpdateOrderDraftInput,
@@ -24,9 +25,18 @@ export class CreateOrUpdateOrderDraftController extends BaseController {
         userId: req.body.userId,
       };
 
-      const orderDraft = await this.createOrUpdateOrderDraft.execute(input);
+      const orderDraftOrSoldProduct =
+        await this.createOrUpdateOrderDraft.execute(input);
 
-      return this.ok(res, { id: orderDraft.id });
+      if (orderDraftOrSoldProduct instanceof OrderDraft) {
+        return this.ok(res, { id: orderDraftOrSoldProduct.id });
+      } else {
+        return this.clientError(
+          res,
+          "UnavailableProducts",
+          orderDraftOrSoldProduct
+        );
+      }
     } catch (error) {
       if (error instanceof Error) {
         return this.clientError(res, error.message);
