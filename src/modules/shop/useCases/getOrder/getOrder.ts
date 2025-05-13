@@ -30,8 +30,6 @@ export class GetOrder implements UseCase<GetOrderInput, OrderQueryModel> {
       customer,
       products,
       address: {
-        firstName: order.firstName,
-        lastName: order.lastName,
         streetName: order.streetName,
         streetName2: order.streetName2,
         city: order.city,

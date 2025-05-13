@@ -1,14 +1,12 @@
 import {
   ShippingAddress,
   ShippingAddressProps,
-} from "../domain/shippingAddress/shippingAddress";
+} from "../domain/shippingInfo/shippingAddress";
 
 export function createShippingAddress(
   props: Partial<ShippingAddressProps>
 ): ShippingAddress {
   return new ShippingAddress({
-    firstName: props.firstName ?? "firstName",
-    lastName: props.lastName ?? "lastName",
     streetName: props.streetName ?? "streetName",
     streetName2: props.streetName2 ?? "streetName2",
     city: props.city ?? "city",

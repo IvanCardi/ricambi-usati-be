@@ -1,7 +1,7 @@
 import { CarPart } from "../domain/carPart/carPart";
 import { Customer } from "../domain/customer/customer";
 import { Order } from "../domain/order/order";
-import { ShippingAddress } from "../domain/shippingAddress/shippingAddress";
+import { ShippingAddress } from "../domain/shippingInfo/shippingAddress";
 
 export class OrderMap {
   toPersistance(order: Order) {
@@ -9,8 +9,6 @@ export class OrderMap {
       _id: order.id,
       customerId: order.customer.id,
       products: order.products.map((p) => p.id),
-      firstName: order.firstName,
-      lastName: order.lastName,
       streetName: order.streetName,
       streetName2: order.streetName2,
       city: order.city,
@@ -38,8 +36,6 @@ export class OrderMap {
         customer,
         products,
         shippingAddress: new ShippingAddress({
-          firstName: order.firstName,
-          lastName: order.lastName,
           streetName: order.streetName,
           streetName2: order.streetName2,
           city: order.city,

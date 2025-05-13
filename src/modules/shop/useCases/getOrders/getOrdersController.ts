@@ -25,8 +25,6 @@ export class GetOrdersController extends BaseController {
           totalPrice: o.getTotalPrice(),
           createdAt: o.createdAt.toISOString(),
           address: {
-            firstName: o.firstName,
-            lastName: o.lastName,
             streetName: o.streetName,
             streetName2: o.streetName2,
             city: o.city,

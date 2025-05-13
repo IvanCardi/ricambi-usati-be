@@ -1,6 +1,8 @@
-import { UseCase } from "../../../../shared";
+import { Email, FirstName, LastName, UseCase } from "../../../../shared";
 import { OrderDraft } from "../../domain/orderDraft/orderDraft";
 import { GetSoldProducts } from "../../domain/services/getSoldProducts";
+import { ShippingAddress } from "../../domain/shippingInfo/shippingAddress";
+import { ShippingInfo } from "../../domain/shippingInfo/shippingInfo";
 import { ICarPartRepo } from "../../repos/carPartRepo";
 import { ICustomerRepo } from "../../repos/customerRepo";
 import { IOrderDraftRepo } from "../../repos/orderDraftRepo";
@@ -10,6 +12,20 @@ export type CreateOrUpdateOrderDraftInput = {
   orderId?: string;
   products: string[];
   userId?: string;
+  info?: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    streetName: string;
+    streetName2: string | undefined;
+    city: string | undefined;
+    country: string;
+    province: string | undefined;
+    administrativeArea: string | undefined;
+    dependentLocality: string | undefined;
+    postalCode: string | undefined;
+    details: string | undefined;
+  };
 };
 
 export class CreateOrUpdateOrderDraft
@@ -57,6 +73,17 @@ export class CreateOrUpdateOrderDraft
 
       if (customer) {
         orderDraft.setCustomer(customer);
+      }
+
+      if (input.info) {
+        const info = new ShippingInfo({
+          firstName: new FirstName(input.info.firstName),
+          lastName: new LastName(input.info.lastName),
+          email: new Email(input.info.email),
+          address: new ShippingAddress(input.info),
+        });
+
+        orderDraft.setInfo(info);
       }
     } else {
       orderDraft = OrderDraft.create({ products, customer });

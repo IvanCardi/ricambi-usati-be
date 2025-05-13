@@ -2,7 +2,7 @@ import { UseCase } from "../../../../shared";
 import { Order } from "../../domain/order/order";
 import { DeliveryOption } from "../../domain/order/orderDeliveryOptions";
 import { PaymentMethod } from "../../domain/order/orderPaymentMethods";
-import { ShippingAddress } from "../../domain/shippingAddress/shippingAddress";
+import { ShippingAddress } from "../../domain/shippingInfo/shippingAddress";
 import { ICarPartRepo } from "../../repos/carPartRepo";
 import { ICustomerRepo } from "../../repos/customerRepo";
 import { IOrderRepo } from "../../repos/orderRepo";
@@ -57,8 +57,6 @@ export class CreateOrder implements UseCase<CreateOrderInput, any> {
       customer,
       products,
       shippingAddress: new ShippingAddress({
-        firstName: input.firstName,
-        lastName: input.lastName,
         streetName: input.streetName,
         streetName2: input.streetName2,
         city: input.city,

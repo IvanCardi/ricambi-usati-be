@@ -3,11 +3,12 @@ import { EmptyProducts } from "../_errors/emptyProducts";
 import { CarPart } from "../carPart/carPart";
 import { CompanyCustomer } from "../customer/companyCustomer/companyCustomer";
 import { Customer } from "../customer/customer";
-import { ShippingAddress } from "../shippingAddress/shippingAddress";
+import { ShippingInfo } from "../shippingInfo/shippingInfo";
 
 export type OrderDraftProps = {
   customer?: Customer;
   products: CarPart[];
+  info?: ShippingInfo;
 };
 
 export class OrderDraft extends Entity<OrderDraftProps> {
@@ -37,6 +38,10 @@ export class OrderDraft extends Entity<OrderDraftProps> {
     return this.props.customer;
   }
 
+  get info() {
+    return this.props.info;
+  }
+
   setProducts(products: CarPart[]) {
     if (products.length === 0) {
       throw new EmptyProducts();
@@ -47,6 +52,10 @@ export class OrderDraft extends Entity<OrderDraftProps> {
 
   setCustomer(customer: Customer) {
     this.props.customer = customer;
+  }
+
+  setInfo(info: ShippingInfo) {
+    this.props.info = info;
   }
 
   getTotalPrice(): number {

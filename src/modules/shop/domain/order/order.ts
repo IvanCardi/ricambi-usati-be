@@ -6,7 +6,7 @@ import { Customer } from "../customer/customer";
 import { DeliveryOption } from "./orderDeliveryOptions";
 import { OrderStatus } from "./orderStatus";
 import { PaymentMethod } from "./orderPaymentMethods";
-import { ShippingAddress } from "../shippingAddress/shippingAddress";
+import { ShippingAddress } from "../shippingInfo/shippingAddress";
 
 export type OrderProps = {
   customer: Customer;
@@ -49,14 +49,6 @@ export class Order extends Entity<OrderProps> {
 
   get products() {
     return this.props.products;
-  }
-
-  get firstName() {
-    return this.props.shippingAddress.firstName;
-  }
-
-  get lastName() {
-    return this.props.shippingAddress.lastName;
   }
 
   get streetName() {

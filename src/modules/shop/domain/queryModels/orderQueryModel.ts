@@ -4,7 +4,7 @@ import { Customer } from "../customer/customer";
 import { PrivateCostumer } from "../customer/privateCustomer/privateCostumer";
 import { OrderStatus } from "../order/orderStatus";
 import { DiscountedPriceCalculator } from "../services/discountedPriceCalculator";
-import { ShippingAddress } from "../shippingAddress/shippingAddress";
+import { ShippingAddress } from "../shippingInfo/shippingAddress";
 
 export type OrderQueryModel = {
   id: string;
@@ -18,8 +18,6 @@ export type OrderQueryModel = {
       }
     | { id: string; type: "company"; name: string; email: string };
   address: {
-    firstName: string;
-    lastName: string;
     streetName: string;
     streetName2?: string;
     city?: string;

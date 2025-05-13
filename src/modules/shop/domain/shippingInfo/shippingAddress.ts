@@ -1,8 +1,6 @@
 import { ValueObject } from "../../../../shared";
 
 export type ShippingAddressProps = {
-  firstName: string;
-  lastName: string;
   streetName: string;
   streetName2?: string;
   city?: string;
@@ -16,14 +14,6 @@ export type ShippingAddressProps = {
 export class ShippingAddress extends ValueObject<ShippingAddressProps> {
   public constructor(props: ShippingAddressProps) {
     super(props);
-  }
-
-  get firstName() {
-    return this.props.firstName;
-  }
-
-  get lastName() {
-    return this.props.lastName;
   }
 
   get streetName() {
