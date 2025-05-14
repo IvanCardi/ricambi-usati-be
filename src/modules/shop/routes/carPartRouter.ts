@@ -21,7 +21,7 @@ carPartRouter.post("/carParts", (req, res) =>
   new CreateCarPartsController(createCarParts).execute(req, res)
 );
 
-carPartRouter.get("/carParts/:id", authentication, (req, res) =>
+carPartRouter.get("/carPart/:id", authentication, (req, res) =>
   new GetCarPartController(getCarPart).execute(req, res)
 );
 

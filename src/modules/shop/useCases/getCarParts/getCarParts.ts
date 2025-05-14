@@ -27,7 +27,16 @@ export class GetCarParts
   implements
     UseCase<
       GetCarPartsInput,
-      { carParts: CarPartQueryModel[]; totalPages: number }
+      {
+        carParts: {
+          id: string;
+          name: string;
+          imageUrl: string | undefined;
+          price: number;
+          discountedPrice: number | undefined;
+        }[];
+        totalPages: number;
+      }
     >
 {
   constructor(
@@ -35,9 +44,16 @@ export class GetCarParts
     private customerRepo: ICustomerRepo
   ) {}
 
-  async execute(
-    input: GetCarPartsInput
-  ): Promise<{ carParts: CarPartQueryModel[]; totalPages: number }> {
+  async execute(input: GetCarPartsInput): Promise<{
+    carParts: {
+      id: string;
+      name: string;
+      imageUrl: string | undefined;
+      price: number;
+      discountedPrice: number | undefined;
+    }[];
+    totalPages: number;
+  }> {
     const { totalPages, carParts } = await this.getFromDb(input);
 
     let customer: Customer | undefined = undefined;
@@ -62,23 +78,11 @@ export class GetCarParts
       carParts: carParts.map((cp) => ({
         id: cp.id,
         name: cp.name,
-        price: discountedPriceCalculator
+        discountedPrice: discountedPriceCalculator
           ? discountedPriceCalculator.calculate(cp.price)
-          : cp.price,
+          : undefined,
+        price: cp.price,
         imageUrl: cp.photos.length > 0 ? cp.photos[0] : undefined,
-        carBrand: cp.car.brand,
-        carId: cp.car.carId ?? "",
-        carModel: cp.car.model,
-        carSetup: cp.car.setup,
-        carYear: cp.car.year.toString(),
-        category: cp.category.toPath(),
-        compatibleCars: cp.compatibleCars,
-        description: cp.description,
-        lastUpdated: cp.lastUpdated.toISOString(),
-        numbers: cp.numbers.map((n) => n.toString()),
-        status: cp.status,
-        warranty: cp.warranty,
-        photos: cp.photos,
       })),
       totalPages,
     };

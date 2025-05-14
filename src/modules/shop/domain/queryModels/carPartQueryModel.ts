@@ -1,8 +1,14 @@
-export type CarPartQueryModel = {
+type CarPartBase = {
   id: string;
   name: string;
-  imageUrl: string | undefined;
+  imageUrl?: string;
   price: number;
+  discountedPrice?: number;
+};
+
+export type CarPartQueryModelMinimal = CarPartBase;
+
+export type CarPartQueryModel = CarPartBase & {
   numbers: string[];
   carId: string;
   carBrand: string;

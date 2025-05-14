@@ -47,9 +47,10 @@ export class GetCarPart implements UseCase<GetCarPartInput, CarPartQueryModel> {
     return {
       id: carPart.id,
       name: carPart.name,
-      price: discountedPriceCalculator
+      discountedPrice: discountedPriceCalculator
         ? discountedPriceCalculator.calculate(carPart.price)
-        : carPart.price,
+        : undefined,
+      price: carPart.price,
       imageUrl: carPart.photos.length > 0 ? carPart.photos[0] : undefined,
       carBrand: carPart.car.brand,
       carId: carPart.car.carId ?? "",
