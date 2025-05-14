@@ -10,6 +10,8 @@ import { updateCarPart } from "../useCases/updateCarPart";
 import { DeleteCarPartController } from "../useCases/deleteCarPart/deleteCarPartController";
 import { deleteCarPart } from "../useCases/deleteCarPart";
 import { authentication } from "../../../middelwares/authentication";
+import { CheckCarPartsAvailabilityController } from "../useCases/checkCarPartsAvailability/checkCarPartsAvailabilityController";
+import { checkCarPartsAvailability } from "../useCases/checkCarPartsAvailability";
 
 const carPartRouter = express.Router();
 
@@ -31,6 +33,10 @@ carPartRouter.patch("/carParts/:id", (req, res) =>
 
 carPartRouter.delete("/carParts/:id", (req, res) =>
   new DeleteCarPartController(deleteCarPart).execute(req, res)
+);
+
+carPartRouter.get("/carParts/availability", authentication, (req, res) =>
+  new CheckCarPartsAvailabilityController(checkCarPartsAvailability).execute(req, res)
 );
 
 export default carPartRouter;

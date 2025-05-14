@@ -29,11 +29,7 @@ export type CreateOrUpdateOrderDraftInput = {
 };
 
 export class CreateOrUpdateOrderDraft
-  implements
-    UseCase<
-      CreateOrUpdateOrderDraftInput,
-      OrderDraft | { soldProducts: string[] }
-    >
+  implements UseCase<CreateOrUpdateOrderDraftInput, OrderDraft>
 {
   constructor(
     private orderDraftRepo: IOrderDraftRepo,
@@ -41,16 +37,8 @@ export class CreateOrUpdateOrderDraft
     private customerRepo: ICustomerRepo
   ) {}
 
-  async execute(
-    input: CreateOrUpdateOrderDraftInput
-  ): Promise<OrderDraft | { soldProducts: string[] }> {
+  async execute(input: CreateOrUpdateOrderDraftInput): Promise<OrderDraft> {
     const products = await this.carPartRepo.getByIds(input.products);
-
-    const soldProducts = new GetSoldProducts(products).execute();
-
-    if (soldProducts.length > 0) {
-      return { soldProducts: soldProducts.map((p) => p.id) };
-    }
 
     const customer = input.userId
       ? await this.customerRepo.getByUserId(input.userId)
