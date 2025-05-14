@@ -29,4 +29,20 @@ const refresh = {
   expiresIn: (process.env.REFRESH_EXPIRES_IN || "1m") as any,
 };
 
-export { isProduction, db, server, salt, access, refresh };
+const urls = {
+  be: process.env.BE_BASE_URL ?? "",
+  fe: process.env.FE_BASE_URL ?? "",
+};
+
+const mollieSecretKey = process.env.MOLLIE_KEY ?? "";
+
+export {
+  isProduction,
+  db,
+  server,
+  salt,
+  access,
+  refresh,
+  urls,
+  mollieSecretKey,
+};

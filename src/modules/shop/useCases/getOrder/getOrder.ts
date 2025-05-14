@@ -21,7 +21,9 @@ export class GetOrder implements UseCase<GetOrderInput, OrderQueryModel> {
       throw new OrderNotFound();
     }
 
-    const customer = mapOrderQueryModelCustomer(order.customer);
+    const customer = order.customer
+      ? mapOrderQueryModelCustomer(order.customer)
+      : undefined;
     const products = mapOrderQueryModelProducts(order.products, order.customer);
 
     return {
@@ -30,16 +32,16 @@ export class GetOrder implements UseCase<GetOrderInput, OrderQueryModel> {
       customer,
       products,
       address: {
-        streetName: order.streetName,
-        streetName2: order.streetName2,
-        city: order.city,
-        country: order.country,
-        province: order.province,
-        administrativeArea: order.administrativeArea,
-        dependentLocality: order.dependentLocality,
-        postalCode: order.postalCode,
+        streetName: order.info.address.streetName,
+        streetName2: order.info.address.streetName2,
+        city: order.info.address.city,
+        country: order.info.address.country,
+        province: order.info.address.province,
+        administrativeArea: order.info.address.administrativeArea,
+        dependentLocality: order.info.address.dependentLocality,
+        postalCode: order.info.address.postalCode,
       },
-      totalPrice: order.getTotalPrice(),
+      totalPrice: order.productsAmount,
       createdAt: order.createdAt.toISOString(),
     };
   }

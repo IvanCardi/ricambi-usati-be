@@ -24,10 +24,12 @@ export class OrderRepo implements IOrderRepo {
       return undefined;
     }
 
-    const customer = await this.customerRepo.getById(raw.customerId);
+    const customer = raw.customerId
+      ? await this.customerRepo.getById(raw.customerId)
+      : undefined;
     const carParts = await this.carPartRepo.getByIds(raw.products);
 
-    if (customer && carParts.length === raw.products.length) {
+    if (carParts.length === raw.products.length) {
       return orderMap.toDomain(customer, carParts, raw);
     }
 
@@ -44,7 +46,9 @@ export class OrderRepo implements IOrderRepo {
       return undefined;
     }
 
-    const customer = await this.customerRepo.getById(raw.customerId);
+    const customer = raw.customerId
+      ? await this.customerRepo.getById(raw.customerId)
+      : undefined;
     const carParts = await this.carPartRepo.getByIds(raw.products);
 
     if (customer && carParts.length === raw.products.length) {
@@ -72,7 +76,9 @@ export class OrderRepo implements IOrderRepo {
     const orders: Order[] = [];
 
     for (const raw of raws) {
-      const customer = await this.customerRepo.getById(raw.customerId);
+      const customer = raw.customerId
+        ? await this.customerRepo.getById(raw.customerId)
+        : undefined;
       const carParts = await this.carPartRepo.getByIds(raw.products);
 
       if (customer && carParts.length === raw.products.length) {

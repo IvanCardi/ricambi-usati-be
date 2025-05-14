@@ -8,7 +8,7 @@ import { ShippingAddress } from "../shippingInfo/shippingAddress";
 
 export type OrderQueryModel = {
   id: string;
-  customer:
+  customer?:
     | {
         id: string;
         type: "private";
@@ -42,7 +42,7 @@ export type OrderQueryModel = {
 
 export function mapOrderQueryModelProducts(
   carParts: CarPart[],
-  customer: Customer
+  customer?: Customer
 ): OrderQueryModel["products"] {
   return carParts.map((carPart) => ({
     id: carPart.id,

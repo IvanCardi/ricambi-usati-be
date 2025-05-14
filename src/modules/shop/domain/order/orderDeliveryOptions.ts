@@ -1,1 +1,1 @@
-export type DeliveryOption = "Corriere espresso" | "Ritiro di persona";
+export type DeliveryOption = "delivery" | "collection";

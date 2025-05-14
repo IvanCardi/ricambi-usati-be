@@ -3,6 +3,7 @@ import { Order } from "../domain/order/order";
 import { OrderStatus } from "../domain/order/orderStatus";
 import { createPrivateCustomer } from "./createPrivateCustomer";
 import { createShippingAddress } from "./createShippingAddress";
+import createShippingInfo from "./createShippingInfo";
 
 export function createPrivateCustomerOrder(props: {
   products: CarPart[];
@@ -11,11 +12,11 @@ export function createPrivateCustomerOrder(props: {
   return new Order({
     customer: createPrivateCustomer({}),
     products: props.products,
-    shippingAddress: createShippingAddress({}),
-    email: "test@gmail.com",
-    status: props.status ?? "created",
+    info: createShippingInfo({}),
+    status: props.status ?? "in payment",
     createdAt: new Date(),
-    deliveryOption: "Corriere espresso",
-    paymentMethod: "Paga con carte",
+    deliveryOption: "delivery",
+    paymentMethod: "online",
+    productsAmount: 10, shippingCosts: 10
   });
 }

@@ -1,23 +1,26 @@
 import { Entity } from "../../../../shared";
 import { OrderCannotBeShipped } from "../_errors/orderCannotBeShipped";
+import { ShippingInfoNotDefined } from "../_errors/shippingInfoNotDefined";
 import { CarPart } from "../carPart/carPart";
 import { CompanyCustomer } from "../customer/companyCustomer/companyCustomer";
 import { Customer } from "../customer/customer";
+import { OrderDraft } from "../orderDraft/orderDraft";
+import { ShippingCostsCalculator } from "../services/shippingCostsCalculator";
+import { ShippingInfo } from "../shippingInfo/shippingInfo";
 import { DeliveryOption } from "./orderDeliveryOptions";
-import { OrderStatus } from "./orderStatus";
 import { PaymentMethod } from "./orderPaymentMethods";
-import { ShippingAddress } from "../shippingInfo/shippingAddress";
+import { OrderStatus } from "./orderStatus";
 
 export type OrderProps = {
-  customer: Customer;
+  customer?: Customer;
   products: CarPart[];
-  shippingAddress: ShippingAddress;
+  info: ShippingInfo;
   status: OrderStatus;
   createdAt: Date; // timestamp
-  email: string;
-  details?: string;
   deliveryOption: DeliveryOption;
   paymentMethod: PaymentMethod;
+  productsAmount: number;
+  shippingCosts: number;
 };
 
 export class Order extends Entity<OrderProps> {
@@ -27,16 +30,30 @@ export class Order extends Entity<OrderProps> {
     this.props.createdAt = props.createdAt ?? new Date();
   }
 
-  static create(props: {
-    customer: Customer;
-    products: CarPart[];
-    shippingAddress: ShippingAddress;
-    email: string;
-    details?: string;
+  static create({
+    deliveryOption,
+    orderDraft,
+    paymentMethod,
+  }: {
+    orderDraft: OrderDraft;
     deliveryOption: DeliveryOption;
     paymentMethod: PaymentMethod;
   }): Order {
-    return new Order({ ...props, createdAt: new Date(), status: "created" });
+    if (!orderDraft.info) {
+      throw new ShippingInfoNotDefined();
+    }
+
+    return new Order({
+      createdAt: new Date(),
+      deliveryOption,
+      info: orderDraft.info,
+      paymentMethod,
+      products: orderDraft.products,
+      productsAmount: orderDraft.getTotalPrice(),
+      shippingCosts: new ShippingCostsCalculator(orderDraft).calculate(),
+      status: "in payment",
+      customer: orderDraft.customer,
+    });
   }
 
   get createdAt() {
@@ -51,36 +68,8 @@ export class Order extends Entity<OrderProps> {
     return this.props.products;
   }
 
-  get streetName() {
-    return this.props.shippingAddress.streetName;
-  }
-
-  get country() {
-    return this.props.shippingAddress.country;
-  }
-
-  get streetName2() {
-    return this.props.shippingAddress.streetName2;
-  }
-
-  get city() {
-    return this.props.shippingAddress.city;
-  }
-
-  get province() {
-    return this.props.shippingAddress.province;
-  }
-
-  get administrativeArea() {
-    return this.props.shippingAddress.administrativeArea;
-  }
-
-  get dependentLocality() {
-    return this.props.shippingAddress.dependentLocality;
-  }
-
-  get postalCode() {
-    return this.props.shippingAddress.postalCode;
+  get info() {
+    return this.props.info;
   }
 
   get status() {
@@ -95,31 +84,16 @@ export class Order extends Entity<OrderProps> {
     return this.props.paymentMethod;
   }
 
-  get email() {
-    return this.props.email;
+  get productsAmount() {
+    return this.props.productsAmount;
   }
 
-  get details() {
-    return this.props.details;
+  get shippingCosts() {
+    return this.props.shippingCosts;
   }
 
   setStatus(status: OrderStatus) {
     this.props.status = status;
-  }
-
-  getTotalPrice(): number {
-    const totalPrice = this.products.reduce((total, product) => {
-      return total + product.price;
-    }, 0);
-
-    if (
-      this.customer instanceof CompanyCustomer &&
-      this.customer.isAutomotive
-    ) {
-      return totalPrice - (totalPrice * this.customer.discount) / 100;
-    }
-
-    return totalPrice;
   }
 
   markAsShipped() {

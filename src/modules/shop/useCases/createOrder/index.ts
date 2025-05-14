@@ -1,15 +1,15 @@
 import {
   carPartRepo,
-  customerRepo,
+  orderDraftRepo,
   orderRepo,
-  paymentService,
+  paymentService
 } from "../../repos";
 import { CreateOrder } from "./createOrder";
 
 const createOrder = new CreateOrder(
-  orderRepo,
-  customerRepo,
+  orderDraftRepo,
   carPartRepo,
+  orderRepo,
   paymentService
 );
 

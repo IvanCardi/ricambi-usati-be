@@ -2,12 +2,10 @@ import { PaymentStatus } from "../../domain/payment/paymentStatus";
 import { mollie } from "../../infra/mollie/molliePaymentGateway";
 import { PaymentError } from "../../domain/_errors/payment";
 import { IPaymentGateway } from "../paymentGateway";
+import { urls } from "../../../../config";
 
 export class PaymentGateway implements IPaymentGateway {
-  async createPayment(
-    amount: number,
-    orderId: string
-  ): Promise<{ checkoutPaymentUrl: string; paymentId: string }> {
+  async createPayment(amount: number, orderId: string): Promise<string> {
     const payment = await mollie.payments.create({
       amount: {
         value: amount.toFixed(2),
@@ -15,8 +13,8 @@ export class PaymentGateway implements IPaymentGateway {
       },
       description: `Order #${orderId}`,
       metadata: { orderId },
-      redirectUrl: `${process.env.FE_BASE_URL}/processingPayment`,
-      webhookUrl: `${process.env.BE_BASE_URL}/webhook`,
+      redirectUrl: `${urls.fe}/processingPayment?orderId=${orderId}`,
+      webhookUrl: `${urls.be}/webhook`,
     });
 
     const checkoutPaymentUrl = payment.getCheckoutUrl();
@@ -25,19 +23,20 @@ export class PaymentGateway implements IPaymentGateway {
       throw new PaymentError.CheckoutUrlCreationFailed();
     }
 
-    return {
-      checkoutPaymentUrl,
-      paymentId: payment.id,
-    };
+    return checkoutPaymentUrl;
   }
 
-  async getPaymentStatus(id: string): Promise<PaymentStatus> {
+  async getPaymentStatus(
+    id: string
+  ): Promise<{ orderId: string; status: PaymentStatus }> {
     const payment = await mollie.payments.get(id);
 
+    const orderId = (payment.metadata as any)?.orderId as string;
+
     if (payment.status === "open") {
-      return "pending";
+      return { orderId, status: "pending" };
     }
 
-    return payment.status;
+    return { orderId, status: payment.status };
   }
 }

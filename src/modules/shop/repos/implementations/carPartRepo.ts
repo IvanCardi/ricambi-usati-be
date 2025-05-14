@@ -61,7 +61,13 @@ export class CarPartRepo implements ICarPartRepo {
   async saveAll(carParts: CarPart[]): Promise<void> {
     const rawParts = carParts.map(carPartMap.toPersistance);
 
-    await this.mongoDb.saveMany(rawParts, this.collection);
+    for (const part of rawParts) {
+      if (await this.getById(part._id)) {
+        await this.mongoDb.replace({ _id: part._id }, part, this.collection);
+      } else {
+        await this.mongoDb.save(part, this.collection);
+      }
+    }
   }
 
   async delete(id: string): Promise<void> {

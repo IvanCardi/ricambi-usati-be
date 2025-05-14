@@ -103,6 +103,10 @@ export class CarPart extends AggregateRoot<CarPartProps> {
     return this.props.adHocShippingCosts?.valueOf();
   }
 
+  setToSold() {
+    this.props.status = "sold";
+  }
+
   update(info: {
     name: string;
     numbers: string[];

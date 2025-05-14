@@ -1,4 +1,1 @@
-export type PaymentMethod =
-  | "Paga con carte"
-  | "Paypal"
-  | "Pagamento alla consegna";
+export type PaymentMethod = "online" | "on delivery";

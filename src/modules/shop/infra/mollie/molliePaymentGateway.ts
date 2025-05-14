@@ -1,5 +1,6 @@
 import createMollieClient from "@mollie/api-client";
+import { mollieSecretKey } from "../../../../config";
 
 export const mollie = createMollieClient({
-  apiKey: process.env.MOLLIE_TEST_KEY ?? "Test API key",
+  apiKey: mollieSecretKey,
 });

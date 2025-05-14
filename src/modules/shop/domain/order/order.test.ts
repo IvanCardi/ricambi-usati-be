@@ -1,71 +1,63 @@
-import { createAddress } from "../../testUtils/createAddress";
 import { createCarPart } from "../../testUtils/createCarPart";
-import { createCompanyCustomerOrder } from "../../testUtils/createCompanyCustomerOrder";
+import { createOrderDraft } from "../../testUtils/createOrderDraft";
 import { createPrivateCustomer } from "../../testUtils/createPrivateCustomer";
 import { createPrivateCustomerOrder } from "../../testUtils/createPrivateCustomerOrder";
 import { createShippingAddress } from "../../testUtils/createShippingAddress";
+import createShippingInfo from "../../testUtils/createShippingInfo";
 import { OrderCannotBeShipped } from "../_errors/orderCannotBeShipped";
 import { CarPartPrice } from "../carPart/carPartPrice";
+import { ShippingCosts } from "../carPart/shippingCosts";
 import { Order } from "./order";
 
 describe("Order Tests", () => {
-  test("Should set the date to now and status to created when creating a new order", () => {
+  describe("Create Order", () => {
+    const product = createCarPart({
+      adHocShippingCosts: new ShippingCosts(5),
+    });
+    const info = createShippingInfo({
+      address: createShippingAddress({
+        country: "Italia"
+      })
+    });
+    const customer = createPrivateCustomer({});
+    const orderDraft = createOrderDraft({
+      customer,
+      info,
+      products: [product],
+    });
+
     const order = Order.create({
-      customer: createPrivateCustomer({}),
-      products: [createCarPart({})],
-      shippingAddress: createShippingAddress({}),
-      email: "test@gmail.com",
-      deliveryOption: "Corriere espresso",
-      paymentMethod: "Paga con carte",
+      orderDraft,
+      deliveryOption: "delivery",
+      paymentMethod: "online",
     });
 
-    expect(order.status).toEqual("created");
-    expect(order.createdAt).toBeDefined();
-  });
-
-  describe("Get Total Price", () => {
-    test("Should return the sum of all products prices when the customer is a private customer", () => {
-      const order = createPrivateCustomerOrder({
-        products: [
-          createCarPart({ price: new CarPartPrice(10) }),
-          createCarPart({ price: new CarPartPrice(20) }),
-          createCarPart({ price: new CarPartPrice(70) }),
-        ],
-      });
-
-      const totalPrice = order.getTotalPrice();
-
-      expect(totalPrice).toEqual(100);
+    test("Should set the product, info and customer to the ones in order draft", () => {
+      expect(order.customer).toEqual(customer);
+      expect(order.info).toEqual(info);
+      expect(order.products).toHaveLength(1);
+      expect(order.products).toContain(product);
     });
-    test("Should return the sum of all products prices when the customer is a non automotive company customer", () => {
-      const order = createCompanyCustomerOrder({
-        isAutomotive: false,
-        discount: 0,
-        products: [
-          createCarPart({ price: new CarPartPrice(10) }),
-          createCarPart({ price: new CarPartPrice(20) }),
-          createCarPart({ price: new CarPartPrice(70) }),
-        ],
-      });
 
-      const totalPrice = order.getTotalPrice();
-
-      expect(totalPrice).toEqual(100);
+    test("Should set the delivery option and payment method to the ones passed", () => {
+      expect(order.deliveryOption).toEqual("delivery");
+      expect(order.paymentMethod).toEqual("online");
     });
-    test("Should return the sum of all products discounted prices when the customer is an automotive company customer", () => {
-      const order = createCompanyCustomerOrder({
-        isAutomotive: true,
-        discount: 10,
-        products: [
-          createCarPart({ price: new CarPartPrice(10) }),
-          createCarPart({ price: new CarPartPrice(20) }),
-          createCarPart({ price: new CarPartPrice(70) }),
-        ],
-      });
 
-      const totalPrice = order.getTotalPrice();
+    test("Should set the status to in payment", () => {
+      expect(order.status).toEqual("in payment");
+    });
 
-      expect(totalPrice).toEqual(90);
+    test("Should set the createdAt date as now", () => {
+      expect(order.createdAt).toBeDefined();
+    });
+
+    test("Should set the total amount equals to the one from order draft", () => {
+      expect(order.productsAmount).toEqual(orderDraft.getTotalPrice());
+    });
+
+    test("Should set the shipping costs from the order draft", () => {
+      expect(order.shippingCosts).toEqual(5);
     });
   });
 

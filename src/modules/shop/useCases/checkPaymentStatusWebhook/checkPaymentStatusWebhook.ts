@@ -7,13 +7,13 @@ export class CheckPaymentStatusWebhook {
     private orderRepo: IOrderRepo
   ) {}
 
-  async execute(paymentId: string): Promise<void> {
-    const paymentStatus = await this.paymentService.getPaymentStatus(paymentId);
-    const order = await this.orderRepo.getByPaymentId(paymentId);
+  async execute({id}: {id: string}): Promise<void> {
+    const payment = await this.paymentService.getPaymentStatus(id);
+    const order = await this.orderRepo.getById(payment.orderId);
 
     if (!order) throw new Error("Order not found");
 
-    if (paymentStatus === "paid") {
+    if (payment.status === "paid") {
       order.setStatus("paid");
     }
 
