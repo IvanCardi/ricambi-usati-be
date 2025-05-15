@@ -66,6 +66,10 @@ export class GetCarPart implements UseCase<GetCarPartInput, CarPartQueryModel> {
       warranty: carPart.warranty,
       photos: carPart.photos,
       adHocShippingCosts: carPart.adHocShippingCosts,
+      technicalDetails: carPart.technicalDetails.map((td) => ({
+        label: td.label,
+        value: td.value,
+      })),
     };
   }
 }

@@ -33,7 +33,11 @@ export class CreateCarPartsController extends BaseController {
             : [],
           warranty: p.warranty, // in month
           price: p.price, // in €
-          adHocShippingCosts: p.adHocShippingCosts
+          adHocShippingCosts: p.adHocShippingCosts,
+          technicalDetails: p.technicalDetails.map((td: any) => ({
+            label: TextUtils.sanitize(td.label),
+            value: TextUtils.sanitize(td.value),
+          })),
         })),
       };
 

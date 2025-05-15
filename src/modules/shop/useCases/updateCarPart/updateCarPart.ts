@@ -12,7 +12,8 @@ export type UpdateCarPartInput = {
   warranty: number; // in month
   price: number; // in €
   compatibleCars: string[];
-  adHocShippingCosts?: number
+  adHocShippingCosts?: number;
+  technicalDetails: { label: string; value: string }[];
 };
 
 export class UpdateCarPart implements UseCase<UpdateCarPartInput, void> {

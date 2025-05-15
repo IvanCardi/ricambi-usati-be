@@ -12,6 +12,7 @@ describe("Car Part Tests", () => {
       numbers: ["partNumber"],
       price: 1000,
       warranty: 5,
+      technicalDetails: [],
     });
 
     test("Should create the car part with the given info", () => {
@@ -59,6 +60,7 @@ describe("Car Part Tests", () => {
       price: 1000,
       warranty: 100,
       adHocShippingCosts: 50,
+      technicalDetails: [],
     });
 
     test("Should update the car part", () => {

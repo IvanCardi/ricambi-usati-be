@@ -23,4 +23,5 @@ export type CarPartQueryModel = CarPartBase & {
   lastUpdated: string;
   photos: string[];
   adHocShippingCosts?: number;
+  technicalDetails: { label: string; value: string }[];
 };

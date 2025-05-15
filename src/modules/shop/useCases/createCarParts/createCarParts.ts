@@ -17,6 +17,7 @@ export type CreateCarPartsInput = {
     price: number; // in €
     compatibleCars: string[];
     adHocShippingCosts?: number;
+    technicalDetails: { label: string; value: string }[];
   }[];
 };
 
@@ -41,6 +42,7 @@ export class CreateCarParts implements UseCase<CreateCarPartsInput, void> {
         price: p.price,
         warranty: p.warranty,
         adHocShippingCosts: p.adHocShippingCosts,
+        technicalDetails: p.technicalDetails
       })
     );
 

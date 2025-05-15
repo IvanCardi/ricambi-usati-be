@@ -8,6 +8,9 @@ import { CarPartPrice } from "./carPartPrice";
 import { CarPartStatus } from "./carPartStatus";
 import { CarPartWarranty } from "./carPartWarranty";
 import { ShippingCosts } from "./shippingCosts";
+import { TechnicalDetail } from "./technicalDetail";
+import { TechnicalDetailLabel } from "./technicalDetailLabel";
+import { TechnicalDetailValue } from "./technicalDetailValue";
 
 export type CarPartProps = {
   name: CarPartName;
@@ -22,6 +25,7 @@ export type CarPartProps = {
   compatibleCars: string[];
   lastUpdated: Date; // timestamp
   adHocShippingCosts?: ShippingCosts;
+  technicalDetails: TechnicalDetail[];
 };
 
 export class CarPart extends AggregateRoot<CarPartProps> {
@@ -36,6 +40,7 @@ export class CarPart extends AggregateRoot<CarPartProps> {
     price: number; // in €
     compatibleCars?: string[];
     adHocShippingCosts?: number;
+    technicalDetails: { label: string; value: string }[];
   }): CarPart {
     return new CarPart({
       car: props.car,
@@ -52,6 +57,13 @@ export class CarPart extends AggregateRoot<CarPartProps> {
       adHocShippingCosts: props.adHocShippingCosts
         ? new ShippingCosts(props.adHocShippingCosts)
         : undefined,
+      technicalDetails: props.technicalDetails.map(
+        (td) =>
+          new TechnicalDetail({
+            label: new TechnicalDetailLabel(td.label),
+            value: new TechnicalDetailValue(td.value),
+          })
+      ),
     });
   }
 
@@ -103,6 +115,10 @@ export class CarPart extends AggregateRoot<CarPartProps> {
     return this.props.adHocShippingCosts?.valueOf();
   }
 
+  get technicalDetails() {
+    return this.props.technicalDetails;
+  }
+
   setToSold() {
     this.props.status = "sold";
   }
@@ -117,6 +133,7 @@ export class CarPart extends AggregateRoot<CarPartProps> {
     price: number; // in €
     compatibleCars: string[];
     adHocShippingCosts?: number;
+    technicalDetails: { label: string; value: string }[];
   }) {
     this.props.name = new CarPartName(info.name);
     this.props.numbers = CarPartNumbers.from(info.numbers);
@@ -132,5 +149,13 @@ export class CarPart extends AggregateRoot<CarPartProps> {
       : undefined;
 
     this.props.lastUpdated = new Date();
+
+    this.props.technicalDetails = info.technicalDetails.map(
+      (td) =>
+        new TechnicalDetail({
+          label: new TechnicalDetailLabel(td.label),
+          value: new TechnicalDetailValue(td.value),
+        })
+    );
   }
 }

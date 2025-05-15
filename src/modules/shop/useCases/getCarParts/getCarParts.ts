@@ -42,6 +42,7 @@ export class GetCarParts
       status: cp.status,
       warranty: cp.warranty,
       adHocShippingCosts: cp.adHocShippingCosts,
+      technicalDetails: [],
     }));
   }
 }

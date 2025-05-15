@@ -8,6 +8,9 @@ import { CarPartNumbers } from "../domain/carPart/carPartNumbers";
 import { CarPartPrice } from "../domain/carPart/carPartPrice";
 import { CarPartWarranty } from "../domain/carPart/carPartWarranty";
 import { ShippingCosts } from "../domain/carPart/shippingCosts";
+import { TechnicalDetail } from "../domain/carPart/technicalDetail";
+import { TechnicalDetailLabel } from "../domain/carPart/technicalDetailLabel";
+import { TechnicalDetailValue } from "../domain/carPart/technicalDetailValue";
 
 export class CarPartMap {
   toPersistance(carPart: CarPart) {
@@ -29,6 +32,10 @@ export class CarPartMap {
       compatibleCars: carPart.compatibleCars,
       lastUpdated: carPart.lastUpdated?.toISOString()!,
       adHocShippingCosts: carPart.adHocShippingCosts,
+      technicalDetails: carPart.technicalDetails.map((t) => ({
+        label: t.label,
+        value: t.value,
+      })),
     };
   }
 
@@ -57,6 +64,13 @@ export class CarPartMap {
         adHocShippingCosts: carPart.adHocShippingCosts
           ? new ShippingCosts(carPart.adHocShippingCosts)
           : undefined,
+        technicalDetails: carPart.technicalDetails.map(
+          (t) =>
+            new TechnicalDetail({
+              label: new TechnicalDetailLabel(t.label),
+              value: new TechnicalDetailValue(t.value),
+            })
+        ),
       },
       carPart._id
     );
