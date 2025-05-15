@@ -10,6 +10,7 @@ export class OrderMap {
   toPersistance(order: Order) {
     return {
       _id: order.id,
+      orderDraftId: order.orderDraftId,
       customerId: order.customer?.id,
       products: order.products.map((p) => p.id),
       firstName: order.info.firstName,
@@ -44,6 +45,7 @@ export class OrderMap {
       {
         customer,
         products,
+        orderDraftId: order.orderDraftId,
         info: new ShippingInfo({
           firstName: new FirstName(order.firstName),
           lastName: new LastName(order.lastName),

@@ -1,9 +1,10 @@
-import { orderRepo, paymentService } from "../../repos";
+import { orderDraftRepo, orderRepo, paymentService } from "../../repos";
 import { CheckPaymentStatusWebhook } from "./checkPaymentStatusWebhook";
 
 const checkPaymentStatusWebhook = new CheckPaymentStatusWebhook(
   paymentService,
-  orderRepo
+  orderRepo,
+  orderDraftRepo
 );
 
 export { checkPaymentStatusWebhook };

@@ -17,6 +17,7 @@ export function createPrivateCustomerOrder(props: {
     createdAt: new Date(),
     deliveryOption: "delivery",
     paymentMethod: "online",
-    productsAmount: 10, shippingCosts: 10
+    productsAmount: 10, shippingCosts: 10,
+    orderDraftId: "something"
   });
 }

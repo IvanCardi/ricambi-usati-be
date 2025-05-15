@@ -38,6 +38,12 @@ export type OrderQueryModel = {
   status: OrderStatus;
   totalPrice: number;
   createdAt: string;
+  info: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    details?: string;
+  };
 };
 
 export function mapOrderQueryModelProducts(
@@ -59,7 +65,9 @@ export function mapOrderQueryModelProducts(
   }));
 }
 
-export function mapOrderQueryModelCustomer(customer: Customer): OrderQueryModel["customer"]{
+export function mapOrderQueryModelCustomer(
+  customer: Customer
+): OrderQueryModel["customer"] {
   if (customer instanceof PrivateCostumer) {
     return {
       id: customer.id,

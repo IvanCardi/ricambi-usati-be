@@ -36,9 +36,9 @@ export class OrderRepo implements IOrderRepo {
     throw new Error("error during order getById");
   }
 
-  async getByPaymentId(id: string): Promise<Order | undefined> {
+  async getByOrderDraftId(id: string): Promise<Order | undefined> {
     const raw = (await this.mongoDb.findOne(
-      { paymentId: id },
+      { orderDraftId: id },
       this.collection
     )) as ReturnType<typeof orderMap.toPersistance>;
 
@@ -51,7 +51,7 @@ export class OrderRepo implements IOrderRepo {
       : undefined;
     const carParts = await this.carPartRepo.getByIds(raw.products);
 
-    if (customer && carParts.length === raw.products.length) {
+    if (carParts.length === raw.products.length) {
       return orderMap.toDomain(customer, carParts, raw);
     }
 
@@ -81,7 +81,7 @@ export class OrderRepo implements IOrderRepo {
         : undefined;
       const carParts = await this.carPartRepo.getByIds(raw.products);
 
-      if (customer && carParts.length === raw.products.length) {
+      if (carParts.length === raw.products.length) {
         orders.push(orderMap.toDomain(customer, carParts, raw));
       }
     }

@@ -44,4 +44,8 @@ export class OrderDraftRepo implements IOrderDraftRepo {
 
     throw new Error("error during order getById");
   }
+
+  async deleteById(id: string): Promise<void> {
+    await MONGO_DB.deleteOne({ _id: id }, this.collection);
+  }
 }

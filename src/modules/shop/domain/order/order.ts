@@ -2,7 +2,6 @@ import { Entity } from "../../../../shared";
 import { OrderCannotBeShipped } from "../_errors/orderCannotBeShipped";
 import { ShippingInfoNotDefined } from "../_errors/shippingInfoNotDefined";
 import { CarPart } from "../carPart/carPart";
-import { CompanyCustomer } from "../customer/companyCustomer/companyCustomer";
 import { Customer } from "../customer/customer";
 import { OrderDraft } from "../orderDraft/orderDraft";
 import { ShippingCostsCalculator } from "../services/shippingCostsCalculator";
@@ -13,6 +12,7 @@ import { OrderStatus } from "./orderStatus";
 
 export type OrderProps = {
   customer?: Customer;
+  orderDraftId: string;
   products: CarPart[];
   info: ShippingInfo;
   status: OrderStatus;
@@ -34,26 +34,32 @@ export class Order extends Entity<OrderProps> {
     deliveryOption,
     orderDraft,
     paymentMethod,
+    oldOrderId,
   }: {
     orderDraft: OrderDraft;
     deliveryOption: DeliveryOption;
     paymentMethod: PaymentMethod;
+    oldOrderId?: string;
   }): Order {
     if (!orderDraft.info) {
       throw new ShippingInfoNotDefined();
     }
 
-    return new Order({
-      createdAt: new Date(),
-      deliveryOption,
-      info: orderDraft.info,
-      paymentMethod,
-      products: orderDraft.products,
-      productsAmount: orderDraft.getTotalPrice(),
-      shippingCosts: new ShippingCostsCalculator(orderDraft).calculate(),
-      status: "in payment",
-      customer: orderDraft.customer,
-    });
+    return new Order(
+      {
+        orderDraftId: orderDraft.id,
+        createdAt: new Date(),
+        deliveryOption,
+        info: orderDraft.info,
+        paymentMethod,
+        products: orderDraft.products,
+        productsAmount: orderDraft.getTotalPrice(),
+        shippingCosts: new ShippingCostsCalculator(orderDraft).calculate(),
+        status: "in payment",
+        customer: orderDraft.customer,
+      },
+      oldOrderId
+    );
   }
 
   get createdAt() {
@@ -90,6 +96,10 @@ export class Order extends Entity<OrderProps> {
 
   get shippingCosts() {
     return this.props.shippingCosts;
+  }
+
+  get orderDraftId() {
+    return this.props.orderDraftId;
   }
 
   setStatus(status: OrderStatus) {

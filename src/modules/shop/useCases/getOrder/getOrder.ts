@@ -42,6 +42,12 @@ export class GetOrder implements UseCase<GetOrderInput, OrderQueryModel> {
         postalCode: order.info.address.postalCode,
       },
       totalPrice: order.productsAmount,
+      info: {
+        email: order.info.email,
+        firstName: order.info.firstName,
+        lastName: order.info.lastName,
+        details: order.info.details,
+      },
       createdAt: order.createdAt.toISOString(),
     };
   }

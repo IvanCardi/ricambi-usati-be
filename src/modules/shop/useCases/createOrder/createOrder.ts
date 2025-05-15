@@ -30,20 +30,23 @@ export class CreateOrder implements UseCase<CreateOrderInput, string> {
       throw new OrderDraftNotFound();
     }
 
-    const order = Order.create({
+    const oldOrder = await this.orderRepo.getByOrderDraftId(input.orderDraftId);
+
+    const newOrder = Order.create({
       orderDraft,
       deliveryOption: input.deliveryMethod as DeliveryOption,
       paymentMethod: input.paymentMethod as PaymentMethod,
+      oldOrderId: oldOrder?.id,
     });
 
-    order.products.map((p) => p.setToSold());
+    newOrder.products.map((p) => p.setToSold());
 
-    await this.orderRepo.save(order);
-    await this.carPartRepo.saveAll(order.products);
+    await this.orderRepo.save(newOrder);
+    await this.carPartRepo.saveAll(newOrder.products);
 
     const checkoutPaymentUrl = await this.paymentService.createPayment(
-      order.productsAmount + order.shippingCosts,
-      order.id
+      newOrder.productsAmount + newOrder.shippingCosts,
+      newOrder.id
     );
 
     return checkoutPaymentUrl;
