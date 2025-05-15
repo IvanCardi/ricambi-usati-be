@@ -74,15 +74,17 @@ export class GetFilteredCarParts
     }
 
     return {
-      carParts: carParts.map((cp) => ({
-        id: cp.id,
-        name: cp.name,
-        discountedPrice: discountedPriceCalculator
-          ? discountedPriceCalculator.calculate(cp.price)
-          : undefined,
-        price: cp.price,
-        imageUrl: cp.photos.length > 0 ? cp.photos[0] : undefined,
-      })),
+      carParts: carParts
+        .filter((cp) => cp.status === "available")
+        .map((cp) => ({
+          id: cp.id,
+          name: cp.name,
+          discountedPrice: discountedPriceCalculator
+            ? discountedPriceCalculator.calculate(cp.price)
+            : undefined,
+          price: cp.price,
+          imageUrl: cp.photos.length > 0 ? cp.photos[0] : undefined,
+        })),
       totalPages,
     };
   }
@@ -98,7 +100,10 @@ export class GetFilteredCarParts
     order,
     number,
     category,
-  }: GetFilteredCarPartsInput): Promise<{ carParts: CarPart[]; totalPages: number }> {
+  }: GetFilteredCarPartsInput): Promise<{
+    carParts: CarPart[];
+    totalPages: number;
+  }> {
     if (number) {
       return this.carPartRepo.getByNumberAndPage(number, page ?? 1, 8);
     }
