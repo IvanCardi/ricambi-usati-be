@@ -10,7 +10,7 @@ export type CarPartQueryModelMinimal = CarPartBase;
 
 export type CarPartQueryModel = CarPartBase & {
   numbers: string[];
-  carId: string;
+  carId?: string;
   carBrand: string;
   carModel: string;
   carSetup: string;

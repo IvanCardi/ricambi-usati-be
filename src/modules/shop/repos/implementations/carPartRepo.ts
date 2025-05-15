@@ -1,7 +1,7 @@
 import { MONGO_DB } from "../../../../bootstrap/database/mongoDb";
 import { CarPart } from "../../domain/carPart/carPart";
 import { carPartMap } from "../../mappers";
-import { OrderBy } from "../../useCases/getCarParts/getCarParts";
+import { OrderBy } from "../../useCases/getFilteredCarParts/getFilteredCarParts";
 import { ICarPartRepo } from "../carPartRepo";
 
 export class CarPartRepo implements ICarPartRepo {

@@ -1,5 +1,5 @@
 import { CarPart } from "../domain/carPart/carPart";
-import { OrderBy } from "../useCases/getCarParts/getCarParts";
+import { OrderBy } from "../useCases/getFilteredCarParts/getFilteredCarParts";
 
 export interface ICarPartRepo {
   getByNumberAndPage(

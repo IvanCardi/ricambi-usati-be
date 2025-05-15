@@ -13,6 +13,10 @@ export class CheckCarPartsAvailability
   constructor(private carPartRepo: ICarPartRepo) {}
 
   async execute(input: CheckCarPartsAvailabilityInput): Promise<string[]> {
+    if (!input.products) {
+      return [];
+    }
+    
     const parts = await this.carPartRepo.getByIds(input.products);
 
     if (parts.length !== input.products.length) {
