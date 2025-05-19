@@ -123,6 +123,10 @@ export class CarPart extends AggregateRoot<CarPartProps> {
     this.props.status = "sold";
   }
 
+   setToAvailable() {
+    this.props.status = "available";
+  }
+
   update(info: {
     name: string;
     numbers: string[];

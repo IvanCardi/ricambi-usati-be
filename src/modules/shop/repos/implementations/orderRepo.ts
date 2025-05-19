@@ -14,6 +14,10 @@ export class OrderRepo implements IOrderRepo {
     private carPartRepo: ICarPartRepo
   ) {}
 
+  async delete(id: string): Promise<void> {
+    await this.mongoDb.deleteOne({ _id: id }, this.collection);
+  }
+
   async getById(id: string): Promise<Order | undefined> {
     const raw = (await this.mongoDb.findOne(
       { _id: id },

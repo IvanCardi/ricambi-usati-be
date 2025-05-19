@@ -21,12 +21,19 @@ carPartRouter.get("/carParts", authentication, (req, res) =>
   new GetCarPartsController(getCarParts).execute(req, res)
 );
 
+carPartRouter.post("/carParts", (req, res) =>
+  new CreateCarPartsController(createCarParts).execute(req, res)
+);
+
 carPartRouter.get("/carParts/filtered", authentication, (req, res) =>
   new GetFilteredCarPartsController(getFilteredCarParts).execute(req, res)
 );
 
-carPartRouter.post("/carParts", (req, res) =>
-  new CreateCarPartsController(createCarParts).execute(req, res)
+carPartRouter.get("/carParts/availability", authentication, (req, res) =>
+  new CheckCarPartsAvailabilityController(checkCarPartsAvailability).execute(
+    req,
+    res
+  )
 );
 
 carPartRouter.get("/carParts/:id", authentication, (req, res) =>
@@ -39,10 +46,6 @@ carPartRouter.patch("/carParts/:id", (req, res) =>
 
 carPartRouter.delete("/carParts/:id", (req, res) =>
   new DeleteCarPartController(deleteCarPart).execute(req, res)
-);
-
-carPartRouter.get("/carParts/availability", authentication, (req, res) =>
-  new CheckCarPartsAvailabilityController(checkCarPartsAvailability).execute(req, res)
 );
 
 export default carPartRouter;

@@ -8,15 +8,17 @@ export type CheckOrderStatusInput = {
 };
 
 export class CheckOrderStatus
-  implements UseCase<CheckOrderStatusInput, OrderStatus>
+  implements UseCase<CheckOrderStatusInput, "paid" | "in payment" | "failed">
 {
   constructor(private orderRepo: IOrderRepo) {}
 
-  async execute(input: CheckOrderStatusInput): Promise<OrderStatus> {
+  async execute(
+    input: CheckOrderStatusInput
+  ): Promise<"paid" | "in payment" | "failed"> {
     const order = await this.orderRepo.getById(input.orderId);
 
-    if (!order) {
-      throw new OrderNotFound();
+    if (!order || order.status === "shipped") {
+      return "failed";
     }
 
     return order.status;
