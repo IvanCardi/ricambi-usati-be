@@ -6,7 +6,7 @@ import { logger } from "../logger";
 let uri: string;
 
 if (isProduction) {
-  uri = `mongodb+srv://${db.username}:${db.password}@${db.host}/${db.name}?retryWrites=true&w=majority`;
+  uri = db.productionUrl;
 } else {
   uri = `mongodb://${db.host}:${db.port}/${db.name}`;
 }
