@@ -1,8 +1,8 @@
+// db/client.ts
 import { MongoClient } from "mongodb";
 import { isProduction, db } from "../../config";
 import { logger } from "../logger";
 
-// Connection URI
 let uri: string;
 
 if (isProduction) {
@@ -11,22 +11,23 @@ if (isProduction) {
   uri = `mongodb://${db.host}:${db.port}/${db.name}`;
 }
 
-// Create a new MongoClient
-export const mongoClient = new MongoClient(uri);
+let client: MongoClient;
+let clientPromise: Promise<MongoClient>;
 
-async function run() {
-  try {
-    // Connect the client to the server
-    await mongoClient.connect();
-
-    // Establish and verify connection
-    await mongoClient.db("admin").command({ ping: 1 });
-    logger.info("Connected successfully to Database");
-  } catch (error) {
-    logger.error(error);
-  } finally {
-    // Ensures that the client will close when you finish/error
-    // await mongoClient.close();
-  }
+declare global {
+  // Allow reuse of clientPromise in hot reload or serverless
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
-run();
+
+if (!global._mongoClientPromise) {
+  client = new MongoClient(uri);
+  global._mongoClientPromise = client.connect().then((connectedClient) => {
+    logger.info("Connected successfully to MongoDB");
+    return connectedClient;
+  }).catch((err) => {
+    logger.error("MongoDB connection failed", err);
+    throw err;
+  });
+}
+
+export const mongoClientPromise = global._mongoClientPromise!;

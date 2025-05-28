@@ -1,30 +1,40 @@
-import { mongoClient } from ".";
+import { mongoClientPromise } from ".";
 
 export default class MongoDb {
   public async getCollection(collectionName: string) {
-    return mongoClient.db().collection(collectionName);
+    return (await mongoClientPromise).db().collection(collectionName);
   }
 
   public async save(document: object, collectionName: string): Promise<void> {
-    await mongoClient.db().collection(collectionName).insertOne(document);
+    await (await mongoClientPromise)
+      .db()
+      .collection(collectionName)
+      .insertOne(document);
   }
 
   public async saveMany(
     documents: Array<object>,
     collectionName: string
   ): Promise<void> {
-    await mongoClient.db().collection(collectionName).insertMany(documents);
+    await (await mongoClientPromise)
+      .db()
+      .collection(collectionName)
+      .insertMany(documents);
   }
 
   public async find(filter: object, collectionName: string): Promise<object[]> {
-    return mongoClient.db().collection(collectionName).find(filter).toArray();
+    return (await mongoClientPromise)
+      .db()
+      .collection(collectionName)
+      .find(filter)
+      .toArray();
   }
 
   public async findManyByIds(
     ids: string[],
     collectionName: string
   ): Promise<object[]> {
-    return mongoClient
+    return (await mongoClientPromise)
       .db()
       .collection(collectionName)
       .find({ _id: { $in: ids as never } })
@@ -32,7 +42,10 @@ export default class MongoDb {
   }
 
   public async findOne(filter: object, collectionName: string): Promise<any> {
-    return mongoClient.db().collection(collectionName).findOne(filter);
+    return (await mongoClientPromise)
+      .db()
+      .collection(collectionName)
+      .findOne(filter);
   }
 
   public async updateOne(
@@ -41,7 +54,9 @@ export default class MongoDb {
     collectionName: string,
     arrayFilters?: Array<object>
   ) {
-    await mongoClient
+    await (
+      await mongoClientPromise
+    )
       .db()
       .collection(collectionName)
       .updateOne(filter, updates, { arrayFilters: arrayFilters ?? [] });
@@ -52,7 +67,7 @@ export default class MongoDb {
     updates: object,
     collectionName: string
   ) {
-    await mongoClient
+    await (await mongoClientPromise)
       .db()
       .collection(collectionName)
       .findOneAndUpdate(filter, { $set: updates }, { upsert: true });
@@ -65,21 +80,30 @@ export default class MongoDb {
         replacement: u,
       },
     }));
-    await mongoClient.db().collection(collectionName).bulkWrite(bulkParam);
+    await (await mongoClientPromise)
+      .db()
+      .collection(collectionName)
+      .bulkWrite(bulkParam);
   }
 
   public async deleteOne(
     filter: object,
     collectionName: string
   ): Promise<void> {
-    await mongoClient.db().collection(collectionName).findOneAndDelete(filter);
+    await (await mongoClientPromise)
+      .db()
+      .collection(collectionName)
+      .findOneAndDelete(filter);
   }
 
   public async deleteMany(
     filter: object,
     collectionName: string
   ): Promise<void> {
-    await mongoClient.db().collection(collectionName).deleteMany(filter);
+    await (await mongoClientPromise)
+      .db()
+      .collection(collectionName)
+      .deleteMany(filter);
   }
 }
 
