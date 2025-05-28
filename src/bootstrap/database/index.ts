@@ -6,13 +6,15 @@ import { logger } from "../logger";
 let uri: string;
 
 if (isProduction) {
+  console.info(">>> PRODUCTION URL")
+  console.info(db.productionUrl)
+  console.info(db.name)
   uri = `${db.productionUrl}/${db.name}?retryWrites=true&w=majority`;
 } else {
   uri = `mongodb://${db.host}:${db.port}/${db.name}`;
 }
 
 let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
 
 declare global {
   // Allow reuse of clientPromise in hot reload or serverless
@@ -22,10 +24,10 @@ declare global {
 if (!global._mongoClientPromise) {
   client = new MongoClient(uri);
   global._mongoClientPromise = client.connect().then((connectedClient) => {
-    logger.info("Connected successfully to MongoDB");
+    console.info("Connected successfully to MongoDB");
     return connectedClient;
   }).catch((err) => {
-    logger.error("MongoDB connection failed", err);
+    console.error("MongoDB connection failed", err);
     throw err;
   });
 }
