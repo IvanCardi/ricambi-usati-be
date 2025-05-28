@@ -33,6 +33,7 @@ const refresh = {
 const urls = {
   be: process.env.BE_BASE_URL ?? "",
   fe: process.env.FE_BASE_URL ?? "",
+  admin: process.env.ADMIN_BASE_URL ?? "",
 };
 
 const mollieSecretKey = process.env.MOLLIE_KEY ?? "";

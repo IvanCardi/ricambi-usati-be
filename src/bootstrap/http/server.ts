@@ -8,19 +8,18 @@ import helmet from "helmet";
 import http from "http";
 import morgan from "morgan";
 import * as config from "../../config";
-import { logger } from "../logger";
-import { healthRouter } from "./health";
-import authentication from "./middlewares/authentication";
 import carRouter from "../../modules/car/routes/carRouter";
-import carPartRouter from "../../modules/shop/routes/carPartRouter";
 import mediaRouter from "../../modules/media/routes/carPartRouter";
+import carPartRouter from "../../modules/shop/routes/carPartRouter";
+import checkPaymentWebhookRouter from "../../modules/shop/routes/checkPaymentWebhook";
 import customerRouter from "../../modules/shop/routes/customerRouter";
+import orderDraftRouter from "../../modules/shop/routes/orderDraftRouter";
 import orderRouter from "../../modules/shop/routes/orderRouter";
 import userRouter from "../../modules/user/routes/userRouter";
-import checkPaymentWebhookRouter from "../../modules/shop/routes/checkPaymentWebhook";
-import orderDraftRouter from "../../modules/shop/routes/orderDraftRouter";
+import { logger } from "../logger";
+import { healthRouter } from "./health";
 
-const allowedOrigins = ["http://localhost:3001", "http://localhost:3002"];
+const allowedOrigins = [config.urls.fe, config.urls.admin];
 
 const corsOptions = {
   origin: function (origin: any, callback: any) {
@@ -70,6 +69,6 @@ app.use(userRouter);
 app.use(checkPaymentWebhookRouter);
 app.use(orderDraftRouter);
 
-if (config.isProduction) {
+/* if (config.isProduction) {
   app.use(authentication);
-}
+} */
