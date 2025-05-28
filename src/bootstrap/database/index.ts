@@ -9,7 +9,7 @@ if (isProduction) {
   console.info(">>> PRODUCTION URL")
   console.info(db.productionUrl)
   console.info(db.name)
-  uri = `${db.productionUrl}/${db.name}?retryWrites=true&w=majority`;
+  uri = `${db.productionUrl}/${db.name}?authSource=admin`;
 } else {
   uri = `mongodb://${db.host}:${db.port}/${db.name}`;
 }
